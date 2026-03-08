@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartHer</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Abhaya Libre', serif;
+            font-weight: 800; 
+            font-size: 14px;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            background-color: #EAF6F5;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            /* ضروري جداً لمنع التمرير بسبب بروز نصف الدائرة */
+            overflow: hidden; 
+        }
+
+        .header-logo {
+            position: absolute;
+            top: 40px;
+            /* الشعار الآن مثبت في أقصى اليمين فوق منطقة الدائرة */
+            right: 40px; 
+            width: 130px;
+            z-index: 20;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            position: relative;
+        }
+
+        .text-section {
+            flex: 1;
+            max-width: 500px;
+            z-index: 10;
+        }
+
+        .main-heading {
+            font-size: 55px;
+            color: #2D9596;
+            line-height: 1.1;
+            margin: 0 0 20px 0;
+        }
+
+        .sub-heading {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 35px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .login-btn {
+            background-color: #2D9596;
+            color: white;
+            border: 2px solid #2D9596;
+        }
+
+        .create-btn {
+            background-color: transparent;
+            color: #2D9596;
+            border: 2px solid #2D9596;
+        }
+
+        .image-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            align-items: center;
+        }
+
+        /* تعديل الدائرة ليظهر نصفها فقط ملتصقاً بالحافة */
+        .bg-circle {
+            position: fixed; /* لتظل ثابتة في خلفية الصفحة */
+            width: 1000px; /* قطر كبير جداً */
+            height: 1000px;
+            background: white;
+            border-radius: 50%;
+            /* التعديل السحري: إزاحة لليمين بمقدار نصف قطرها بالضبط */
+            right: -500px; 
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        /* صورة القطار الخاصة بكِ من فيجما */
+        .train-img {
+            position: absolute;
+            width: 700px; /* عرض القطار */
+            height: auto;
+            /* بروز ربع القطار خارج الدائرة جهة اليسار */
+            right: -150px; 
+            z-index: 5;
+        }
+
+        @media (max-width: 1000px) {
+            .main-container {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+            }
+            .image-section { order: -1; margin-bottom: 50px; }
+            .bg-circle { right: -250px; width: 500px; height: 500px; }
+            .train-img { position: relative; right: 0; width: 100%; }
+            .button-group { justify-content: center; }
+            .header-logo { right: 50%; transform: translateX(50%); width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="الشعار بالاسم.svg" alt="Sikka Logo" class="header-logo">
+
+    <div class="main-container">
+        <div class="text-section">
+            <h1 class="main-heading">Seekah Welcomes you!</h1>
+            <p class="sub-heading">We wish you a unique experience.</p>
+            
+            <div class="button-group">
+                <a href="login.html" class="btn login-btn">Log in</a>
+                <a href="create_account.html" class="btn create-btn">Create Account</a>
+            </div>
+        </div>
+
+        <div class="image-section">
+            <div class="bg-circle"></div>
+            <img src="القطار.svg" alt="Sikka Train" class="train-img">
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartHer</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            /* توحيد الخط والوزن والحجم 14px */
+            font-family: 'Abhaya Libre', serif;
+            font-weight: 800; 
+            font-size: 14px;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            background-color: #EAF6F5; /* لون الخلفية السماوي الموحد للمشروع */
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* الشعار في الزاوية العلوية اليمنى كما في التصميم */
+        .header-logo {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            width: 120px;
+            z-index: 10;
+        }
+
+        /* الحاوية الرئيسية المرنة */
+        .main-container {
+            width: 100%;
+            max-width: 1200px; /* العرض الموحد المتفق عليه */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            position: relative;
+        }
+
+        /* قسم النصوص على اليسار */
+        .text-section {
+            flex: 1;
+            max-width: 500px;
+            z-index: 5;
+        }
+
+        .main-heading {
+            font-size: 55px; /* حجم كبير للعنوان الرئيسي */
+            color: #2D9596; /* اللون الأخضر الغامق الخاص بسكة */
+            line-height: 1.1;
+            margin: 0 0 20px 0;
+        }
+
+        .sub-heading {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 500; /* أنحف قليلاً من العنوان */
+        }
+
+        /* قسم الأزرار */
+        .button-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* تنسيق الأزرار العام */
+        .btn {
+            padding: 12px 35px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        /* زر Log in الملون */
+        .login-btn {
+            background-color: #2D9596;
+            color: white;
+            border: 2px solid #2D9596;
+        }
+
+        .login-btn:hover {
+            background-color: #247a7b;
+        }
+
+        /* زر Create Account المفرغ */
+        .create-btn {
+            background-color: transparent;
+            color: #2D9596;
+            border: 2px solid #2D9596;
+        }
+
+        .create-btn:hover {
+            background-color: rgba(45, 149, 150, 0.1);
+        }
+
+        /* قسم الصورة (القطار والخلفية الدائرية) */
+        .image-section {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        /* الشكل الدائري الأبيض خلف القطار */
+        .bg-circle {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: white;
+            border-radius: 50%;
+            right: -250px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        /* صورة القطار */
+        .train-img {
+            width: 120%; /* لتكون بارزة كما في التصميم */
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+            transform: translateX(100px); /* دفع الصورة لليمين قليلاً */
+        }
+
+        /* التجاوب مع الشاشات الصغيرة */
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+            }
+            .image-section { order: -1; margin-bottom: 50px; }
+            .bg-circle { right: 50%; transform: translate(50%, -50%); width: 400px; height: 400px; }
+            .train-img { transform: none; width: 100%; }
+            .button-group { justify-content: center; }
+            .main-heading { font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="الشعار بالاسم.svg" alt="Sikka Logo" class="header-logo">
+
+    <div class="main-container">
+        <div class="text-section">
+            <h1 class="main-heading">Seekah Welcomes you!</h1>
+            <p class="sub-heading">We wish you a uniqe experience.</p>
+            
+            <div class="button-group">
+                <a href="login.html" class="btn login-btn">Log in</a>
+                
+                <a href="create_account.html" class="btn create-btn">Create Account</a>
+            </div>
+        </div>
+
+        <div class="image-section">
+            <div class="bg-circle"></div>
+            <img src="train.png" alt="Sikka Train" class="train-img">
+        </div>
+    </div>
+
+</body>
+</html> -->
