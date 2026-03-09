@@ -232,26 +232,24 @@
         <div class="content-area">
             <div class="welcome-section">
                 Hi,<br>
-                welcome Anas
-            </div>
+                welcome <span id="welcome-name">Loading...</span> </div>
 
             <div class="profile-layout">
                 <div class="avatar-wrapper">
                     <div class="avatar-circle">
                         <i class="material-icons" style="font-size: 70px; color: #ccc;">person</i>
                     </div>
-                    <span>Anas ibn Malik</span>
+                    <span id="user-display-name">Loading...</span>
                 </div>
 
                 <div class="inputs-container">
                     <div class="field-group">
                         <span class="label-text" style="width:120px">Full Name</span>
-                        <input type="text" class="input-box" value="Anas ibn Malik" readonly>
-                    </div>
+                        <input type="text" id="full-name-input" class="input-box" value="" readonly> </div>
 
                     <div class="field-group">
                         <span class="label-text" style="width:120px">Email</span>
-                        <input type="text" class="input-box" value="Anas.M@gmail.com" readonly>
+                        <input type="text" class="input-box" value="User.M@gmail.com" readonly>
                     </div>
 
                     <div class="field-group">
@@ -263,8 +261,42 @@
         </div>
     </div>
 
+<script>
+    // 1. جلب الاسم المحفوظ من الذاكرة المحلية (localStorage)
+    const savedName = localStorage.getItem("userName");
+
+    // 2. إذا وجدنا اسماً، نقوم بتحديث العناصر في الصفحة
+    if (savedName) {
+        // تحديث الاسم تحت صورة الملف الشخصي
+        document.getElementById("user-display-name").innerText = savedName;
+
+        // تحديث الاسم في رسالة الترحيب العلوية
+        document.getElementById("welcome-name").innerText = savedName;
+
+        // تحديث الاسم داخل مربع النص (Full Name)
+        document.getElementById("full-name-input").value = savedName;
+    } else {
+        // في حال لم يتم تسجيل الدخول، يمكن عرض اسم افتراضي
+        document.getElementById("user-display-name").innerText = "Guest";
+        document.getElementById("welcome-name").innerText = "Guest";
+        document.getElementById("full-name-input").value = "Guest User";
+    }
+</script>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -291,7 +323,6 @@
     <style>
         * {
             box-sizing: border-box;
-            /* تطبيق الخط المطلوب بحجم 14 كما في المتطلبات */
             font-family: 'Abhaya Libre', serif;
             font-weight: 800; 
             font-size: 14px;
@@ -301,14 +332,17 @@
             margin: 0;
             display: flex;
             min-height: 100vh;
-            background-color: #EAF6F5; /* لون الخلفية السماوي */
+            background-color: #EAF6F5;
             align-items: center;
             justify-content: center;
             position: relative;
             padding: 20px;
         }
 
-        /* الجزء المسؤول عن الشعار في الخلفية */
+        #menu-toggle {
+            display: none;
+        }
+
         .header-logo {
             position: absolute;
             top: 20px;
@@ -317,21 +351,16 @@
             z-index: 1;
         }
 
-        /* الحاوية الرئيسية التي تجمع القائمة والمحتوى */
         .main-wrapper {
             display: flex;
-            gap: 20px; /* المسافة بين القائمة الجانبية والمستطيل الكبير */
-            align-items: stretch;
-            /* --------------------------------------------------------- */
-            /* !!! ملاحظة: هنا يمكنك تعديل عرض الصفحة الكلي !!! */
+            gap: 20px;
             width: 100%;
-            max-width: 1200px; /* يمكنك تغيير 1200 إلى 1366 إذا أردتِ حجماً ثابتاً */
-            /* --------------------------------------------------------- */
+            max-width: 1200px;
+            align-items: stretch;
         }
 
-        /* تنسيق مستطيل القائمة الجانبية الصغير */
-        .sidebar {
-            width: 65px; /* العرض المصغر المطلوب */
+        .sidebar-small {
+            width: 65px;
             background: white;
             border-radius: 30px;
             display: flex;
@@ -341,34 +370,106 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        /* تنسيق المستطيل الأبيض الكبير (منطقة المحتوى) */
+        .menu-btn-label {
+            font-size: 32px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: white;
+            z-index: 100;
+            transition: 0.3s ease-in-out;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #menu-toggle:checked ~ .sidebar-overlay {
+            left: 0;
+        }
+
+        .overlay-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 90;
+            display: none;
+        }
+
+        #menu-toggle:checked ~ .overlay-bg {
+            display: block;
+        }
+
+        .close-btn-label {
+            align-self: flex-end;
+            cursor: pointer;
+            font-size: 30px;
+            margin-bottom: 40px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            color: black;
+            text-decoration: none; 
+        }
+
+        .nav-item:hover {
+            background: #f5f5f5;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            background: #E53935;
+            color: white;
+            border-radius: 20px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            font-family: inherit;
+            text-decoration: none; 
+        }
+
         .content-area {
-            flex: 1; /* ليأخذ باقي المساحة المتاحة بشكل مرن */
+            flex: 1;
             background: white;
             border-radius: 30px;
             padding: 60px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            min-height: 600px; /* أقل طول مسموح للمستطيل */
+            min-height: 600px;
         }
 
-        /* نصوص الترحيب */
         .welcome-section {
             margin-bottom: 50px;
-            line-height: 1.2;
-            font-size: 20px; /* تكبير بسيط للترحيب ليناسب التصميم */
+            font-size: 20px;
         }
 
-        /* ترتيب العناصر داخل الملف الشخصي */
         .profile-layout {
             display: flex;
             gap: 100px;
-            align-items: flex-start;
-            flex-wrap: wrap; /* لضمان نزول العناصر تحت بعضها في الشاشات الصغيرة جداً */
+            flex-wrap: wrap;
         }
 
-        /* قسم الصورة والاسم */
         .avatar-wrapper {
             display: flex;
             flex-direction: column;
@@ -387,51 +488,57 @@
             margin-bottom: 15px;
         }
 
-        /* حاوية حقول البيانات */
         .inputs-container {
             flex: 1;
             max-width: 450px;
         }
 
-        /* تنسيق كل حقل (العنوان + المستطيل) */
         .field-group {
             display: flex;
             align-items: center;
             margin-bottom: 30px;
         }
 
-        .label-text {
-            width: 120px;
-            color: black;
-        }
-
-        /* شكل مستطيلات إدخال البيانات */
         .input-box {
             flex: 1;
             background: #F5F5F5;
             border: none;
             border-radius: 25px;
             padding: 12px 25px;
-            color: #333;
             outline: none;
-            font-family: inherit;
-        }
-
-        /* أيقونة القائمة */
-        .menu-btn {
-            font-size: 32px;
-            color: #333;
-            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <img src="https://placehold.co/100x100/EAF6F5/333?text=Logo" alt="Sikka Logo" class="header-logo">
+    <input type="checkbox" id="menu-toggle">
+
+    <img src="Logo.svg" alt="Sikka Logo" class="header-logo">
+
+    <label for="menu-toggle" class="overlay-bg"></label>
+
+    <div class="sidebar-overlay">
+        <label for="menu-toggle" class="material-icons close-btn-label">close</label>
+        
+        <a href="home.html" class="nav-item">
+            <i class="material-icons">home</i>
+            <span>Home</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item">
+            <i class="material-icons">person_outline</i>
+            <span>Account Details</span>
+        </a>
+
+        <a href="StartHer.html" class="logout-btn">
+            <i class="material-icons">logout</i>
+            <span>Logout</span>
+        </a>
+    </div>
 
     <div class="main-wrapper">
-        <div class="sidebar">
-            <i class="material-icons menu-btn">menu</i>
+        <div class="sidebar-small">
+            <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
         </div>
 
         <div class="content-area">
@@ -445,28 +552,38 @@
                     <div class="avatar-circle">
                         <i class="material-icons" style="font-size: 70px; color: #ccc;">person</i>
                     </div>
-                    <span>Anas ibn Malik</span>
+                    <span id="user-display-name">Loading...</span>
                 </div>
 
                 <div class="inputs-container">
                     <div class="field-group">
-                        <span class="label-text">Full Name</span>
+                        <span class="label-text" style="width:120px">Full Name</span>
                         <input type="text" class="input-box" value="Anas ibn Malik" readonly>
                     </div>
 
                     <div class="field-group">
-                        <span class="label-text">Email</span>
+                        <span class="label-text" style="width:120px">Email</span>
                         <input type="text" class="input-box" value="Anas.M@gmail.com" readonly>
                     </div>
 
                     <div class="field-group">
-                        <span class="label-text">Password</span>
+                        <span class="label-text" style="width:120px">Password</span>
                         <input type="password" class="input-box" value="********" readonly>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+<script>
+    // جلب الاسم المحفوظ من الذاكرة
+    const savedName = localStorage.getItem("userName");
 
+    // إذا وجدنا اسماً، نعرضه في الصفحة
+    if (savedName) {
+        document.getElementById("user-display-name").innerText = savedName;
+    }
+</script>
 </body>
-</html> -->
+</html>
+
+ -->

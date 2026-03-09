@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    
+
     <style>
         * {
             box-sizing: border-box;
             font-family: 'Abhaya Libre', serif;
-            font-weight: 800; 
+            font-weight: 800;
             font-size: 14px;
         }
 
@@ -20,7 +21,7 @@
             margin: 0;
             display: flex;
             min-height: 100vh;
-            background-color: #EAF6F5; /* نفس لون خلفية البروفايل */
+            background-color: #EAF6F5;
             align-items: center;
             justify-content: center;
             position: relative;
@@ -28,12 +29,10 @@
             overflow-x: hidden;
         }
 
-        /* التحكم في القائمة الجانبية عبر Checkbox مخفي (بدون جافا سكريبت) */
         #menu-toggle {
             display: none;
         }
 
-        /* الشعار في الخلفية العلوية اليمنى كما في التصميم */
         .header-logo {
             position: absolute;
             top: 20px;
@@ -46,11 +45,10 @@
             display: flex;
             gap: 20px;
             width: 100%;
-            max-width: 1200px; /* نفس حجم صفحة البروفايل */
+            max-width: 1200px;
             align-items: stretch;
         }
 
-        /* القائمة الجانبية الصغيرة الثابتة */
         .sidebar-small {
             width: 65px;
             background: white;
@@ -59,7 +57,7 @@
             flex-direction: column;
             align-items: center;
             padding: 30px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .menu-btn-label {
@@ -68,7 +66,6 @@
             color: #333;
         }
 
-        /* القائمة الجانبية الكبيرة (Overlay) */
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -78,13 +75,13 @@
             background: white;
             z-index: 100;
             transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             padding: 20px;
         }
 
-        #menu-toggle:checked ~ .sidebar-overlay {
+        #menu-toggle:checked~.sidebar-overlay {
             left: 0;
         }
 
@@ -94,12 +91,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             z-index: 90;
             display: none;
         }
 
-        #menu-toggle:checked ~ .overlay-bg {
+        #menu-toggle:checked~.overlay-bg {
             display: block;
         }
 
@@ -110,7 +107,6 @@
             margin-bottom: 40px;
         }
 
-        /* تنسيق روابط القائمة الجانبية */
         .nav-item {
             display: flex;
             align-items: center;
@@ -123,12 +119,13 @@
             text-decoration: none;
         }
 
-        .nav-item:hover { background: #f5f5f5; }
+        .nav-item:hover {
+            background: #f5f5f5;
+        }
 
-        /* زر تسجيل الخروج الأحمر */
         .logout-btn {
             margin-top: auto;
-            background: #E53935; /* لون أحمر مطابق للتصميم */
+            background: #E53935;
             color: white;
             border-radius: 20px;
             padding: 12px;
@@ -140,37 +137,36 @@
             text-decoration: none;
         }
 
-        /* المستطيل الأبيض الكبير للمحتوى */
         .content-area {
             flex: 1;
             background: white;
             border-radius: 30px;
             padding: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 600px;
         }
 
+        /* تنسيق جملة الترحيب */
         .welcome-title {
             font-size: 28px;
             margin: 40px 0 60px 0;
             text-align: center;
+            color: #333;
         }
 
-        /* شبكة المربعات الأربعة (Grid) */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* مربعين في كل صف */
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
             width: 100%;
             max-width: 800px;
         }
 
-        /* تنسيق المربع الواحد */
         .management-card {
-            background: #EAF6F5; /* لون خلفية المربعات الخفيف */
+            background: #EAF6F5;
             border-radius: 25px;
             padding: 30px;
             display: flex;
@@ -185,13 +181,13 @@
 
         .management-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .card-icon-bg {
             width: 80px;
             height: 80px;
-            background: #2D9596; /* لون الأيقونة الغامق كما في التصميم */
+            background: #2D9596;
             border-radius: 20px;
             display: flex;
             align-items: center;
@@ -208,13 +204,14 @@
             font-size: 16px;
         }
 
-        /* استجابة الشاشات الصغيرة */
         @media (max-width: 768px) {
-            .cards-grid { grid-template-columns: 1fr; }
-            .profile-layout { gap: 40px; }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <input type="checkbox" id="menu-toggle">
@@ -225,12 +222,12 @@
 
     <div class="sidebar-overlay">
         <label for="menu-toggle" class="material-icons close-btn-label">close</label>
-        
+
         <a href="home.html" class="nav-item">
             <i class="material-icons">home</i>
             <span>Home</span>
         </a>
-        
+
         <a href="profile.html" class="nav-item">
             <i class="material-icons">person_outline</i>
             <span>Account Details</span>
@@ -248,10 +245,10 @@
         </div>
 
         <div class="content-area">
-            <h1 class="welcome-title">Welcome Anas! What’s on the agenda today?</h1>
+            <h1 class="welcome-title">Welcome <span id="home-user-name" style="color: #2D9596; font-size: inherit; font-weight: inherit;">User</span>! What’s on the agenda today?</h1>
 
             <div class="cards-grid">
-                
+
                 <a href="train_management.html" class="management-card">
                     <div class="card-icon-bg">
                         <i class="material-icons">train</i>
@@ -284,5 +281,14 @@
         </div>
     </div>
 
+    <script>
+        const savedName = localStorage.getItem("userName");
+        if (savedName) {
+            document.getElementById("home-user-name").innerText = savedName;
+        } else {
+            document.getElementById("home-user-name").innerText = "Guest";
+        }
+    </script>
 </body>
+
 </html>
