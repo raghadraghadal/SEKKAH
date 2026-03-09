@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <title>Create Table</title>
-
-   <head>
-    <meta charset="UTF-8">
-    <title>Saved Train Schedule</title>
-
+     <meta charset="UTF-8">
+    <title>Train 101</title>
     <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+    
     <style>
         * {
             box-sizing: border-box;
             font-family: 'Abhaya Libre', serif;
-            font-weight: 800;
+            font-weight: 800; 
             font-size: 14px;
         }
 
@@ -24,7 +22,7 @@
             margin: 0;
             display: flex;
             min-height: 100vh;
-            background-color: #EAF6F5;
+            background-color: #EAF6F5; /* نفس لون خلفية البروفايل */
             align-items: center;
             justify-content: center;
             position: relative;
@@ -32,9 +30,12 @@
             overflow-x: hidden;
         }
 
-        /* Sidebar + Layout (نفس تصميمك السابق) */
-        #menu-toggle { display: none; }
+        /* التحكم في القائمة الجانبية عبر Checkbox مخفي (بدون جافا سكريبت) */
+        #menu-toggle {
+            display: none;
+        }
 
+        /* الشعار في الخلفية العلوية اليمنى كما في التصميم */
         .header-logo {
             position: absolute;
             top: 20px;
@@ -47,10 +48,11 @@
             display: flex;
             gap: 20px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1200px; /* نفس حجم صفحة البروفايل */
             align-items: stretch;
         }
 
+        /* القائمة الجانبية الصغيرة الثابتة */
         .sidebar-small {
             width: 65px;
             background: white;
@@ -68,6 +70,7 @@
             color: #333;
         }
 
+        /* القائمة الجانبية الكبيرة (Overlay) */
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -83,7 +86,9 @@
             padding: 20px;
         }
 
-        #menu-toggle:checked ~ .sidebar-overlay { left: 0; }
+        #menu-toggle:checked ~ .sidebar-overlay {
+            left: 0;
+        }
 
         .overlay-bg {
             position: fixed;
@@ -96,7 +101,9 @@
             display: none;
         }
 
-        #menu-toggle:checked ~ .overlay-bg { display: block; }
+        #menu-toggle:checked ~ .overlay-bg {
+            display: block;
+        }
 
         .close-btn-label {
             align-self: flex-end;
@@ -105,6 +112,7 @@
             margin-bottom: 40px;
         }
 
+        /* تنسيق روابط القائمة الجانبية */
         .nav-item {
             display: flex;
             align-items: center;
@@ -119,9 +127,10 @@
 
         .nav-item:hover { background: #f5f5f5; }
 
+        /* زر تسجيل الخروج الأحمر */
         .logout-btn {
             margin-top: auto;
-            background: #E53935;
+            background: #E53935; /* لون أحمر مطابق للتصميم */
             color: white;
             border-radius: 20px;
             padding: 12px;
@@ -133,6 +142,7 @@
             text-decoration: none;
         }
 
+        /* المستطيل الأبيض الكبير للمحتوى */
         .content-area {
             flex: 1;
             background: white;
@@ -142,7 +152,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 600px;
+           min-height: 600px;
+
         }
         body {
             font-family: Arial, sans-serif;
@@ -240,48 +251,68 @@
     </style>
 </head>
 <body>
+    <input type="checkbox" id="menu-toggle">
 
-<input type="checkbox" id="menu-toggle">
+    <img src="images\Logo.svg" alt="Sikka Logo" class="header-logo">
 
-<img src="Logo.svg" class="header-logo">
+    <label for="menu-toggle" class="overlay-bg"></label>
 
-<label for="menu-toggle" class="overlay-bg"></label>
+    <div class="sidebar-overlay">
+        <label for="menu-toggle" class="material-icons" style="align-self: flex-end; cursor: pointer; font-size: 30px; margin-bottom: 40px;">close</label>
 
-<div class="sidebar-overlay">
-    <label for="menu-toggle" class="material-icons close-btn-label">close</label>
+        <a href="home.html" class="nav-item main-link">
+            <i class="material-icons">home</i>
+            <span>Home</span>
+        </a>
 
-    <a href="home.html" class="nav-item">
-        <i class="material-icons">home</i>
-        <span>Home</span>
-    </a>
+        <a href="train_management.html" class="nav-item">
+            <i class="material-icons">train</i>
+            <span>Train Management</span>
+        </a>
 
-    <a href="profile.html" class="nav-item">
-        <i class="material-icons">person_outline</i>
-        <span>Account Details</span>
-    </a>
- <a href="StartHer.html" class="logout-btn">
-        <i class="material-icons">logout</i>
-        <span>Logout</span>
-    </a>
-</div>
+        <a href="passenger_management.html" class="nav-item">
+            <i class="material-icons">groups</i>
+            <span>Passenger Management</span>
+        </a>
 
-<div class="main-wrapper">
-    <div class="sidebar-small">
-        <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+        <a href="reservation_system.html" class="nav-item">
+            <i class="material-icons">confirmation_number</i>
+            <span>Reservation System</span>
+        </a>
+
+        <a href="reports.html" class="nav-item">
+            <i class="material-icons">assessment</i>
+            <span>Dashboard & Reports</span>
+        </a>
+
+        <a href="profile.html" class="nav-item main-link" style="margin-top: 15px;">
+            <i class="material-icons">person_outline</i>
+            <span>Account Details</span>
+        </a>
+
+        <a href="StartHer.html" class="logout-btn">
+            <i class="material-icons">logout</i>
+            <span>Logout</span>
+        </a>
     </div>
 
-    <div class="content-area">
-<body>
+    <div class="main-wrapper">
+        <div class="sidebar-small">
+            <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+        </div>
 
-<body>
+        <div class="content-area">
+
 
 <h2>Saved Timetables</h2>
+
 
 <div class="table-box" id="listBox"></div>
 
 <script>
 let list = JSON.parse(localStorage.getItem("scheduleList"));
 const box = document.getElementById("listBox");
+
 
 // إذا ما فيه جداول
 if (!list || list.length === 0) {
@@ -290,11 +321,14 @@ if (!list || list.length === 0) {
 
     list.forEach(name => {
 
+
         // نجيب بيانات الجدول
         let data = JSON.parse(localStorage.getItem(name));
 
         // نضيف عنوان للجدول
+
 box.innerHTML += `<h3 style="color:#28B8FA; text-align:center;">${name}</h3>`;
+
         // نبدأ جدول جديد
         let tableHTML = `
             <table style="width:100%; border-collapse:collapse; margin-bottom:30px;">

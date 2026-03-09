@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sekkah - Train Journey Management</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #EAF6F5;
+            font-family: 'Abhaya Libre', serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 1. الشريط الجانبي الصغير (الثابت) */
+        .sidebar-small {
+            width: 50px !important;
+    background: white;
+    border-radius: 20px; /* زوايا منحنية من كل الجهات عشان يطلع طائر */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.03);
+    
+    /* التعديل السحري هنا */
+    height: 85vh;        /* جعلنا طوله 85% من الشاشة بدل 100% */
+    position: fixed;
+    left: 10px;          /* دفعناه شوي عن الحافة اليسار */
+    top: 7.5vh;         /* نزلناه عن السقف عشان يتوسط الشاشة */
+    z-index: 1000;
+        }
+
+        .menu-btn-label {
+            font-size: 28px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* 2. القائمة المنزلقة (Sidebar Overlay) */
+        .sidebar-overlay {
+            position: fixed;
+    left: -320px; 
+    width: 280px;
+    background: white;
+    z-index: 1100;
+    transition: 0.3s ease-in-out;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    
+    /* التعديل المطابق للشريط الصغير */
+    height: 85vh;        /* نفس طول الشريط الصغير */
+    top: 7.5vh;         /* نفس المسافة من فوق */
+    border-radius: 25px; /* زوايا منحنية بالكامل */
+        }
+
+        #menu-toggle:checked ~ .sidebar-overlay {
+            left: 0;
+        }
+
+        .overlay-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 90;
+            display: none;
+        }
+
+        #menu-toggle:checked ~ .overlay-bg {
+            display: block;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .nav-item:hover { background: #f5f5f5; }
+
+        .logout-btn {
+            margin-top: auto;
+    margin-bottom: 20px; /* مسافة من الأسفل لضمان الظهور */
+    background: #E53935;
+    color: white;
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+        }
+
+        /* 3. الهيكل الرئيسي للمحتوى */
+        .main-wrapper {
+            flex: 1;
+    margin-left: 80px; /* زدنا المسافة من 50px لـ 80px لنوفر مساحة للشريط الطائر */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: calc(100% - 80px);
+        }
+
+        .header-logo {
+           position: absolute;
+    top: 10px;    /* رفعناه قليلاً للأعلى للاستفادة من المساحة */
+    right: 30px;  /* حركناه لليمين قليلاً ليتوازن مع التكبير */
+    
+    /* التعديل الجوهري للتكبير */
+    width: 90px;  /* زدنا العرض من 65px إلى 90px ليصبح كبيراً وواضحاً */
+    height: auto; /* يحافظ على تناسق الطول مع العرض الجديد */
+    
+    z-index: 1000; /* نضمن ظهوره فوق المربع الأبيض */
+        }
+
+        /* المربع الأبيض الكبير */
+        .content-area {
+           background: white;
+    border-radius: 50px;
+    margin-top: 100px; /* القيمة الجديدة لإنزاله شوي */
+    padding: 60px 50px; /* القيمة الجديدة لزيادة المساحة داخل المربع */
+    
+    /* الباقي خليه زي ما هو عشان يظل المربع ملموم وفي النص */
+    width: 85%;
+    max-width: 1100px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    height: fit-content;
+    min-height: auto;
+        }
+
+        .page-title {
+   font-family: 'Abhaya Libre', serif !important; /* أو 'Playfair Display' */
+    font-size: 45px !important;
+    font-weight: 300 !important;
+    color: #1a1a1a;
+    margin-bottom: 50px;
+    text-align: left;
+    padding-left: 10px;
+    
+    /* الحركة هذي هي اللي بتغير الشكل تماماً */
+    letter-spacing: 2px;      /* نزيد المسافة بين الحروف ليعطي شكل الـ Luxury */
+    text-transform: capitalize; /* يخلي أول حرف من كل كلمة كبير */
+    word-spacing: 5px;
+        }
+
+        /* 4. الجدول (نفس الصورة بالضبط) */
+        .train-table {
+            width: 100%;
+    border-collapse: collapse;
+    background-color: #F0F8F7; /* خلفية فاتحة مريحة للعين */
+    border-radius: 30px;
+    overflow: hidden;
+        }
+
+        .train-table thead th {
+            background-color: #12958D; /* الدرجة المطلوبة بالظبط */
+    color: #1a1a1a;
+    padding: 20px;
+    font-size: 15px;
+    font-weight: 600;
+        }
+
+        .train-table tbody td {
+
+    padding: 30px 10px;
+    text-align: center;
+    /* الخطوط الطولية بنفس الدرجة لكن شفافة قليلاً لتكون ناعمة */
+    border-right: 1.5px solid rgba(18, 149, 141, 0.2);
+    border-bottom: none; /* بدون خطوط عرضية */
+    font-size: 17px;
+    color: #333;
+        }
+
+        .train-table tbody td:last-child { border-right: none; }
+         .train-table tbody tr:last-child td { 
+    border-bottom: none;}
+        /* زر Verify */
+
+        .verify-btn {
+           background-color: #12958D;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(104, 187, 182, 0.2);
+    transition: 0.3s;
+        }
+
+        .verify-btn:hover { 
+            background-color: #56a39f;
+    padding: 10px 25px;
+    border-radius: 25px; /* زوايا دائرية أكثر */
+    font-weight: 500;
+    font-size: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+         }
+        
+        .close-btn { align-self: flex-end; cursor: pointer; font-size: 30px; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+
+    <input type="checkbox" id="menu-toggle" style="display: none;">
+    <label for="menu-toggle" class="overlay-bg"></label>
+
+    <div class="sidebar-overlay">
+        <label for="menu-toggle" class="material-icons close-btn">close</label>
+
+    <a href="home.html" class="nav-item">
+        <i class="material-icons">home</i>
+        <span style="font-weight: bold;">Home</span>
+    </a>
+
+    <a href="Train-Information.html" class="nav-item" style="background: #f0f8f7; border-radius: 15px;">
+        <i class="material-icons">train</i>
+        <span>Train Management</span>
+    </a>
+
+    <a href="Passenger-Management.html" class="nav-item">
+        <i class="material-icons">people_outline</i>
+        <span>Passenger Management</span>
+    </a>
+
+    <a href="Reservation-System.html" class="nav-item">
+        <i class="material-icons">confirmation_number</i>
+        <span>Reservation System</span>
+    </a>
+
+    <a href="Dashboard.html" class="nav-item">
+        <i class="material-icons">bar_chart</i>
+        <span>Dashboard & Reports</span>
+    </a>
+
+    <br><br> <a href="profile.html" class="nav-item">
+        <i class="material-icons">person_outline</i>
+        <span style="font-weight: bold;">Account Details</span>
+    </a>
+
+    <a href="Login.html" class="logout-btn" style="background-color: #e53935; color: white; border-radius: 25px; margin-top: 20px;">
+        <i class="material-icons">logout</i>
+        <span>Logout</span>
+    </a>
+    </div>
+
+    <div class="sidebar-small">
+        <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+    </div>
+
+    <div class="main-wrapper">
+        <img src="images\Logo.svg" alt="Sikka Logo" class="header-logo">
+
+        <div class="content-area">
+            <h1 class="page-title">Train Information</h1>
+
+            <table class="train-table">
+                <thead>
+                    <tr>
+                        <th>Flight number</th>
+                        <th>Train</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Arrival time</th>
+                        <th>Departure time</th>
+                        <th>Seats</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TR-101</td><td>Train 101</td><td>Riyadh</td><td>Dammam</td><td>5 PM</td><td>7 PM</td><td>50</td>
+                        <td><button class="verify-btn">Verify</button></td>
+                    </tr>
+                    <tr>
+                        <td>TR-102</td><td>Train 102</td><td>Abha</td><td>Tabuk</td><td>12 PM</td><td>4 PM</td><td>35</td>
+                        <td><button class="verify-btn">Verify</button></td>
+                    </tr>
+                    <tr>
+                        <td>TR-103</td><td>Train 103</td><td>Hail</td><td>Madinah</td><td>8 AM</td><td>11 AM</td><td>22</td>
+                        <td><button class="verify-btn">Verify</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
