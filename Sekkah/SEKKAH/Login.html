@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="glow glow-left"></div>
+  <div class="glow glow-right"></div>
+
+  <div class="card">
+    <form class="form">
+
+      <!-- Email fieldset عشان يصير "Email" على حدود البوكس -->
+      <fieldset class="field">
+        <legend>Email</legend>
+        <input type="text">
+      </fieldset>
+
+     <fieldset class="field">
+  <legend>Password</legend>
+  <input type="password">
+</fieldset>
+
+      <a class="forgot" href="#">Forget your password ?</a>
+
+      <button class="btn" type="submit">Login</button>
+
+      <p class="create">
+        Don't you have an account ? <span>Create account</span>
+      </p>
+
+    </form>
+  </div>
+<script>
+    // 1. اختيار العناصر من الواجهة
+    const loginForm = document.querySelector('.form');
+    // نحدد حقل الإيميل (الاسم) وحقل الباسورد بناءً على ترتيب الـ fieldset
+    const emailInput = document.querySelector('fieldset:nth-of-type(1) input');
+    const passwordInput = document.querySelector('fieldset:nth-of-type(2) input');
+
+    // 2. قاعدة البيانات الثابتة للمستخدمين (Static Data)
+    const usersData = {
+        "Anas bin Malik": "12345678&&",
+        "Saad bin Ahmad": "Sikka2026",
+        "Ibrahim bin Abdullah": "Admin@99",
+        
+    };
+
+    // 3. مراقبة عملية إرسال النموذج (Submit)
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // منع الصفحة من التحديث التلقائي
+
+        const enteredName = emailInput.value.trim();
+        const enteredPass = passwordInput.value;
+
+        // 4. منطق التحقق (Authentication Logic)
+        if (usersData[enteredName] && usersData[enteredName] === enteredPass) {
+            
+            // --- الخطوة الذهبية لربط الصفحات ---
+            // حفظ اسم المستخدم في الذاكرة المحلية لفتحه في البروفايل
+            localStorage.setItem("userName", enteredName); 
+            
+            alert("Logged in successfully!" + enteredName);
+            
+            // التوجيه لصفحة الهوم (تأكدي من صحة اسم الملف لديكِ)
+            window.location.href = "home.html"; 
+            
+        } else {
+            // رسالة رفض الدخول (Access Control Test)
+            alert("Login attempt was rejected; the username or password is incorrect!");
+        }
+    });
+</script>
+</body>
+</html>

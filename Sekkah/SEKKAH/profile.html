@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>profile</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Abhaya Libre', serif;
+            font-weight: 800; 
+            font-size: 14px;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            background-color: #EAF6F5;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        #menu-toggle {
+            display: none;
+        }
+
+        .header-logo {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            width: 100px;
+            z-index: 1;
+        }
+
+        .main-wrapper {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            align-items: stretch;
+        }
+
+        .sidebar-small {
+            width: 65px;
+            background: white;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .menu-btn-label {
+            font-size: 32px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: white;
+            z-index: 100;
+            transition: 0.3s ease-in-out;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #menu-toggle:checked ~ .sidebar-overlay {
+            left: 0;
+        }
+
+        .overlay-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 90;
+            display: none;
+        }
+
+        #menu-toggle:checked ~ .overlay-bg {
+            display: block;
+        }
+
+        .close-btn-label {
+            align-self: flex-end;
+            cursor: pointer;
+            font-size: 30px;
+            margin-bottom: 40px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            color: black;
+            text-decoration: none; 
+        }
+
+        .nav-item:hover {
+            background: #f5f5f5;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            background: #E53935;
+            color: white;
+            border-radius: 20px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            font-family: inherit;
+            text-decoration: none; 
+        }
+
+        .content-area {
+            flex: 1;
+            background: white;
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            min-height: 600px;
+        }
+
+        .welcome-section {
+            margin-bottom: 50px;
+            font-size: 20px;
+        }
+
+        .profile-layout {
+            display: flex;
+            gap: 100px;
+            flex-wrap: wrap;
+        }
+
+        .avatar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 150px;
+        }
+
+        .avatar-circle {
+            width: 110px;
+            height: 110px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .inputs-container {
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .field-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .input-box {
+            flex: 1;
+            background: #F5F5F5;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="checkbox" id="menu-toggle">
+
+    <img src="Logo.svg" alt="Sikka Logo" class="header-logo">
+
+    <label for="menu-toggle" class="overlay-bg"></label>
+
+    <div class="sidebar-overlay">
+        <label for="menu-toggle" class="material-icons close-btn-label">close</label>
+        
+        <a href="home.html" class="nav-item">
+            <i class="material-icons">home</i>
+            <span>Home</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item">
+            <i class="material-icons">person_outline</i>
+            <span>Account Details</span>
+        </a>
+
+        <a href="StartHer.html" class="logout-btn">
+            <i class="material-icons">logout</i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="sidebar-small">
+            <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+        </div>
+
+        <div class="content-area">
+            <div class="welcome-section">
+                Hi,<br>
+                welcome <span id="welcome-name">Loading...</span> </div>
+
+            <div class="profile-layout">
+                <div class="avatar-wrapper">
+                    <div class="avatar-circle">
+                        <i class="material-icons" style="font-size: 70px; color: #ccc;">person</i>
+                    </div>
+                    <span id="user-display-name">Loading...</span>
+                </div>
+
+                <div class="inputs-container">
+                    <div class="field-group">
+                        <span class="label-text" style="width:120px">Full Name</span>
+                        <input type="text" id="full-name-input" class="input-box" value="" readonly> </div>
+
+                    <div class="field-group">
+                        <span class="label-text" style="width:120px">Email</span>
+                        <input type="text" class="input-box" value="User.M@gmail.com" readonly>
+                    </div>
+
+                    <div class="field-group">
+                        <span class="label-text" style="width:120px">Password</span>
+                        <input type="password" class="input-box" value="********" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // 1. جلب الاسم المحفوظ من الذاكرة المحلية (localStorage)
+    const savedName = localStorage.getItem("userName");
+
+    // 2. إذا وجدنا اسماً، نقوم بتحديث العناصر في الصفحة
+    if (savedName) {
+        // تحديث الاسم تحت صورة الملف الشخصي
+        document.getElementById("user-display-name").innerText = savedName;
+
+        // تحديث الاسم في رسالة الترحيب العلوية
+        document.getElementById("welcome-name").innerText = savedName;
+
+        // تحديث الاسم داخل مربع النص (Full Name)
+        document.getElementById("full-name-input").value = savedName;
+    } else {
+        // في حال لم يتم تسجيل الدخول، يمكن عرض اسم افتراضي
+        document.getElementById("user-display-name").innerText = "Guest";
+        document.getElementById("welcome-name").innerText = "Guest";
+        document.getElementById("full-name-input").value = "Guest User";
+    }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>profile</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Abhaya Libre', serif;
+            font-weight: 800; 
+            font-size: 14px;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            background-color: #EAF6F5;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        #menu-toggle {
+            display: none;
+        }
+
+        .header-logo {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            width: 100px;
+            z-index: 1;
+        }
+
+        .main-wrapper {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            align-items: stretch;
+        }
+
+        .sidebar-small {
+            width: 65px;
+            background: white;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .menu-btn-label {
+            font-size: 32px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: white;
+            z-index: 100;
+            transition: 0.3s ease-in-out;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #menu-toggle:checked ~ .sidebar-overlay {
+            left: 0;
+        }
+
+        .overlay-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 90;
+            display: none;
+        }
+
+        #menu-toggle:checked ~ .overlay-bg {
+            display: block;
+        }
+
+        .close-btn-label {
+            align-self: flex-end;
+            cursor: pointer;
+            font-size: 30px;
+            margin-bottom: 40px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            color: black;
+            text-decoration: none; 
+        }
+
+        .nav-item:hover {
+            background: #f5f5f5;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            background: #E53935;
+            color: white;
+            border-radius: 20px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            font-family: inherit;
+            text-decoration: none; 
+        }
+
+        .content-area {
+            flex: 1;
+            background: white;
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            min-height: 600px;
+        }
+
+        .welcome-section {
+            margin-bottom: 50px;
+            font-size: 20px;
+        }
+
+        .profile-layout {
+            display: flex;
+            gap: 100px;
+            flex-wrap: wrap;
+        }
+
+        .avatar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 150px;
+        }
+
+        .avatar-circle {
+            width: 110px;
+            height: 110px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .inputs-container {
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .field-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .input-box {
+            flex: 1;
+            background: #F5F5F5;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="checkbox" id="menu-toggle">
+
+    <img src="Logo.svg" alt="Sikka Logo" class="header-logo">
+
+    <label for="menu-toggle" class="overlay-bg"></label>
+
+    <div class="sidebar-overlay">
+        <label for="menu-toggle" class="material-icons close-btn-label">close</label>
+        
+        <a href="home.html" class="nav-item">
+            <i class="material-icons">home</i>
+            <span>Home</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item">
+            <i class="material-icons">person_outline</i>
+            <span>Account Details</span>
+        </a>
+
+        <a href="StartHer.html" class="logout-btn">
+            <i class="material-icons">logout</i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="sidebar-small">
+            <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+        </div>
+
+        <div class="content-area">
+            <div class="welcome-section">
+                Hi,<br>
+                welcome Anas
+            </div>
+
+            <div class="profile-layout">
+                <div class="avatar-wrapper">
+                    <div class="avatar-circle">
+                        <i class="material-icons" style="font-size: 70px; color: #ccc;">person</i>
+                    </div>
+                    <span id="user-display-name">Loading...</span>
+                </div>
+
+                <div class="inputs-container">
+                    <div class="field-group">
+                        <span class="label-text" style="width:120px">Full Name</span>
+                        <input type="text" class="input-box" value="Anas ibn Malik" readonly>
+                    </div>
+
+                    <div class="field-group">
+                        <span class="label-text" style="width:120px">Email</span>
+                        <input type="text" class="input-box" value="Anas.M@gmail.com" readonly>
+                    </div>
+
+                    <div class="field-group">
+                        <span class="label-text" style="width:120px">Password</span>
+                        <input type="password" class="input-box" value="********" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    // جلب الاسم المحفوظ من الذاكرة
+    const savedName = localStorage.getItem("userName");
+
+    // إذا وجدنا اسماً، نعرضه في الصفحة
+    if (savedName) {
+        document.getElementById("user-display-name").innerText = savedName;
+    }
+</script>
+</body>
+</html>
+
+ -->
