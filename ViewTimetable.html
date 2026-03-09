@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Saved Train Schedule</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Abhaya Libre', serif;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            background-color: #EAF6F5;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        #menu-toggle { display: none; }
+
+        .header-logo {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            width: 100px;
+            z-index: 1;
+        }
+
+        .main-wrapper {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            align-items: stretch;
+        }
+
+        .sidebar-small {
+            width: 65px;
+            background: white;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .menu-btn-label {
+            font-size: 32px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: white;
+            z-index: 100;
+            transition: 0.3s ease-in-out;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #menu-toggle:checked ~ .sidebar-overlay { left: 0; }
+
+        .overlay-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 90;
+            display: none;
+        }
+
+        #menu-toggle:checked ~ .overlay-bg { display: block; }
+
+        .close-btn-label {
+            align-self: flex-end;
+            cursor: pointer;
+            font-size: 30px;
+            margin-bottom: 40px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .nav-item:hover { background: #f5f5f5; }
+
+        .logout-btn {
+            margin-top: auto;
+            background: #E53935;
+            color: white;
+            border-radius: 20px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .content-area {
+            flex: 1;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+<input type="checkbox" id="menu-toggle">
+
+<img src="Logo.svg" class="header-logo">
+
+<label for="menu-toggle" class="overlay-bg"></label>
+
+<div class="sidebar-overlay">
+    <label for="menu-toggle" class="material-icons close-btn-label">close</label>
+
+    <a href="home.html" class="nav-item">
+        <i class="material-icons">home</i>
+        <span>Home</span>
+    </a>
+
+    <a href="profile.html" class="nav-item">
+        <i class="material-icons">person_outline</i>
+        <span>Account Details</span>
+    </a>
+
+    <a href="StartHer.html" class="logout-btn">
+        <i class="material-icons">logout</i>
+        <span>Logout</span>
+    </a>
+</div>
+
+<div class="main-wrapper">
+    <div class="sidebar-small">
+        <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+    </div>
+
+    <div class="content-area">
+
+        <h2>Saved Timetables</h2>
+
+        <div class="table-box" id="listBox"></div>
+
+        <script>
+            let list = JSON.parse(localStorage.getItem("scheduleList"));
+            const box = document.getElementById("listBox");
+
+            if (!list || list.length === 0) {
+                box.innerHTML = "<p>No saved tables found.</p>";
+            } else {
+                box.innerHTML = `
+                    <a href="viewTable.html"
+                       style="
+                            display:block;
+                            width: 250px;
+                            margin: 40px auto;
+                            padding: 18px 25px;
+                            background:#1aa6a6;
+                            color:white;
+                            text-align:center;
+                            font-size:20px;
+                            border-radius:12px;
+                            font-weight:bold;
+                            text-decoration:none;
+                            transition:0.2s;
+                       "
+                       onmouseover="this.style.background='#178f8f'"
+                       onmouseout="this.style.background='#1aa6a6'"
+                    >
+                        View All Timetables
+                    </a>
+                `;
+            }
+        </script>
+
+    </div>
+</div>
+
+</body>
+</html>
