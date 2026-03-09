@@ -38,11 +38,9 @@
 </div>
 
 <script>
-    // هذا الكود هو المسؤول عن الربط البرمجي فقط
     const loginForm = document.getElementById('loginForm');
     const nameInput = document.getElementById('name');
     const passInput = document.getElementById('pass');
-    const loginBtn = document.getElementById('loginBtn');
 
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -50,13 +48,13 @@
         const enteredName = nameInput.value.trim();
         const enteredPass = passInput.value;
 
-        // التحقق من المتصفح (localStorage)
+        // جلب كلمة المرور من المتصفح
         const storedPass = localStorage.getItem(enteredName);
 
         if (storedPass && storedPass === enteredPass) {
             localStorage.setItem("userName", enteredName);
-            alert("Welcome!");
-            window.location.href = "home.html";
+            // الانتقال للصفحة المطلوبة (تأكد من مطابقة الاسم)
+            window.location.href = "home.html"; 
         } else {
             alert("Incorrect username or password!");
         }

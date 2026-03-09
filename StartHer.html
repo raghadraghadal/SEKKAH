@@ -1,18 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StartHer</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
-    
+
     <style>
         * {
             box-sizing: border-box;
             font-family: 'Abhaya Libre', serif;
-            font-weight: 800; 
+            font-weight: 800;
             font-size: 14px;
         }
 
@@ -25,14 +25,14 @@
             justify-content: center;
             position: relative;
             /* ضروري جداً لمنع التمرير بسبب بروز نصف الدائرة */
-            overflow: hidden; 
+            overflow: hidden;
         }
 
         .header-logo {
             position: absolute;
             top: 40px;
             /* الشعار الآن مثبت في أقصى اليمين فوق منطقة الدائرة */
-            right: 40px; 
+            right: 40px;
             width: 130px;
             z-index: 20;
         }
@@ -53,15 +53,10 @@
             z-index: 10;
         }
 
-        .main-heading {
-            font-size: 55px;
-            color: #2D9596;
-            line-height: 1.1;
-            margin: 0 0 20px 0;
-        }
+
 
         .sub-heading {
-            font-size: 18px;
+            font-size: 20px;
             color: #666;
             margin-bottom: 40px;
             font-weight: 500;
@@ -72,14 +67,29 @@
             gap: 20px;
         }
 
+        /* 1. لتكبير العنوان الرئيسي Seekah Welcomes you! */
+        .main-heading {
+            font-size: 80px;
+            /* قمت بزيادتها من 55px إلى 70px */
+            color: #2D9596;
+            line-height: 1.1;
+            margin: 0 0 20px 0;
+        }
+
+        /* 2. لتكبير النص داخل الأزرار */
         .btn {
-            padding: 12px 35px;
-            border-radius: 25px;
+            padding: 15px 40px;
+            /* زدت حجم الحشوة قليلاً لتناسب النص الأكبر */
+            border-radius: 30px;
             text-decoration: none;
             display: inline-block;
             transition: 0.3s;
             text-align: center;
-            min-width: 140px;
+            min-width: 160px;
+            font-size: 22px;
+            /* قمت بزيادة حجم الخط هنا */
+            font-weight: 800;
+            /* الحفاظ على سماكة الخط */
         }
 
         .login-btn {
@@ -104,13 +114,15 @@
 
         /* تعديل الدائرة ليظهر نصفها فقط ملتصقاً بالحافة */
         .bg-circle {
-            position: fixed; /* لتظل ثابتة في خلفية الصفحة */
-            width: 1000px; /* قطر كبير جداً */
+            position: fixed;
+            /* لتظل ثابتة في خلفية الصفحة */
+            width: 1000px;
+            /* قطر كبير جداً */
             height: 1000px;
             background: white;
             border-radius: 50%;
             /* التعديل السحري: إزاحة لليمين بمقدار نصف قطرها بالضبط */
-            right: -500px; 
+            right: -500px;
             top: 50%;
             transform: translateY(-50%);
             z-index: 1;
@@ -119,10 +131,11 @@
         /* صورة القطار الخاصة بكِ من فيجما */
         .train-img {
             position: absolute;
-            width: 700px; /* عرض القطار */
+            width: 700px;
+            /* عرض القطار */
             height: auto;
             /* بروز ربع القطار خارج الدائرة جهة اليسار */
-            right: -150px; 
+            right: -150px;
             z-index: 5;
         }
 
@@ -132,14 +145,37 @@
                 text-align: center;
                 padding-top: 100px;
             }
-            .image-section { order: -1; margin-bottom: 50px; }
-            .bg-circle { right: -250px; width: 500px; height: 500px; }
-            .train-img { position: relative; right: 0; width: 100%; }
-            .button-group { justify-content: center; }
-            .header-logo { right: 50%; transform: translateX(50%); width: 100px; }
+
+            .image-section {
+                order: -1;
+                margin-bottom: 50px;
+            }
+
+            .bg-circle {
+                right: -250px;
+                width: 500px;
+                height: 500px;
+            }
+
+            .train-img {
+                position: relative;
+                right: 0;
+                width: 100%;
+            }
+
+            .button-group {
+                justify-content: center;
+            }
+
+            .header-logo {
+                right: 50%;
+                transform: translateX(50%);
+                width: 100px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <img src="images\Logobyname.svg" alt="Sikka Logo" class="header-logo">
@@ -148,7 +184,7 @@
         <div class="text-section">
             <h1 class="main-heading">Seekah Welcomes you!</h1>
             <p class="sub-heading">We wish you a unique experience.</p>
-            
+
             <div class="button-group">
                 <a href="Login.html" class="btn login-btn">Log in</a>
                 <a href="SingUp.html" class="btn create-btn">Create Account</a>
@@ -162,6 +198,7 @@
     </div>
 
 </body>
+
 </html>
 
 
