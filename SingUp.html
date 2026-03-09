@@ -3,18 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>Signup Page</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+    
     <style>
-        /* التنسيق الخاص بك بالكامل - لم أغير أي شيء */
-        body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(180deg, #d3e9e7, #e8f5f4); font-family: 'Segoe UI', sans-serif; }
+        body { 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            background: linear-gradient(180deg, #d3e9e7, #e8f5f4); 
+            /* تطبيق الخط الجديد هنا */
+            font-family: 'Abhaya Libre', serif; 
+        }
         .card { background: white; padding: 50px 40px; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 350px; text-align: center; }
         .input-group { position: relative; margin-bottom: 25px; text-align: left; }
-        .input-group input { width: 100%; padding: 18px 20px; border: 1.5px solid #e0e0e0; border-radius: 30px; box-sizing: border-box; font-size: 16px; outline: none; transition: all 0.3s ease; }
+        .input-group input { 
+            width: 100%; 
+            padding: 18px 20px; 
+            border: 1.5px solid #e0e0e0; 
+            border-radius: 30px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
+            outline: none; 
+            transition: all 0.3s ease; 
+            font-family: 'Abhaya Libre', serif; /* التأكد من تطبيق الخط هنا أيضاً */
+        }
         .input-group input:focus { border-color: #6fbdb6; }
-        .input-group label { position: absolute; top: 18px; left: 20px; color: #aaa; pointer-events: none; transition: all 0.3s ease; background: white; padding: 0 5px; font-size: 16px; }
-        .input-group input:focus + label, .input-group input:not(:placeholder-shown) + label { top: -10px; left: 15px; font-size: 12px; color: #6fbdb6; font-weight: bold; }
-        button { width: 100%; padding: 18px; background-color: #4a9d95; color: white; border: none; border-radius: 50px; font-size: 22px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: all 0.2s ease; font-family: 'Arial', sans-serif; letter-spacing: 1px; }
+        .input-group label { 
+            position: absolute; 
+            top: 18px; 
+            left: 20px; 
+            color: #aaa; 
+            pointer-events: none; 
+            transition: all 0.3s ease; 
+            background: white; 
+            padding: 0 5px; 
+            font-size: 16px; 
+        }
+        .input-group input:focus + label, .input-group input:not(:placeholder-shown) + label { 
+            top: -10px; 
+            left: 15px; 
+            font-size: 12px; 
+            color: #6fbdb6; 
+            font-weight: bold; 
+        }
+        button { 
+            width: 100%; 
+            padding: 18px; 
+            background-color: #4a9d95; 
+            color: white; 
+            border: none; 
+            border-radius: 50px; 
+            font-size: 25px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            transition: all 0.2s ease; 
+            font-family: 'Abhaya Libre', serif; /* تحديث الخط في الزر */
+            letter-spacing: 1px; 
+        }
         button:active { transform: scale(0.95); background-color: #387a74; }
-        .footer-text { margin-top: 20px; font-size: 14px; color: #666; }
+        .footer-text { margin-top: 20px; font-size: 16px; color: #666; font-weight: 800; }
     </style>
 </head>
 <body>
