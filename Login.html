@@ -1,78 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <style>
+        /* التنسيق بالكامل - لا تقم بتغيير أي شيء هنا للحفاظ على الشكل */
+        body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(180deg, #d3e9e7, #e8f5f4); font-family: 'Segoe UI', sans-serif; }
+        .card { background: white; padding: 50px 40px; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 350px; text-align: center; }
+        .input-group { position: relative; margin-bottom: 25px; text-align: left; }
+        .input-group input { width: 100%; padding: 18px 20px; border: 1.5px solid #e0e0e0; border-radius: 30px; box-sizing: border-box; font-size: 16px; outline: none; transition: all 0.3s ease; }
+        .input-group input:focus { border-color: #6fbdb6; }
+        .input-group label { position: absolute; top: 18px; left: 20px; color: #aaa; pointer-events: none; transition: all 0.3s ease; background: white; padding: 0 5px; font-size: 16px; }
+        .input-group input:focus + label, .input-group input:not(:placeholder-shown) + label { top: -10px; left: 15px; font-size: 12px; color: #6fbdb6; font-weight: bold; }
+        button { width: 100%; padding: 18px; background-color: #4a9d95; color: white; border: none; border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: all 0.2s ease; font-family: Arial, sans-serif; letter-spacing: 1px; }
+        button:active { transform: scale(0.95); }
+        .footer-text { margin-top: 20px; font-size: 14px; color: #666; }
+    </style>
 </head>
 <body>
 
-  <div class="glow glow-left"></div>
-  <div class="glow glow-right"></div>
-
-  <div class="card">
-    <form class="form">
-
-      <!-- Email fieldset عشان يصير "Email" على حدود البوكس -->
-      <fieldset class="field">
-        <legend>Email</legend>
-        <input type="text">
-      </fieldset>
-
-     <fieldset class="field">
-  <legend>Password</legend>
-  <input type="password">
-</fieldset>
-
-      <a class="forgot" href="#">Forget your password ?</a>
-
-      <button class="btn" type="submit">Login</button>
-
-      <p class="create">
-        Don't you have an account ? <span>Create account</span>
-      </p>
-
+<div class="card">
+    <form id="loginForm">
+        <div class="input-group">
+            <input type="text" id="name" placeholder=" " required>
+            <label for="name">Name</label>
+        </div>
+        <div class="input-group">
+            <input type="password" id="pass" placeholder=" " required>
+            <label for="pass">Password</label>
+        </div>
+        <button type="submit" id="loginBtn">Login</button>
     </form>
-  </div>
+<div class="footer-text">
+    Don't you have an account? 
+    <a href="SingUp.html" style="color: #4a9d95; text-decoration: none; font-weight: bold;">Create account</a>
+</div>
+</div>
+
 <script>
-    // 1. اختيار العناصر من الواجهة
-    const loginForm = document.querySelector('.form');
-    // نحدد حقل الإيميل (الاسم) وحقل الباسورد بناءً على ترتيب الـ fieldset
-    const emailInput = document.querySelector('fieldset:nth-of-type(1) input');
-    const passwordInput = document.querySelector('fieldset:nth-of-type(2) input');
+    // هذا الكود هو المسؤول عن الربط البرمجي فقط
+    const loginForm = document.getElementById('loginForm');
+    const nameInput = document.getElementById('name');
+    const passInput = document.getElementById('pass');
+    const loginBtn = document.getElementById('loginBtn');
 
-    // 2. قاعدة البيانات الثابتة للمستخدمين (Static Data)
-    const usersData = {
-        "Anas bin Malik": "12345678&&",
-        "Saad bin Ahmad": "Sikka2026",
-        "Ibrahim bin Abdullah": "Admin@99",
-        
-    };
-
-    // 3. مراقبة عملية إرسال النموذج (Submit)
     loginForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // منع الصفحة من التحديث التلقائي
+        e.preventDefault();
+        
+        const enteredName = nameInput.value.trim();
+        const enteredPass = passInput.value;
 
-        const enteredName = emailInput.value.trim();
-        const enteredPass = passwordInput.value;
+        // التحقق من المتصفح (localStorage)
+        const storedPass = localStorage.getItem(enteredName);
 
-        // 4. منطق التحقق (Authentication Logic)
-        if (usersData[enteredName] && usersData[enteredName] === enteredPass) {
-            
-            // --- الخطوة الذهبية لربط الصفحات ---
-            // حفظ اسم المستخدم في الذاكرة المحلية لفتحه في البروفايل
-            localStorage.setItem("userName", enteredName); 
-            
-            alert("Logged in successfully!" + enteredName);
-            
-            // التوجيه لصفحة الهوم (تأكدي من صحة اسم الملف لديكِ)
-            window.location.href = "home.html"; 
-            
+        if (storedPass && storedPass === enteredPass) {
+            localStorage.setItem("userName", enteredName);
+            alert("Welcome!");
+            window.location.href = "home.html";
         } else {
-            // رسالة رفض الدخول (Access Control Test)
-            alert("Login attempt was rejected; the username or password is incorrect!");
+            alert("Incorrect username or password!");
         }
     });
 </script>
+
 </body>
 </html>
