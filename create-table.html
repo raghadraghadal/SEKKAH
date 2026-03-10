@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <title>Create Table</title>
-
-   <head>
-    <meta charset="UTF-8">
-    <title>Saved Train Schedule</title>
-
+     <meta charset="UTF-8">
+    <title>Train 101</title>
     <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+    
     <style>
         * {
             box-sizing: border-box;
             font-family: 'Abhaya Libre', serif;
-            font-weight: 800;
+            font-weight: 800; 
             font-size: 14px;
         }
 
@@ -24,7 +22,7 @@
             margin: 0;
             display: flex;
             min-height: 100vh;
-            background-color: #EAF6F5;
+            background-color: #EAF6F5; /* نفس لون خلفية البروفايل */
             align-items: center;
             justify-content: center;
             position: relative;
@@ -32,9 +30,12 @@
             overflow-x: hidden;
         }
 
-        /* Sidebar + Layout (نفس تصميمك السابق) */
-        #menu-toggle { display: none; }
+        /* التحكم في القائمة الجانبية عبر Checkbox مخفي (بدون جافا سكريبت) */
+        #menu-toggle {
+            display: none;
+        }
 
+        /* الشعار في الخلفية العلوية اليمنى كما في التصميم */
         .header-logo {
             position: absolute;
             top: 20px;
@@ -47,10 +48,11 @@
             display: flex;
             gap: 20px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1200px; /* نفس حجم صفحة البروفايل */
             align-items: stretch;
         }
 
+        /* القائمة الجانبية الصغيرة الثابتة */
         .sidebar-small {
             width: 65px;
             background: white;
@@ -68,6 +70,7 @@
             color: #333;
         }
 
+        /* القائمة الجانبية الكبيرة (Overlay) */
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -83,7 +86,9 @@
             padding: 20px;
         }
 
-        #menu-toggle:checked ~ .sidebar-overlay { left: 0; }
+        #menu-toggle:checked ~ .sidebar-overlay {
+            left: 0;
+        }
 
         .overlay-bg {
             position: fixed;
@@ -96,7 +101,9 @@
             display: none;
         }
 
-        #menu-toggle:checked ~ .overlay-bg { display: block; }
+        #menu-toggle:checked ~ .overlay-bg {
+            display: block;
+        }
 
         .close-btn-label {
             align-self: flex-end;
@@ -105,6 +112,7 @@
             margin-bottom: 40px;
         }
 
+        /* تنسيق روابط القائمة الجانبية */
         .nav-item {
             display: flex;
             align-items: center;
@@ -119,9 +127,10 @@
 
         .nav-item:hover { background: #f5f5f5; }
 
+        /* زر تسجيل الخروج الأحمر */
         .logout-btn {
             margin-top: auto;
-            background: #E53935;
+            background: #E53935; /* لون أحمر مطابق للتصميم */
             color: white;
             border-radius: 20px;
             padding: 12px;
@@ -133,6 +142,7 @@
             text-decoration: none;
         }
 
+        /* المستطيل الأبيض الكبير للمحتوى */
         .content-area {
             flex: 1;
             background: white;
@@ -142,8 +152,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 600px;
+           min-height: 600px;
+
         }
+
+      
         body {
             font-family: Arial, sans-serif;
             background: #EAF6F5;
@@ -240,38 +253,58 @@
     </style>
 </head>
 <body>
+    <input type="checkbox" id="menu-toggle">
 
-<input type="checkbox" id="menu-toggle">
+    <img src="images\Logo.svg" alt="Sikka Logo" class="header-logo">
 
-<img src="images\Logo.svg" class="header-logo">
+    <label for="menu-toggle" class="overlay-bg"></label>
 
-<label for="menu-toggle" class="overlay-bg"></label>
+    <div class="sidebar-overlay">
+        <label for="menu-toggle" class="material-icons" style="align-self: flex-end; cursor: pointer; font-size: 30px; margin-bottom: 40px;">close</label>
 
-<div class="sidebar-overlay">
-    <label for="menu-toggle" class="material-icons close-btn-label">close</label>
+        <a href="home.html" class="nav-item main-link">
+            <i class="material-icons">home</i>
+            <span>Home</span>
+        </a>
 
-    <a href="home.html" class="nav-item">
-        <i class="material-icons">home</i>
-        <span>Home</span>
-    </a>
+        <a href="train_management.html" class="nav-item">
+            <i class="material-icons">train</i>
+            <span>Train Management</span>
+        </a>
 
-    <a href="profile.html" class="nav-item">
-        <i class="material-icons">person_outline</i>
-        <span>Account Details</span>
-    </a>
- <a href="StartHer.html" class="logout-btn">
-        <i class="material-icons">logout</i>
-        <span>Logout</span>
-    </a>
-</div>
+        <a href="passenger_management.html" class="nav-item">
+            <i class="material-icons">groups</i>
+            <span>Passenger Management</span>
+        </a>
 
-<div class="main-wrapper">
-    <div class="sidebar-small">
-        <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+        <a href="reservation_system.html" class="nav-item">
+            <i class="material-icons">confirmation_number</i>
+            <span>Reservation System</span>
+        </a>
+
+        <a href="reports.html" class="nav-item">
+            <i class="material-icons">assessment</i>
+            <span>Dashboard & Reports</span>
+        </a>
+
+        <a href="profile.html" class="nav-item main-link" style="margin-top: 15px;">
+            <i class="material-icons">person_outline</i>
+            <span>Account Details</span>
+        </a>
+
+        <a href="StartHer.html" class="logout-btn">
+            <i class="material-icons">logout</i>
+            <span>Logout</span>
+        </a>
     </div>
 
-    <div class="content-area">
-<body>
+    <div class="main-wrapper">
+        <div class="sidebar-small">
+            <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+        </div>
+
+        <div class="content-area">
+
 
 <h1>Create New Table</h1>
 
@@ -293,10 +326,9 @@
     <tr><td><input id="org4"></td><td><input id="train4"></td><td><input id="from4"></td><td><input id="to4"></td><td><input id="arrive4"></td><td><input id="depart4"></td><td><input id="notes4"></td></tr>
     <tr><td><input id="org5"></td><td><input id="train5"></td><td><input id="from5"></td><td><input id="to5"></td><td><input id="arrive5"></td><td><input id="depart5"></td><td><input id="notes5"></td></tr>
 </table>
-<button class="btn" onclick="saveNewTable()">Create</button>
 
+<button class="btn" onclick="createTable()">Create</button>
 <button class="save-btn" onclick="saveNewTable()">Save</button>
-
  
 
 
@@ -309,8 +341,32 @@
 
 
 
-
 <script>
+
+
+ function collectData() {
+    return [
+        { org: org1.value, train: train1.value, from: from1.value, to: to1.value, arrive: arrive1.value, depart: depart1.value, notes: notes1.value },
+        { org: org2.value, train: train2.value, from: from2.value, to: to2.value, arrive: arrive2.value, depart: depart2.value, notes: notes2.value },
+        { org: org3.value, train: train3.value, from: from3.value, to: to3.value, arrive: arrive3.value, depart: depart3.value, notes: notes3.value },
+        { org: org4.value, train: train4.value, from: from4.value, to: to4.value, arrive: arrive4.value, depart: depart4.value, notes: notes4.value },
+        { org: org5.value, train: train5.value, from: from5.value, to: to5.value, arrive: arrive5.value, depart: depart5.value, notes: notes5.value }
+    ];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function saveTable() {
@@ -339,8 +395,7 @@ function saveTable() {
 function goToSchedule() {
     window.location.href = "create-schedule.html";
 }
-</script>
-<script>
+
 
 function collectData() {
     return [
@@ -391,11 +446,24 @@ function collectData() {
         }
     ];
 }
-</script><script>
+
+
+function createTable() {
+    const data = collectData();
+    localStorage.setItem("currentTable", JSON.stringify(data));
+    alert("Table Created (Not Saved Yet)");
+}
+
 
 function saveNewTable() {
-    // 1. نجمع البيانات من الجدول
-    const data = collectData();
+
+    // 1. نجيب الجدول اللي تم إنشاؤه
+    const data = JSON.parse(localStorage.getItem("currentTable"));
+
+    if (!data) {
+        alert("Please press Create first");
+        return;
+    }
 
     // 2. نجيب قائمة الجداول القديمة
     let list = JSON.parse(localStorage.getItem("scheduleList")) || [];
@@ -412,8 +480,13 @@ function saveNewTable() {
     localStorage.setItem("scheduleList", JSON.stringify(list));
 
     // 6. رسالة نجاح
-    alert("Table saved successfully as: " + tableName);
+    alert("Saved Successfully");
+
+    // 7. نرجع للصفحة
+    window.location.href = "create-schedule.html";
 }
+
 </script>
+
 </body>
 </html>
