@@ -1,59 +1,65 @@
  <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sikkah - Train Timetable</title>
+<title>Sekkah - Train Timetable</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&display=swap" rel="stylesheet">
 
 <style>
 
-*{
-box-sizing:border-box;
-font-family:'Abhaya Libre',serif;
-font-weight:800;
-font-size:16px;
-}
-
 body{
+background-color:#EAF6F5;
+font-family:'Abhaya Libre',serif;
 margin:0;
 display:flex;
-min-height:100vh;
-background-color:#EAF6F5;
+height:100vh;
+overflow:hidden;
+}
+
+/* sidebar small */
+
+.sidebar-small{
+width:50px !important;
+background:white;
+border-radius:20px;
+display:flex;
+flex-direction:column;
 align-items:center;
-justify-content:center;
-position:relative;
-padding:20px;
+padding:15px 0;
+box-shadow:2px 0 10px rgba(0,0,0,0.03);
+height:85vh;
+position:fixed;
+left:10px;
+top:7.5vh;
+z-index:1000;
 }
 
-#menu-toggle{
-display:none;
+.menu-btn-label{
+font-size:28px;
+cursor:pointer;
+color:#333;
 }
 
-.header-logo{
-position:absolute;
-top:20px;
-right:40px;
-width:100px;
-z-index:1;
-}
+/* sidebar overlay */
 
 .sidebar-overlay{
 position:fixed;
-top:0;
-left:-300px;
+left:-320px;
 width:280px;
-height:100%;
 background:white;
-z-index:100;
+z-index:1100;
 transition:0.3s ease-in-out;
 box-shadow:5px 0 15px rgba(0,0,0,0.1);
 display:flex;
 flex-direction:column;
 padding:20px;
+height:85vh;
+top:7.5vh;
+border-radius:25px;
 }
 
 #menu-toggle:checked ~ .sidebar-overlay{
@@ -75,13 +81,6 @@ display:none;
 display:block;
 }
 
-.close-btn-label{
-align-self:flex-end;
-cursor:pointer;
-font-size:30px;
-margin-bottom:40px;
-}
-
 .nav-item{
 display:flex;
 align-items:center;
@@ -89,7 +88,7 @@ gap:15px;
 padding:15px;
 cursor:pointer;
 border-radius:10px;
-margin-bottom:5px;
+margin-bottom:10px;
 color:black;
 text-decoration:none;
 }
@@ -100,10 +99,11 @@ background:#f5f5f5;
 
 .logout-btn{
 margin-top:auto;
+margin-bottom:20px;
 background:#E53935;
 color:white;
 border-radius:20px;
-padding:12px;
+padding:10px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -111,53 +111,93 @@ gap:10px;
 text-decoration:none;
 }
 
-.main-wrapper{
-display:flex;
-gap:20px;
-width:100%;
-max-width:1200px;
-}
+/* main wrapper */
 
-.sidebar-small{
-width:65px;
-background:white;
-border-radius:30px;
+.main-wrapper{
+flex:1;
+margin-left:80px;
 display:flex;
 flex-direction:column;
 align-items:center;
-padding:30px 0;
-box-shadow:0 4px 15px rgba(0,0,0,0.05);
+position:relative;
+width:calc(100% - 80px);
 }
+
+.header-logo{
+position:absolute;
+top:10px;
+right:30px;
+width:90px;
+height:auto;
+z-index:1000;
+}
+
+/* content area */
 
 .content-area{
-flex:1;
 background:white;
-border-radius:30px;
-padding:60px;
-box-shadow:0 4px 15px rgba(0,0,0,0.05);
-min-height:600px;
+border-radius:50px;
+margin-top:100px;
+padding:60px 50px;
+width:85%;
+max-width:1100px;
+box-shadow:0 4px 20px rgba(0,0,0,0.02);
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+height:fit-content;
 }
 
-h1{
-color:#2D9596;
-margin-bottom:40px;
+/* title */
+
+.page-title{
+font-family:'Abhaya Libre',serif !important;
+font-size:45px !important;
+font-weight:300 !important;
+color:#1a1a1a;
+margin-bottom:50px;
+text-align:left;
+padding-left:10px;
+letter-spacing:2px;
+text-transform:capitalize;
+word-spacing:5px;
 }
 
-table{
+/* table */
+
+.train-table{
 width:100%;
 border-collapse:collapse;
+background-color:#F0F8F7;
+border-radius:30px;
+overflow:hidden;
 }
 
-th{
-background:#2D9596;
+.train-table thead th{
+background-color:#12958D;
 color:white;
-padding:15px;
+padding:20px;
+font-size:15px;
+font-weight:600;
 }
 
-td{
-padding:15px;
-border-bottom:1px solid #ddd;
+.train-table tbody td{
+padding:30px 10px;
 text-align:center;
+border-right:1.5px solid rgba(18,149,141,0.2);
+font-size:17px;
+color:#333;
+}
+
+.train-table tbody td:last-child{
+border-right:none;
+}
+
+.close-btn{
+align-self:flex-end;
+cursor:pointer;
+font-size:30px;
+margin-bottom:30px;
 }
 
 </style>
@@ -165,71 +205,76 @@ text-align:center;
 
 <body>
 
-<input type="checkbox" id="menu-toggle">
-
-<img src="images/Logo.svg" class="header-logo">
-
+<input type="checkbox" id="menu-toggle" style="display:none;">
 <label for="menu-toggle" class="overlay-bg"></label>
 
 <div class="sidebar-overlay">
 
-<label for="menu-toggle" class="material-icons close-btn-label">close</label>
+<label for="menu-toggle" class="material-icons close-btn">close</label>
 
 <a href="home.html" class="nav-item">
 <i class="material-icons">home</i>
-<span>Home</span>
+<span style="font-weight:bold;">Home</span>
 </a>
 
-<a href="train_management.html" class="nav-item">
+<a href="timetable.html" class="nav-item" style="background:#f0f8f7;border-radius:15px;">
 <i class="material-icons">train</i>
-<span>Train Management</span>
+<span>Train Timetable</span>
 </a>
 
-<a href="passenger_management.html" class="nav-item">
-<i class="material-icons">groups</i>
+<a href="Passenger-Management.html" class="nav-item">
+<i class="material-icons">people_outline</i>
 <span>Passenger Management</span>
 </a>
 
-<a href="reservation_system.html" class="nav-item">
+<a href="Reservation-System.html" class="nav-item">
 <i class="material-icons">confirmation_number</i>
 <span>Reservation System</span>
 </a>
 
-<a href="reports.html" class="nav-item">
-<i class="material-icons">assessment</i>
+<a href="Dashboard.html" class="nav-item">
+<i class="material-icons">bar_chart</i>
 <span>Dashboard & Reports</span>
 </a>
 
+<br><br>
+
 <a href="profile.html" class="nav-item">
 <i class="material-icons">person_outline</i>
-<span>Account Details</span>
+<span style="font-weight:bold;">Account Details</span>
 </a>
 
-<a href="StartHer.html" class="logout-btn">
+<a href="Login.html" class="logout-btn">
 <i class="material-icons">logout</i>
 <span>Logout</span>
 </a>
 
 </div>
 
+<div class="sidebar-small">
+<label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+</div>
+
 <div class="main-wrapper">
 
-<div class="sidebar-small">
-<label for="menu-toggle" class="material-icons" style="font-size:32px;cursor:pointer;">menu</label>
-</div>
+<img src="images/Logo.svg" alt="Sikka Logo" class="header-logo">
 
 <div class="content-area">
 
-<h1>Train Timetable</h1>
+<h1 class="page-title">Train Timetable</h1>
 
-<table>
+<table class="train-table">
 
+<thead>
 <tr>
 <th>Train</th>
 <th>Route</th>
 <th>Departure Time</th>
 <th>Arrival Time</th>
 </tr>
+</thead>
+
+<tbody>
 
 <tr>
 <td>Train 101</td>
@@ -252,10 +297,11 @@ text-align:center;
 <td>11 AM</td>
 </tr>
 
+</tbody>
+
 </table>
 
 </div>
-
 </div>
 
 </body>
