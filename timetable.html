@@ -1,101 +1,262 @@
-<!DOCTYPE html>
-<html lang="en">
+ <!DOCTYPE html>
+<html lang="en" dir="ltr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Train Timetable</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sikkah - Train Timetable</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #eef5f1;
-      margin: 0;
-      padding: 0;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    .container {
-      width: 85%;
-      margin: 40px auto;
-      background: #f8fbf9;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+<style>
 
-    h1 {
-      text-align: center;
-      color: #1f5f57;
-      margin-bottom: 30px;
-    }
+*{
+box-sizing:border-box;
+font-family:'Abhaya Libre',serif;
+font-weight:800;
+font-size:16px;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 14px;
-      background-color: #ffffff;
-    }
+body{
+margin:0;
+display:flex;
+min-height:100vh;
+background-color:#EAF6F5;
+align-items:center;
+justify-content:center;
+position:relative;
+padding:20px;
+}
 
-    th {
-      background-color: #1f7a6d;
-      color: white;
-      padding: 14px;
-      text-align: center;
-      font-size: 16px;
-    }
+#menu-toggle{
+display:none;
+}
 
-    td {
-      padding: 14px;
-      text-align: center;
-      border: 1px solid #d8e3dd;
-      font-size: 15px;
-    }
+.header-logo{
+position:absolute;
+top:20px;
+right:40px;
+width:100px;
+z-index:1;
+}
 
-    tr:nth-child(even) {
-      background-color: #f3f7f5;
-    }
+.sidebar-overlay{
+position:fixed;
+top:0;
+left:-300px;
+width:280px;
+height:100%;
+background:white;
+z-index:100;
+transition:0.3s ease-in-out;
+box-shadow:5px 0 15px rgba(0,0,0,0.1);
+display:flex;
+flex-direction:column;
+padding:20px;
+}
 
-    tr:hover {
-      background-color: #e7f1ed;
-    }
-  </style>
+#menu-toggle:checked ~ .sidebar-overlay{
+left:0;
+}
+
+.overlay-bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.3);
+z-index:90;
+display:none;
+}
+
+#menu-toggle:checked ~ .overlay-bg{
+display:block;
+}
+
+.close-btn-label{
+align-self:flex-end;
+cursor:pointer;
+font-size:30px;
+margin-bottom:40px;
+}
+
+.nav-item{
+display:flex;
+align-items:center;
+gap:15px;
+padding:15px;
+cursor:pointer;
+border-radius:10px;
+margin-bottom:5px;
+color:black;
+text-decoration:none;
+}
+
+.nav-item:hover{
+background:#f5f5f5;
+}
+
+.logout-btn{
+margin-top:auto;
+background:#E53935;
+color:white;
+border-radius:20px;
+padding:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+text-decoration:none;
+}
+
+.main-wrapper{
+display:flex;
+gap:20px;
+width:100%;
+max-width:1200px;
+}
+
+.sidebar-small{
+width:65px;
+background:white;
+border-radius:30px;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:30px 0;
+box-shadow:0 4px 15px rgba(0,0,0,0.05);
+}
+
+.content-area{
+flex:1;
+background:white;
+border-radius:30px;
+padding:60px;
+box-shadow:0 4px 15px rgba(0,0,0,0.05);
+min-height:600px;
+}
+
+h1{
+color:#2D9596;
+margin-bottom:40px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#2D9596;
+color:white;
+padding:15px;
+}
+
+td{
+padding:15px;
+border-bottom:1px solid #ddd;
+text-align:center;
+}
+
+</style>
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>Train Timetable</h1>
+<input type="checkbox" id="menu-toggle">
 
-    <table>
-      <tr>
-        <th>Train</th>
-        <th>Route</th>
-        <th>Departure Time</th>
-        <th>Arrival Time</th>
-      </tr>
+<img src="images/Logo.svg" class="header-logo">
 
-      <tr>
-        <td>Train 101</td>
-        <td>Riyadh → Dammam</td>
-        <td>5 PM</td>
-        <td>7 PM</td>
-      </tr>
+<label for="menu-toggle" class="overlay-bg"></label>
 
-      <tr>
-        <td>Train 102</td>
-        <td>Abha → Tabuk</td>
-        <td>12 PM</td>
-        <td>4 PM</td>
-      </tr>
+<div class="sidebar-overlay">
 
-      <tr>
-        <td>Train 103</td>
-        <td>Hail → Madinah</td>
-        <td>8 AM</td>
-        <td>11 AM</td>
-      </tr>
-    </table>
-  </div>
+<label for="menu-toggle" class="material-icons close-btn-label">close</label>
+
+<a href="home.html" class="nav-item">
+<i class="material-icons">home</i>
+<span>Home</span>
+</a>
+
+<a href="train_management.html" class="nav-item">
+<i class="material-icons">train</i>
+<span>Train Management</span>
+</a>
+
+<a href="passenger_management.html" class="nav-item">
+<i class="material-icons">groups</i>
+<span>Passenger Management</span>
+</a>
+
+<a href="reservation_system.html" class="nav-item">
+<i class="material-icons">confirmation_number</i>
+<span>Reservation System</span>
+</a>
+
+<a href="reports.html" class="nav-item">
+<i class="material-icons">assessment</i>
+<span>Dashboard & Reports</span>
+</a>
+
+<a href="profile.html" class="nav-item">
+<i class="material-icons">person_outline</i>
+<span>Account Details</span>
+</a>
+
+<a href="StartHer.html" class="logout-btn">
+<i class="material-icons">logout</i>
+<span>Logout</span>
+</a>
+
+</div>
+
+<div class="main-wrapper">
+
+<div class="sidebar-small">
+<label for="menu-toggle" class="material-icons" style="font-size:32px;cursor:pointer;">menu</label>
+</div>
+
+<div class="content-area">
+
+<h1>Train Timetable</h1>
+
+<table>
+
+<tr>
+<th>Train</th>
+<th>Route</th>
+<th>Departure Time</th>
+<th>Arrival Time</th>
+</tr>
+
+<tr>
+<td>Train 101</td>
+<td>Riyadh → Dammam</td>
+<td>5 PM</td>
+<td>7 PM</td>
+</tr>
+
+<tr>
+<td>Train 102</td>
+<td>Abha → Tabuk</td>
+<td>12 PM</td>
+<td>4 PM</td>
+</tr>
+
+<tr>
+<td>Train 103</td>
+<td>Hail → Madinah</td>
+<td>8 AM</td>
+<td>11 AM</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
 
 </body>
 </html>
