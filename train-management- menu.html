@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Management Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        :root {
+            --dark-teal: #12958D;
+            --light-teal: #EAF6F5;
+            --bg-page: #EAF6F5; /* اللون الأخضر الفاتح للخلفية */
+            --sidebar-bg: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Abhaya Libre', serif;
+            background-color: var(--bg-page);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- الشريط الأبيض الجانبي --- */
+        .sidebar-panel {
+            width: 80px;
+            background-color: var(--sidebar-bg);
+            height: calc(100vh - 40px);
+            margin: 20px;
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            z-index: 10;
+        }
+
+        #check { display: none; }
+
+        .menu-btn-label {
+            cursor: pointer;
+            font-size: 35px;
+            color: #333;
+        }
+
+        /* --- القائمة المنزلقة (Drawer) --- */
+        .side-drawer-menu {
+            position: fixed;
+            left: -350px;
+            width: 320px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding-top: 100px;
+        }
+
+        #check:checked ~ .side-drawer-menu { left: 0; }
+
+        .close-btn-label {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            cursor: pointer;
+            font-size: 35px;
+            color: #333;
+        }
+
+        .drawer-links ul { list-style: none; padding: 0; margin: 0; }
+        .drawer-links ul a {
+            display: flex;
+            align-items: center;
+            padding: 18px 40px;
+            font-size: 22px;
+            color: #333;
+            text-decoration: none;
+            transition: 0.3s;
+            gap: 20px;
+            white-space: nowrap;
+        }
+
+        .drawer-links ul a:hover { background: var(--light-teal); color: var(--dark-teal); }
+        .drawer-links ul a.active { color: var(--dark-teal); font-weight: bold; }
+
+        .logout-link { color: #e74c3c !important; margin-top: 50px; font-weight: bold; }
+
+        /* --- المحتوى الرئيسي (اللوحة البيضاء) --- */
+        .main-container {
+            flex: 1;
+            background-color: white;
+            /* زدنا الهوامش هنا (margin) عشان اللوحة تصغر ويبان الأخضر تحت اللوجو */
+            margin: 40px 100px 40px 0; 
+            border-radius: 45px;
+            padding: 60px;
+            position: relative;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.02);
+        }
+
+        /* اللوجو على اللون الأخضر (خارج اللوحة البيضاء) */
+        .logo-container {
+            position: absolute;
+            top: -10px;    /* رفعه للأعلى قليلاً */
+            right: -80px;  /* دفعه لليمين ليخرج فوق المساحة الخضراء */
+        }
+
+        .logo-img { width: 85px; height: auto; }
+
+        h1 {
+            font-size: 45px;
+            color: #1a1a1a;
+            margin-bottom: 70px;
+        }
+
+        /* شبكة الأزرار */
+        .grid-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .card-row { display: flex; gap: 60px; }
+
+        .card {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-teal);
+            width: 380px;
+            height: 105px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+        .icon-box { background-color: var(--dark-teal); width: 105px; height: 100%; border-radius: 22px; }
+
+        .card-text { padding-left: 35px; color: #000; font-size: 24px; font-weight: 500; }
+
+        .last-row { width: 100%; display: flex; justify-content: center; }
+
+    </style>
+</head>
+<body>
+
+    <input type="checkbox" id="check">
+
+    <div class="sidebar-panel">
+        <label for="check">
+            <i class="material-icons menu-btn-label">menu</i>
+        </label>
+    </div>
+
+    <div class="side-drawer-menu">
+        <label for="check" class="material-icons close-btn-label">close</label>
+        <div class="drawer-links">
+            <ul>
+                <li><a href="home.html"><i class="material-icons">home</i> Home</a></li>
+                <li><a href="train-management-menu.html" class="active"><i class="material-icons">train</i> Train Management</a></li>
+                <li><a href="#"><i class="material-icons">person</i> Passenger Management</a></li>
+                <li><a href="#"><i class="material-icons">confirmation_number</i> Reservation System</a></li>
+                <li><a href="#"><i class="material-icons">insert_chart</i> Dashboard & Reports</a></li>
+                <li><a href="profile.html"><i class="material-icons">account_circle</i> Account Details</a></li>
+                <li><a href="StartHer.html" class="logout-link"><i class="material-icons">logout</i> Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="logo-container">
+            <img src="images/Logo.svg" alt="Logo" class="logo-img">
+        </div>
+
+        <h1>Train Management</h1>
+
+        <div class="grid-wrapper">
+            <div class="card-row">
+                <a href="monitoring.html" class="card">
+                    <div class="icon-box"></div>
+                    <div class="card-text">Train monitoring</div>
+                </a>
+                <a href="#" class="card">
+                    <div class="icon-box"></div>
+                    <div class="card-text">Add new train</div>
+                </a>
+            </div>
+
+            <div class="card-row">
+                <a href="ViewTimetable.html" class="card">
+                    <div class="icon-box"></div>
+                    <div class="card-text">Timetable view</div>
+                </a>
+                <a href="Train-Information.html" class="card">
+                    <div class="icon-box"></div>
+                    <div class="card-text">Train Information</div>
+                </a>
+            </div>
+
+            <div class="last-row">
+                <a href="create-schedule.html" class="card">
+                    <div class="icon-box"></div>
+                    <div class="card-text">Creating train schedules</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
