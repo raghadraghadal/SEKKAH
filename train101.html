@@ -1,41 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
-     <meta charset="UTF-8">
-    <title>Train 101</title>
-    <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <title>home</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    
+
     <style>
+        /* --- [1] إعدادات الخطوط العامة --- */
         * {
             box-sizing: border-box;
             font-family: 'Abhaya Libre', serif;
-            font-weight: 800; 
-            font-size: 14px;
+            font-weight: 800; /* سمك الخط */
+            font-size: 14px;  /* حجم الخط الافتراضي */
         }
 
+        /* --- [2] خلفية الصفحة وتوزيع العناصر --- */
         body {
             margin: 0;
             display: flex;
             min-height: 100vh;
-            background-color: #EAF6F5; /* نفس لون خلفية البروفايل */
-            align-items: center;
-            justify-content: center;
+            background-color: #EAF6F5; /* لون الخلفية السماوي */
+            align-items: center;      /* توسيط المحتوى عمودياً */
+            justify-content: center;   /* توسيط المحتوى أفقياً */
             position: relative;
             padding: 20px;
-            overflow-x: hidden;
+            overflow-x: hidden;        /* منع ظهور شريط التمرير الأفقي */
         }
 
-        /* التحكم في القائمة الجانبية عبر Checkbox مخفي (بدون جافا سكريبت) */
-        #menu-toggle {
-            display: none;
-        }
+        /* إخفاء "Checkbox" الذي نستخدمه للتحكم في فتح القائمة */
+        #menu-toggle { display: none; }
 
-        /* الشعار في الخلفية العلوية اليمنى كما في التصميم */
+        /* مكان شعار "سكة" في أعلى اليمين */
         .header-logo {
             position: absolute;
             top: 20px;
@@ -44,15 +43,16 @@
             z-index: 1;
         }
 
+        /* الغلاف الذي يجمع الشريط النحيف والمربع الأبيض */
         .main-wrapper {
             display: flex;
             gap: 20px;
             width: 100%;
-            max-width: 1200px; /* نفس حجم صفحة البروفايل */
+            max-width: 1200px;
             align-items: stretch;
         }
 
-        /* القائمة الجانبية الصغيرة الثابتة */
+        /* --- [3] الشريط الجانبي النحيف (أيقونة المنيو) --- */
         .sidebar-small {
             width: 65px;
             background: white;
@@ -61,7 +61,7 @@
             flex-direction: column;
             align-items: center;
             padding: 30px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .menu-btn-label {
@@ -70,49 +70,40 @@
             color: #333;
         }
 
-        /* القائمة الجانبية الكبيرة (Overlay) */
+        /* --- [4] القائمة المنسدلة (Sidebar Overlay) --- */
         .sidebar-overlay {
             position: fixed;
             top: 0;
-            left: -300px;
+            left: -300px; /* مخفية لجهة اليسار */
             width: 280px;
             height: 100%;
             background: white;
             z-index: 100;
-            transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s ease-in-out; /* سرعة انزلاق القائمة */
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             padding: 20px;
         }
 
-        #menu-toggle:checked ~ .sidebar-overlay {
-            left: 0;
-        }
+        /* إظهار القائمة عند تفعيل المفتاح */
+        #menu-toggle:checked~.sidebar-overlay { left: 0; }
 
+        /* خلفية معتمة تظهر خلف القائمة لتمييزها */
         .overlay-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             z-index: 90;
             display: none;
         }
 
-        #menu-toggle:checked ~ .overlay-bg {
-            display: block;
-        }
+        #menu-toggle:checked~.overlay-bg { display: block; }
 
-        .close-btn-label {
-            align-self: flex-end;
-            cursor: pointer;
-            font-size: 30px;
-            margin-bottom: 40px;
-        }
-
-        /* تنسيق روابط القائمة الجانبية */
+        /* أيقونات وأزرار القائمة الجانبية */
         .nav-item {
             display: flex;
             align-items: center;
@@ -120,9 +111,15 @@
             padding: 15px;
             cursor: pointer;
             border-radius: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             color: black;
             text-decoration: none;
+        }
+
+        /* تمييز Home و Account Details بخط أكبر وأغمق */
+        .nav-item.main-link {
+            font-size: 20px;
+            font-weight: 900;
         }
 
         .nav-item:hover { background: #f5f5f5; }
@@ -130,7 +127,7 @@
         /* زر تسجيل الخروج الأحمر */
         .logout-btn {
             margin-top: auto;
-            background: #E53935; /* لون أحمر مطابق للتصميم */
+            background: #E53935;
             color: white;
             border-radius: 20px;
             padding: 12px;
@@ -138,25 +135,45 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            cursor: pointer;
             text-decoration: none;
         }
 
-        /* المستطيل الأبيض الكبير للمحتوى */
+        /* --- [5] المربع الأبيض الكبير والمربعات الأربعة --- */
         .content-area {
             flex: 1;
             background: white;
             border-radius: 30px;
             padding: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
-           min-height: 600px;
-
+            min-height: 600px;
         }
 
-      .payment-card {
+     
+        
+
+        /* تأثير الحركة عند تمرير الماوس */
+        .management-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+       
+
+        /* استجابة الصفحة لشاشات الجوال */
+        @media (max-width: 768px) {
+            .cards-grid { grid-template-columns: 1fr; } /* مربع واحد في كل صف */
+        }
+        #home-user-name {
+    font-size: 35px; /* غيري هذا الرقم لتكبير أو تصغير الاسم فقط */
+    font-weight: 900; /* لجعل الخط عريض جداً */
+    display: inline-block; /* لضمان تطبيق الأبعاد بشكل صحيح */
+    margin: 0 5px; /* إضافة مسافة بسيطة حول الاسم */
+}
+
+         .payment-card {
     width: 50000%;
     height: 500;
     max-width: 400px; 
@@ -187,29 +204,50 @@
 .status-stop { background: #f39c12; }      /* برتقالي - متوقف */
 
         .card-logo {
+                position: absolute;
     width: 60px;        /* حجم الشعار */
-    position: absolute;
     top: 15px;          /* المسافة من الأعلى */
     right: 15px;         /* المسافة من اليسار */
 }
     </style>
 </head>
+
 <body>
- <input type="checkbox" id="menu-toggle">
+    <input type="checkbox" id="menu-toggle">
 
     <img src="images\Logo.svg" alt="Sikka Logo" class="header-logo">
 
     <label for="menu-toggle" class="overlay-bg"></label>
 
     <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons close-btn-label">close</label>
-        
-        <a href="home.html" class="nav-item">
+        <label for="menu-toggle" class="material-icons" style="align-self: flex-end; cursor: pointer; font-size: 30px; margin-bottom: 40px;">close</label>
+
+        <a href="home.html" class="nav-item main-link">
             <i class="material-icons">home</i>
             <span>Home</span>
         </a>
-        
-        <a href="profile.html" class="nav-item">
+
+        <a href="train_management.html" class="nav-item">
+            <i class="material-icons">train</i>
+            <span>Train Management</span>
+        </a>
+
+        <a href="passenger_management.html" class="nav-item">
+            <i class="material-icons">groups</i>
+            <span>Passenger Management</span>
+        </a>
+
+        <a href="reservation_system.html" class="nav-item">
+            <i class="material-icons">confirmation_number</i>
+            <span>Reservation System</span>
+        </a>
+
+        <a href="reports.html" class="nav-item">
+            <i class="material-icons">assessment</i>
+            <span>Dashboard & Reports</span>
+        </a>
+
+        <a href="profile.html" class="nav-item main-link" style="margin-top: 15px;">
             <i class="material-icons">person_outline</i>
             <span>Account Details</span>
         </a>
@@ -226,7 +264,9 @@
         </div>
 
         <div class="content-area">
-        <body>
+
+     
+
 
 
 <div class="white-column">
@@ -248,7 +288,7 @@
      <p> Train 101</p>
       <p><strong>Current Trip:</strong> From Riyadh to Dammam</p>
     <p><strong>Previous Trip:</strong> From Dammam to Riyadh</p>
-    <p><strong>Arrival Time:</strong> 3 PM</p>
+    <p><strong>Arrival Time:</strong> 5 PM</p>
     <p><strong>Departure Time:</strong> 7 PM</p>
     <p><strong>Train Status:</strong> Late</p>
     
