@@ -44,7 +44,71 @@
     </div>
 </div>
 
+
 <script>
+    // 1. وظيفة لزرع البيانات الثابتة (أنس، سعد، إبراهيم) إذا لم تكن موجودة
+    function seedConstantUsers() {
+        const constantUsers = {
+            "Anas bin Malik": "123456&",
+            "Saad bin Ahmab": "saad2026",
+            "Ibrahim bin Abdullah": "ibra88"
+        };
+
+        // نمر على كل مستخدم ونخزنه في الذاكرة المحلية إذا لم يكن مسجلاً من قبل
+        for (const [name, pass] of Object.entries(constantUsers)) {
+            if (!localStorage.getItem(name)) {
+                localStorage.setItem(name, pass);
+            }
+        }
+    }
+
+    // استدعاء الوظيفة بمجرد تحميل الصفحة
+    seedConstantUsers();
+
+    // 2. معالجة عملية تسجيل الدخول
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const enteredName = document.getElementById('name').value.trim();
+        const enteredPass = document.getElementById('pass').value;
+
+        // جلب كلمة المرور المخزنة (سواء كانت ثابتة أو من صفحة Sign Up)
+        const storedPass = localStorage.getItem(enteredName);
+
+        // التحقق من البيانات
+        if (storedPass !== null && storedPass === enteredPass) {
+            // حفظ اسم المستخدم الحالي ليعرفه الموقع في بقية الصفحات
+            localStorage.setItem("userName", enteredName);
+            
+            // إظهار رسالة ترحيب (اختياري قبل الانتقال)
+            alert("Welcome " + enteredName + "!");
+            
+            // الانتقال لصفحة الهوم
+            window.location.href = "home.html"; 
+        } else {
+            // في حال عدم وجود الاسم أو خطأ في كلمة المرور (بيئة آمنة)
+            alert("Unauthorized access! Account not found or incorrect password.");
+        }
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <script>
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -61,7 +125,4 @@
             alert("Account not found or incorrect password!"); // منع الدخول
         }
     });
-</script>
-
-</body>
-</html>
+</script> -->

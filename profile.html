@@ -291,6 +291,11 @@
     </div>
 
     <script>
+        // هذا الكود يمنع الدخول غير المصرح به
+        if (!localStorage.getItem("userName")) {
+            alert("Please login first!");
+            window.location.href = "Login.html";
+        }
         // جلب الاسم المحفوظ وتحديث عناصر الصفحة
         const savedName = localStorage.getItem("userName");
 
