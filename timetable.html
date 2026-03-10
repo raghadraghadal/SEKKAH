@@ -1,44 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Train Timetable</title>
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Train Timetable</title>
+  <link rel="stylesheet" href="style.css">
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef5f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 85%;
+      margin: 40px auto;
+      background: #f8fbf9;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1f5f57;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 14px;
+      background-color: #ffffff;
+    }
+
+    th {
+      background-color: #1f7a6d;
+      color: white;
+      padding: 14px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    td {
+      padding: 14px;
+      text-align: center;
+      border: 1px solid #d8e3dd;
+      font-size: 15px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f3f7f5;
+    }
+
+    tr:hover {
+      background-color: #e7f1ed;
+    }
+  </style>
+</head>
 <body>
 
-<h1>Train Timetable</h1>
+  <div class="container">
+    <h1>Train Timetable</h1>
 
-<table border="1">
-<tr>
-<th>Train</th>
-<th>Route</th>
-<th>Departure Time</th>
-<th>Arrival Time</th>
-</tr>
+    <table>
+      <tr>
+        <th>Train</th>
+        <th>Route</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+      </tr>
 
-<tr>
-<td>Train 101</td>
-<td>Riyadh → Dammam</td>
-<td>5 PM</td>
-<td>7 PM</td>
-</tr>
+      <tr>
+        <td>Train 101</td>
+        <td>Riyadh → Dammam</td>
+        <td>5 PM</td>
+        <td>7 PM</td>
+      </tr>
 
-<tr>
-<td>Train 102</td>
-<td>Abha → Tabuk</td>
-<td>12 PM</td>
-<td>4 PM</td>
-</tr>
+      <tr>
+        <td>Train 102</td>
+        <td>Abha → Tabuk</td>
+        <td>12 PM</td>
+        <td>4 PM</td>
+      </tr>
 
-<tr>
-<td>Train 103</td>
-<td>Hail → Madinah</td>
-<td>8 AM</td>
-<td>11 AM</td>
-</tr>
-
-</table>
+      <tr>
+        <td>Train 103</td>
+        <td>Hail → Madinah</td>
+        <td>8 AM</td>
+        <td>11 AM</td>
+      </tr>
+    </table>
+  </div>
 
 </body>
 </html>
