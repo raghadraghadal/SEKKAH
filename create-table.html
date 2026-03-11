@@ -144,6 +144,7 @@
 
         /* المستطيل الأبيض الكبير للمحتوى */
         .content-area {
+        position: relative;
             flex: 1;
             background: white;
             border-radius: 30px;
@@ -193,7 +194,13 @@
             border-radius: 5px;
             border: 1px solid #aaa;
         }
-
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* المسافة بين الأزرار */
+    width: 100%;
+    align-items: center;
+}
         .btn {
             margin-top: 20px;
             display: block;
@@ -250,6 +257,7 @@
 .save-btn:hover {
     background-color: #178f8f; /* لون أغمق عند المرور */
 }
+
     </style>
 </head>
 <body>
@@ -326,20 +334,30 @@
     <tr><td><input id="org4"></td><td><input id="train4"></td><td><input id="from4"></td><td><input id="to4"></td><td><input id="arrive4"></td><td><input id="depart4"></td><td><input id="notes4"></td></tr>
     <tr><td><input id="org5"></td><td><input id="train5"></td><td><input id="from5"></td><td><input id="to5"></td><td><input id="arrive5"></td><td><input id="depart5"></td><td><input id="notes5"></td></tr>
 </table>
+<div class="action-buttons">
 
 <button class="btn" onclick="createTable()">Create</button>
 <button class="save-btn" onclick="saveNewTable()">Save</button>
- 
-
-
-
-
-
-
-
-
-
-
+ <a href="create-schedule.html"
+   style="
+        background:#1aa6a6;
+        color:white;
+        width: 200px;
+        padding: 12px;
+        border-radius:10px;
+        font-size:16px;
+        font-weight:bold;
+        text-decoration:none;
+        transition:0.2s;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+   "
+   onmouseover="this.style.background='#178f8f'"
+   onmouseout="this.style.background='#1aa6a6'">
+   Back
+</a>
+ </div>
 
 <script>
 
@@ -353,14 +371,6 @@
         { org: org5.value, train: train5.value, from: from5.value, to: to5.value, arrive: arrive5.value, depart: depart5.value, notes: notes5.value }
     ];
 }
-
-
-
-
-
-
-
-
 
 
 

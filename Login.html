@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
     <style>
-        /* التنسيق بالكامل - لا تقم بتغيير أي شيء هنا للحفاظ على الشكل */
-        body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(180deg, #d3e9e7, #e8f5f4); font-family: 'Segoe UI', sans-serif; }
+        body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(180deg, #d3e9e7, #e8f5f4); font-family: 'Abhaya Libre', serif; }
         .card { background: white; padding: 50px 40px; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 350px; text-align: center; }
         .input-group { position: relative; margin-bottom: 25px; text-align: left; }
-        .input-group input { width: 100%; padding: 18px 20px; border: 1.5px solid #e0e0e0; border-radius: 30px; box-sizing: border-box; font-size: 16px; outline: none; transition: all 0.3s ease; }
+        .input-group input { width: 100%; padding: 18px 20px; border: 1.5px solid #e0e0e0; border-radius: 30px; box-sizing: border-box; font-size: 16px; outline: none; transition: all 0.3s ease; font-family: 'Abhaya Libre', serif; }
         .input-group input:focus { border-color: #6fbdb6; }
         .input-group label { position: absolute; top: 18px; left: 20px; color: #aaa; pointer-events: none; transition: all 0.3s ease; background: white; padding: 0 5px; font-size: 16px; }
         .input-group input:focus + label, .input-group input:not(:placeholder-shown) + label { top: -10px; left: 15px; font-size: 12px; color: #6fbdb6; font-weight: bold; }
-        button { width: 100%; padding: 18px; background-color: #4a9d95; color: white; border: none; border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: all 0.2s ease; font-family: Arial, sans-serif; letter-spacing: 1px; }
+        .forgot-pass-container { text-align: left; margin-bottom: 20px; margin-top: -10px; }
+        button { width: 100%; padding: 18px; background-color: #4a9d95; color: white; border: none; border-radius: 50px; font-size: 25px; font-weight: bold; cursor: pointer; margin-top: 5px; transition: all 0.2s ease; font-family: 'Abhaya Libre', serif; letter-spacing: 1px; }
         button:active { transform: scale(0.95); }
-        .footer-text { margin-top: 20px; font-size: 14px; color: #666; }
+        .footer-text { margin-top: 25px; font-size: 16px; color: #666; font-weight: 800; }
     </style>
 </head>
 <body>
@@ -29,39 +30,99 @@
             <input type="password" id="pass" placeholder=" " required>
             <label for="pass">Password</label>
         </div>
+        
+        <div class="forgot-pass-container">
+            <a href="forgetPassword.html" style="color: #666; text-decoration: none; font-size: 14px; font-weight: bold;">Forgot password?</a>
+        </div>
+        
         <button type="submit" id="loginBtn">Login</button>
     </form>
-<div class="footer-text">
-    Don't you have an account? 
-    <a href="SingUp.html" style="color: #4a9d95; text-decoration: none; font-weight: bold;">Create account</a>
+    
+    <div class="footer-text">
+        Don't you have an account? 
+        <a href="SingUp.html" style="color: #4a9d95; text-decoration: none; font-weight: bold;">Create account</a>
+    </div>
 </div>
-</div>
+
 
 <script>
-    // هذا الكود هو المسؤول عن الربط البرمجي فقط
-    const loginForm = document.getElementById('loginForm');
-    const nameInput = document.getElementById('name');
-    const passInput = document.getElementById('pass');
-    const loginBtn = document.getElementById('loginBtn');
+    // 1. وظيفة لزرع البيانات الثابتة (أنس، سعد، إبراهيم) إذا لم تكن موجودة
+    function seedConstantUsers() {
+        const constantUsers = {
+            "Anas bin Malik": "123456&",
+            "Saad bin Ahmad": "saad2026",
+            "Ibrahim bin Abdullah": "ibra88"
+        };
 
-    loginForm.addEventListener('submit', function(e) {
+        // نمر على كل مستخدم ونخزنه في الذاكرة المحلية إذا لم يكن مسجلاً من قبل
+        for (const [name, pass] of Object.entries(constantUsers)) {
+            if (!localStorage.getItem(name)) {
+                localStorage.setItem(name, pass);
+            }
+        }
+    }
+
+    // استدعاء الوظيفة بمجرد تحميل الصفحة
+    seedConstantUsers();
+
+    // 2. معالجة عملية تسجيل الدخول
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const enteredName = nameInput.value.trim();
-        const enteredPass = passInput.value;
+        const enteredName = document.getElementById('name').value.trim();
+        const enteredPass = document.getElementById('pass').value;
 
-        // التحقق من المتصفح (localStorage)
+        // جلب كلمة المرور المخزنة (سواء كانت ثابتة أو من صفحة Sign Up)
         const storedPass = localStorage.getItem(enteredName);
 
-        if (storedPass && storedPass === enteredPass) {
+        // التحقق من البيانات
+        if (storedPass !== null && storedPass === enteredPass) {
+            // حفظ اسم المستخدم الحالي ليعرفه الموقع في بقية الصفحات
             localStorage.setItem("userName", enteredName);
-            alert("Welcome!");
-            window.location.href = "home.html";
+            
+            // إظهار رسالة ترحيب (اختياري قبل الانتقال)
+            alert("Welcome " + enteredName + "!");
+            
+            // الانتقال لصفحة الهوم
+            window.location.href = "home.html"; 
         } else {
-            alert("Incorrect username or password!");
+            // في حال عدم وجود الاسم أو خطأ في كلمة المرور (بيئة آمنة)
+            alert("Unauthorized access! Account not found or incorrect password.");
         }
     });
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const enteredName = document.getElementById('name').value.trim();
+        const enteredPass = document.getElementById('pass').value;
+
+        // جلب كلمة المرور المخزنة بناءً على الاسم المدخل
+        const storedPass = localStorage.getItem(enteredName);
+
+        // التحقق: هل المستخدم موجود في الـ localStorage؟ وهل كلمة المرور صحيحة؟
+        if (storedPass !== null && storedPass === enteredPass) {
+            window.location.href = "home.html"; // السماح بالدخول
+        } else {
+            alert("Account not found or incorrect password!"); // منع الدخول
+        }
+    });
+</script> -->

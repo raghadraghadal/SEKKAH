@@ -1,163 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<style>
-  body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(180deg, #d3e9e7, #e8f5f4);
-    font-family: 'Segoe UI', sans-serif;
-  }
+  <meta charset="UTF-8">
+  <title>Signup Page</title>
 
-  .card {
-    background: white;
-    padding: 50px 40px;
-    border-radius: 40px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    width: 350px;
-    text-align: center;
-  }
+  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
 
-  .input-group {
-    position: relative;
-    margin-bottom: 25px;
-    text-align: left;
-  }
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #d3e9e7, #e8f5f4);
+      /* تطبيق الخط الجديد هنا */
+      font-family: 'Abhaya Libre', serif;
+    }
 
-  .input-group input {
-    width: 100%;
-    padding: 18px 20px;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 30px;
-    box-sizing: border-box;
-    font-size: 16px;
-    outline: none;
-    transition: all 0.3s ease;
-  }
+    .card {
+      background: white;
+      padding: 50px 40px;
+      border-radius: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
 
-  .input-group input:focus {
-    border-color: #6fbdb6;
-  }
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+      text-align: left;
+    }
 
-  .input-group label {
-    position: absolute;
-    top: 18px;
-    left: 20px;
-    color: #aaa;
-    pointer-events: none;
-    transition: all 0.3s ease;
-    background: white;
-    padding: 0 5px;
-    font-size: 16px;
-  }
+    .input-group input {
+      width: 100%;
+      padding: 18px 20px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 30px;
+      box-sizing: border-box;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: 'Abhaya Libre', serif;
+      /* التأكد من تطبيق الخط هنا أيضاً */
+    }
 
-  .input-group input:focus + label,
-  .input-group input:not(:placeholder-shown) + label {
-    top: -10px;
-    left: 15px;
-    font-size: 12px;
-    color: #6fbdb6;
-    font-weight: bold;
-  }
+    .input-group input:focus {
+      border-color: #6fbdb6;
+    }
 
-  button {
-    width: 100%;
-    padding: 18px;
-    background-color: #4a9d95; /* اللون الجديد الأغمق */
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.2s ease;
-  }
+    .input-group label {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      color: #aaa;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      background: white;
+      padding: 0 5px;
+      font-size: 16px;
+    }
 
-  button:active {
-    transform: scale(0.95);
-    background-color: #387a74; /* درجة أغمق للضغط */
-  }
+    .input-group input:focus+label,
+    .input-group input:not(:placeholder-shown)+label {
+      top: -10px;
+      left: 15px;
+      font-size: 12px;
+      color: #6fbdb6;
+      font-weight: bold;
+    }
 
-  .footer-text {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #666;
-  }
-  button {
-    width: 100%;
-    padding: 18px;
-    background-color: #4a9d95; /* اللون الأغمق الذي اخترناه */
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.2s ease;
-    
-    /* إضافة الخط الجديد */
-    font-family: 'Arial', sans-serif; 
-    letter-spacing: 1px; /* مسافة بسيطة بين الحروف */
-  }
-</style>
+    button {
+      width: 100%;
+      padding: 18px;
+      background-color: #4a9d95;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.2s ease;
+      font-family: 'Abhaya Libre', serif;
+      /* تحديث الخط في الزر */
+      letter-spacing: 1px;
+    }
+
+    button:active {
+      transform: scale(0.95);
+      background-color: #387a74;
+    }
+
+    .footer-text {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #666;
+      font-weight: 800;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="card">
-  <div class="input-group">
-    <input type="text" id="name" placeholder=" ">
-    <label for="name">Enter your name</label>
+  <div class="card">
+    <form id="signupForm">
+      <div class="input-group">
+        <input type="text" id="name" placeholder=" " required>
+        <label for="name">Enter your name</label>
+      </div>
+      <div class="input-group">
+        <input type="email" id="email" placeholder=" " required>
+        <label for="email">Enter your email</label>
+      </div>
+      <div class="input-group">
+        <input type="password" id="pass" placeholder=" " required>
+        <label for="pass">Password</label>
+      </div>
+      <button type="submit" id="signupBtn">Signup</button>
+    </form>
+    <div class="footer-text">
+      Already have an account?
+      <a href="Login.html" style="color: #4a9d95; text-decoration: none; font-weight: bold;">Login</a>
+    </div>
   </div>
 
-  <div class="input-group">
-    <input type="email" id="email" placeholder=" ">
-    <label for="email">Enter your email</label>
-  </div>
-  
-  <div class="input-group">
-    <input type="password" id="pass" placeholder=" ">
-    <label for="pass">Password</label>
-  </div>
+  <script>
+    const signupForm = document.getElementById('signupForm');
 
-  <button id="signupBtn" onclick="animateButton()">Signup</button>
-  
-  <div class="footer-text">
-    Already have an account?
-    <a href="Login.html" style="color: #4a9d95; text-decoration: none; font-weight: bold;">Login</a>
-</div>
+    signupForm.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-</div>
+      const name = document.getElementById('name').value.trim();
+      const pass = document.getElementById('pass').value;
 
-<script>
-  function animateButton() {
-    const btn = document.getElementById('signupBtn');
-    btn.innerText = "Loading...";
-    btn.style.backgroundColor = "#333";
-    
-    setTimeout(() => {
-      btn.innerText = "Signup";
-      btn.style.backgroundColor = "#4a9d95"; // يرجع للون الجديد بعد التحميل
-    }, 1000);
-  }
-</script>
-<script>
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value.trim();
-            const pass = document.getElementById('pass').value;
+      // حفظ البيانات
+      localStorage.setItem(name, pass);
 
-            // حفظ بيانات المستخدم في المتصفح
-            localStorage.setItem(name, pass);
-            
-            alert("Account created successfully!");
-            window.location.href = "login.html"; // التوجه لصفحة تسجيل الدخول
-        });
-    </script>
+      alert("Account created successfully!");
+      window.location.href = "Login.html";
+    });
+  </script>
 </body>
+
 </html>
