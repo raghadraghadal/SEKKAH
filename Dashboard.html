@@ -37,12 +37,7 @@
 
         .menu-btn-label { font-size: 32px; cursor: pointer; color: #333; }
 
-        .sidebar-overlay {
-            position: fixed; top: 0; left: -300px; width: 280px; height: 100%;
-            background: white; z-index: 100; transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            display: flex; flex-direction: column; padding: 20px;
-        }
+            .sidebar-overlay { position: fixed; left: -320px; width: 280px; background: white; z-index: 1100; transition: 0.3s ease-in-out; box-shadow: 5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; padding: 20px; height: 85vh; top: 7.5vh; border-radius: 25px; }
 
         #menu-toggle:checked ~ .sidebar-overlay { left: 0; }
 
