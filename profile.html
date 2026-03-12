@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
@@ -312,11 +312,264 @@
 
 </body>
 
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sikkah - Profile</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+        /* --- [1] الإعدادات العامة للمشروع --- */
+        :root {
+            --dark-teal: #12958D;
+            --light-teal: #EAF6F5;
+            --bg-page: #EAF6F5;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Abhaya Libre', serif;
+            font-weight: 800;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--bg-page);
+            overflow: hidden; /* لمنع التمرير المزدوج */
+        }
+
+        /* --- [2] الشريط الجانبي الصغير (Sidebar Small) - محدث ليتطابق مع صورة 80 --- */
+        .sidebar-small {
+            width: 50px !important; /* نفس عرض صورة 80 */
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.03);
+            height: 85vh;
+            position: fixed;
+            left: 10px;
+            top: 7.5vh;
+            z-index: 1000;
+        }
+
+        .menu-btn-label {
+            font-size: 28px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        #menu-toggle { display: none; }
+
+        /* --- [3] القائمة الجانبية المنسدلة (Sidebar Overlay) - محدثة --- */
+        .sidebar-overlay {
+            position: fixed;
+            left: -320px; 
+            width: 280px;
+            background: white;
+            z-index: 1100;
+            transition: 0.3s ease-in-out;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            height: 85vh;
+            top: 7.5vh;
+            border-radius: 25px;
+        }
+
+        #menu-toggle:checked ~ .sidebar-overlay { left: 10px; }
+
+        .overlay-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3); z-index: 90; display: none;
+        }
+
+        #menu-toggle:checked ~ .overlay-bg { display: block; }
+
+        .close-btn { align-self: flex-end; cursor: pointer; font-size: 30px; margin-bottom: 30px; }
+
+        /* تنسيق الروابط داخل القائمة */
+        .nav-item {
+            display: flex; align-items: center; gap: 15px; padding: 15px;
+            cursor: pointer; border-radius: 10px; margin-bottom: 10px;
+            color: black; text-decoration: none; transition: 0.3s;
+        }
+
+        .nav-item:hover { background: #f5f5f5; }
+        
+        /* تمييز صفحة البروفايل كصفحة نشطة */
+        .nav-item.active { background: #f0f8f7; border-radius: 15px; }
+
+        .logout-btn {
+            margin-top: auto; background: #E53935; color: white;
+            border-radius: 20px; padding: 10px; display: flex;
+            align-items: center; justify-content: center; gap: 10px; text-decoration: none;
+        }
+
+        /* --- [4] محتوى الصفحة الأساسي --- */
+        .main-wrapper {
+            flex: 1;
+            margin-left: 80px; /* مسافة لتعويض مكان الشريط الثابت */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: calc(100% - 80px);
+            overflow-y: auto; /* للسماح بالتمرير داخل المحتوى فقط */
+        }
+
+        .header-logo {
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            width: 90px;
+            z-index: 1000;
+        }
+
+        .content-area {
+            background: white;
+            border-radius: 50px;
+            margin-top: 100px;
+            padding: 60px 50px;
+            width: 85%;
+            max-width: 1100px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            min-height: 500px;
+        }
+
+        /* تنسيقات البروفايل الداخلية (بدون تغيير) */
+        .welcome-section { margin-bottom: 50px; font-size: 20px; }
+        .profile-layout { display: flex; gap: 100px; flex-wrap: wrap; }
+        .avatar-wrapper { display: flex; flex-direction: column; align-items: center; width: 150px; }
+        .avatar-circle {
+            width: 110px; height: 110px; background: #f0f0f0; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 15px;
+        }
+        .input-box { flex: 1; background: #F5F5F5; border: none; border-radius: 25px; padding: 12px 25px; outline: none; }
+        .field-group { display: flex; align-items: center; margin-bottom: 30px; }
+        #welcome-name { color: #2D9596; font-weight: 600; margin-left: 5px; display: inline-block; }
+    </style>
+</head>
+
+<body>
+
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="overlay-bg"></label>
+
+    <div class="sidebar-small">
+        <label for="menu-toggle">
+            <i class="material-icons menu-btn-label">menu</i>
+        </label>
+    </div>
+
+    <div class="sidebar-overlay">
+        <label for="menu-toggle" class="material-icons close-btn">close</label>
+
+        <a href="home.html" class="nav-item">
+            <i class="material-icons">home</i>
+            <span style="font-weight: bold;">Home</span>
+        </a>
+
+        <a href="train-management-menu.html" class="nav-item">
+            <i class="material-icons">train</i>
+            <span>Train Management</span>
+        </a>
+
+        <a href="Passenger Management.html" class="nav-item">
+            <i class="material-icons">people_outline</i>
+            <span>Passenger Management</span>
+        </a>
+
+        <a href="Reservation-System.html" class="nav-item">
+            <i class="material-icons">confirmation_number</i>
+            <span>Reservation System</span>
+        </a>
+
+        <a href="Dashboard.html" class="nav-item">
+            <i class="material-icons">bar_chart</i>
+            <span>Dashboard & Reports</span>
+        </a>
+
+        <br><br> 
+        <a href="profile.html" class="nav-item active">
+            <i class="material-icons">person_outline</i>
+            <span style="font-weight: bold;">Account Details</span>
+        </a>
+
+        <a href="StartHer.html" class="logout-btn">
+            <i class="material-icons">logout</i>
+            <span>Logout</span>
+        </a>
+    </div>
+
+    <div class="main-wrapper">
+        <img src="images/Logo.svg" alt="Sikka Logo" class="header-logo">
+
+        <div class="content-area">
+            <div class="welcome-section">
+                Hi,<br>
+                welcome <span id="welcome-name">Loading...</span>
+            </div>
+
+            <div class="profile-layout">
+                <div class="avatar-wrapper">
+                    <div class="avatar-circle">
+                        <i class="material-icons" style="font-size: 70px; color: #ccc;">person</i>
+                    </div>
+                    <span id="user-display-name">Loading...</span>
+                </div>
+
+                <div class="inputs-container" style="flex: 1; max-width: 450px;">
+                    <div class="field-group">
+                        <span class="label-text" style="width:120px">Full Name</span>
+                        <input type="text" id="full-name-input" class="input-box" value="" readonly>
+                    </div>
+
+                    <div class="field-group">
+                        <span class="label-text" style="width:120px">Email</span>
+                        <input type="text" class="input-box" value="User.M@gmail.com" readonly>
+                    </div>
+
+                    <div class="field-group">
+                        <span class="label-text" style="width:120px">Password</span>
+                        <input type="password" class="input-box" value="********" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // التحقق من تسجيل الدخول
+        if (!localStorage.getItem("userName")) {
+            alert("Please login first!");
+            window.location.href = "Login.html";
+        }
+        // تحديث البيانات من الـ LocalStorage
+        const savedName = localStorage.getItem("userName");
+        if (savedName) {
+            document.getElementById("user-display-name").innerText = savedName;
+            document.getElementById("welcome-name").innerText = savedName;
+            document.getElementById("full-name-input").value = savedName;
+        }
+    </script>
+
+</body>
 </html>
-
-
-
-
 
 
 
