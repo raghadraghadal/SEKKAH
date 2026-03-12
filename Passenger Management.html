@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
-        /* --- [1] الإعدادات العامة للمشروع --- */
         :root {
             --dark-teal: #12958D;
             --light-teal: #EAF6F5;
@@ -27,12 +26,11 @@
             display: flex;
             min-height: 100vh;
             background-color: var(--bg-page);
-            overflow: hidden; /* لمنع التمرير المزدوج */
+            overflow: hidden;
         }
 
-        /* --- [2] الشريط الجانبي الصغير (Sidebar Small) - المطلوب --- */
         .sidebar-small {
-            width: 50px !important;
+            width: 50px;
             background: white;
             border-radius: 20px;
             display: flex;
@@ -47,18 +45,13 @@
             z-index: 1000;
         }
 
-        .menu-btn-label {
-            font-size: 28px;
-            cursor: pointer;
-            color: #333;
-        }
+        .menu-btn-label { font-size: 28px; cursor: pointer; color: #333; }
 
         #menu-toggle { display: none; }
 
-        /* --- [3] القائمة الجانبية المنسدلة (Sidebar Overlay) - المطلوب --- */
         .sidebar-overlay {
             position: fixed;
-            left: -320px; 
+            left: -320px;
             width: 280px;
             background: white;
             z-index: 1100;
@@ -85,9 +78,10 @@
 
         .nav-item {
             display: flex; align-items: center; gap: 15px; padding: 15px;
-            cursor: pointer; border-radius: 10px; margin-bottom: 10px;
+            cursor: pointer; border-radius: 10px; margin-bottom: 5px;
             color: black; text-decoration: none; transition: 0.3s;
         }
+        .nav-item.main-link { font-size: 20px; font-weight: 900; }
         .nav-item:hover { background: #f5f5f5; }
         .nav-item.active { background: #f0f8f7; border-radius: 15px; }
 
@@ -97,10 +91,9 @@
             align-items: center; justify-content: center; gap: 10px; text-decoration: none;
         }
 
-        /* --- [4] محتوى الصفحة الأساسي --- */
         .main-wrapper {
             flex: 1;
-            margin-left: 80px; 
+            margin-left: 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -111,11 +104,7 @@
         }
 
         .header-logo {
-            position: absolute;
-            top: 10px;
-            right: 30px;
-            width: 90px;
-            z-index: 1000;
+            position: absolute; top: 10px; right: 30px; width: 90px; z-index: 1000;
         }
 
         .content-area {
@@ -143,7 +132,6 @@
         .btn-edit { background: #8FC5C3; color: black; border: none; border-radius: 10px; padding: 7px 14px; cursor: pointer; margin-right: 5px; }
         .btn-delete { background: #F94F4F; color: white; border: none; border-radius: 10px; padding: 7px 14px; cursor: pointer; }
 
-        /* Modal Styles */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; }
         .modal-overlay.show { display: flex; }
         .modal { background: white; border-radius: 30px; padding: 40px; width: 480px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
@@ -169,17 +157,17 @@
 <div class="sidebar-overlay">
     <label for="menu-toggle" class="material-icons close-btn">close</label>
 
-    <a href="home.html" class="nav-item">
+    <a href="home.html" class="nav-item main-link">
         <i class="material-icons">home</i>
-        <span style="font-weight: bold;">Home</span>
+        <span>Home</span>
     </a>
 
-    <a href="train-management- menu.html" class="nav-item">
+    <a href="train-management-menu.html" class="nav-item">
         <i class="material-icons">train</i>
         <span>Train Management</span>
     </a>
 
-    <a href="Passenger Management.html" class="nav-item active">
+    <a href="passenger_management.html" class="nav-item active">
         <i class="material-icons">people_outline</i>
         <span>Passenger Management</span>
     </a>
@@ -194,10 +182,9 @@
         <span>Dashboard & Reports</span>
     </a>
 
-    <br><br> 
-    <a href="profile.html" class="nav-item">
+    <a href="profile.html" class="nav-item main-link" style="margin-top:15px;">
         <i class="material-icons">person_outline</i>
-        <span style="font-weight: bold;">Account Details</span>
+        <span>Account Details</span>
     </a>
 
     <a href="StartHer.html" class="logout-btn">
@@ -264,11 +251,10 @@
 </div>
 
 <script>
-    // برمجة الجدول (تم الحفاظ عليها بالكامل)
     const defaultPassengers = [
-        { id: "P-001", name: "Anas bin Malik", nid: "1023456789", phone: "0501234567", email: "anas@example.com", date: "2026-01-10" },
-        { id: "P-002", name: "Saad bin Ahmad", nid: "1034567890", phone: "0509876543", email: "saad@example.com", date: "2026-01-15" },
-        { id: "P-003", name: "Ibrahim bin Abdullah", nid: "1045678901", phone: "0551234567", email: "ibrahim@example.com", date: "2026-02-03" },
+        { id: "P-001", name: "Anas bin Malik",       nid: "1023456789", phone: "0501234567", email: "anas@example.com",    date: "2026-01-10" },
+        { id: "P-002", name: "Saad bin Ahmad",        nid: "1034567890", phone: "0509876543", email: "saad@example.com",    date: "2026-01-15" },
+        { id: "P-003", name: "Ibrahim bin Abdullah",  nid: "1045678901", phone: "0551234567", email: "ibrahim@example.com", date: "2026-02-03" },
     ];
 
     function load() { const s = localStorage.getItem("passengers"); return s ? JSON.parse(s) : defaultPassengers; }
@@ -277,7 +263,12 @@
     function render(filter = "") {
         const list = load();
         const body = document.getElementById("passBody");
-        const filtered = filter ? list.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()) || p.phone.includes(filter) || p.nid.includes(filter)) : list;
+        const filtered = filter
+            ? list.filter(p =>
+                p.name.toLowerCase().includes(filter.toLowerCase()) ||
+                p.phone.includes(filter) ||
+                p.nid.includes(filter))
+            : list;
         body.innerHTML = filtered.map((p, i) => `
             <tr>
                 <td>${i + 1}</td>
@@ -315,11 +306,11 @@
     function closeModal() { document.getElementById("modalOverlay").classList.remove("show"); }
 
     function savePassenger() {
-        const name = document.getElementById("m_name").value.trim();
-        const nid = document.getElementById("m_nid").value.trim();
+        const name  = document.getElementById("m_name").value.trim();
+        const nid   = document.getElementById("m_nid").value.trim();
         const phone = document.getElementById("m_phone").value.trim();
         const email = document.getElementById("m_email").value.trim();
-        const pid = document.getElementById("m_index").value;
+        const pid   = document.getElementById("m_index").value;
 
         if (!name || !nid || !phone || !email) { alert("Please fill all fields"); return; }
         const list = load();
@@ -332,7 +323,9 @@
         save(list); closeModal(); render();
     }
 
-    function deletePassenger(pid) { if (confirm("Delete this record?")) { save(load().filter(p => p.id !== pid)); render(); } }
+    function deletePassenger(pid) {
+        if (confirm("Delete this record?")) { save(load().filter(p => p.id !== pid)); render(); }
+    }
 
     document.getElementById("searchInput").addEventListener("input", function() { render(this.value); });
     render();

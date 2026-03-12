@@ -269,7 +269,6 @@
 </div>
 
 <script>
-    // ── seed data ──
     const defaultBookings = [
         { id: "BK-001", name: "Anas bin Malik",      train: "Train 101", route: "Riyadh → Dammam", seat: 5,  date: "2026-03-10", status: "Confirmed" },
         { id: "BK-002", name: "Saad bin Ahmad",      train: "Train 102", route: "Abha → Tabuk",    seat: 12, date: "2026-03-11", status: "Pending"   },
@@ -367,7 +366,6 @@
         renderTable(this.value);
     });
 
-    // guard
     if (!localStorage.getItem("userName")) {
         alert("Please login first!");
         window.location.href = "Login.html";
