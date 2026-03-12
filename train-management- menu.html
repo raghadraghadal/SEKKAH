@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Train Management Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;600;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <style>
@@ -15,16 +15,19 @@
             --sidebar-bg: #ffffff;
         }
 
+        * { box-sizing: border-box; font-family: 'Abhaya Libre', serif; }
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Abhaya Libre', serif;
             background-color: var(--bg-page);
             display: flex;
             height: 100vh;
             overflow: hidden;
+            position: relative;
         }
 
+        /* --- [1] الشريط الجانبي (مطابق للبروفايل) --- */
         .sidebar-small {
             width: 50px !important;
             background: white;
@@ -42,12 +45,7 @@
         }
 
         #menu-toggle { display: none; }
-
-        .menu-btn-label {
-            font-size: 28px;
-            cursor: pointer;
-            color: #333;
-        }
+        .menu-btn-label { font-size: 28px; cursor: pointer; color: #333; }
 
         .sidebar-overlay {
             position: fixed;
@@ -65,25 +63,17 @@
             border-radius: 25px;
         }
 
-        #menu-toggle:checked ~ .sidebar-overlay { left: 0; }
-
-        .overlay-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3); z-index: 90; display: none;
-        }
-
+        #menu-toggle:checked ~ .sidebar-overlay { left: 10px; }
+        .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 90; display: none; }
         #menu-toggle:checked ~ .overlay-bg { display: block; }
-
-        .close-btn { align-self: flex-end; cursor: pointer; font-size: 30px; margin-bottom: 30px; }
 
         .nav-item {
             display: flex; align-items: center; gap: 15px; padding: 15px;
             cursor: pointer; border-radius: 10px; margin-bottom: 10px;
             color: black; text-decoration: none; transition: 0.3s;
         }
-
         .nav-item:hover { background: #f5f5f5; }
-        .nav-item.active { background: #f0f8f7; }
+        .nav-item.active { background: #f0f8f7; border-radius: 15px; }
 
         .logout-btn {
             margin-top: auto; background: #E53935; color: white;
@@ -91,6 +81,7 @@
             align-items: center; justify-content: center; gap: 10px; text-decoration: none;
         }
 
+        /* --- [2] المحتوى الرئيسي (الأبعاد المطابقة للبروفايل) --- */
         .main-wrapper {
             flex: 1;
             margin-left: 80px;
@@ -99,6 +90,7 @@
             align-items: center;
             position: relative;
             width: calc(100% - 80px);
+            overflow-y: auto;
         }
 
         .header-logo {
@@ -106,26 +98,26 @@
             top: 10px;
             right: 30px;
             width: 90px;
-            height: auto;
             z-index: 1000;
         }
 
+        /* تم توحيد الأبعاد هنا لتطابق البروفايل */
         .content-area {
             background: white;
-            border-radius: 50px;
+            border-radius: 30px; /* تم تعديلها لتطابق 30px */
             margin-top: 100px;
-            padding: 60px 50px;
+            padding: 60px; /* تم توحيد المسافات الداخلية */
             width: 85%;
             max-width: 1100px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* نفس ظل البروفايل */
             display: flex;
             flex-direction: column;
             align-items: flex-start; 
-            height: fit-content;
+            min-height: 500px;
+            margin-bottom: 40px;
         }
 
         h1 {
-            font-family: 'Abhaya Libre', serif;
             font-size: 45px;
             font-weight: 300;
             color: #1a1a1a;
@@ -134,6 +126,7 @@
             text-transform: capitalize;
         }
 
+        /* شبكة الأزرار */
         .grid-wrapper {
             width: 100%;
             display: flex;
@@ -191,7 +184,7 @@
     </div>
 
     <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons close-btn">close</label>
+        <label for="menu-toggle" class="material-icons" style="align-self:flex-end;cursor:pointer;font-size:30px;margin-bottom:40px;">close</label>
 
         <a href="home.html" class="nav-item">
             <i class="material-icons">home</i>
