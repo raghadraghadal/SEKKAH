@@ -1,394 +1,86 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-     <meta charset="UTF-8">
-    <title>Train 101</title>
-    <link rel="stylesheet" href="styles.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Create Schedule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800; 
-            font-size: 14px;
-        }
+        * { box-sizing: border-box; font-family: 'Abhaya Libre', serif; font-weight: 800; }
+        body { margin: 0; display: flex; min-height: 100vh; background-color: #EAF6F5; position: relative; padding: 20px; overflow-x: hidden; }
 
-        body {
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-            background-color: #EAF6F5; /* نفس لون خلفية البروفايل */
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-
-        /* التحكم في القائمة الجانبية عبر Checkbox مخفي (بدون جافا سكريبت) */
-        #menu-toggle {
-            display: none;
-        }
-
-        /* الشعار في الخلفية العلوية اليمنى كما في التصميم */
-        .header-logo {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            width: 100px;
-            z-index: 1;
-        }
-
-        .main-wrapper {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px; /* نفس حجم صفحة البروفايل */
-            align-items: stretch;
-        }
-
-        /* القائمة الجانبية الصغيرة الثابتة */
-        .sidebar-small {
-            width: 65px;
-            background: white;
-            border-radius: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .menu-btn-label {
-            font-size: 32px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        /* القائمة الجانبية الكبيرة (Overlay) */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 280px;
-            height: 100%;
-            background: white;
-            z-index: 100;
-            transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        #menu-toggle:checked ~ .sidebar-overlay {
-            left: 0;
-        }
-
-        .overlay-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.3);
-            z-index: 90;
-            display: none;
-        }
-
-        #menu-toggle:checked ~ .overlay-bg {
-            display: block;
-        }
-
-        .close-btn-label {
-            align-self: flex-end;
-            cursor: pointer;
-            font-size: 30px;
-            margin-bottom: 40px;
-        }
-
-        /* تنسيق روابط القائمة الجانبية */
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            color: black;
-            text-decoration: none;
-        }
-
+        #menu-toggle { display: none; }
+        .header-logo { position: absolute; top: 10px; right: 30px; width: 90px; height: auto; z-index: 1000; }
+        .sidebar-small { width: 50px; background: white; border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 15px 0; box-shadow: 2px 0 10px rgba(0,0,0,0.03); height: 85vh; position: fixed; left: 10px; top: 7.5vh; z-index: 1000; }
+        .menu-btn-label { font-size: 28px; cursor: pointer; color: #333; }
+        .sidebar-overlay { position: fixed; left: -320px; width: 280px; background: white; z-index: 1100; transition: 0.3s ease-in-out; box-shadow: 5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; padding: 20px; height: 85vh; top: 7.5vh; border-radius: 25px; }
+        #menu-toggle:checked ~ .sidebar-overlay { left: 0; }
+        .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 90; display: none; }
+        #menu-toggle:checked ~ .overlay-bg { display: block; }
+        .nav-item { display: flex; align-items: center; gap: 15px; padding: 15px; cursor: pointer; border-radius: 10px; margin-bottom: 10px; color: black; text-decoration: none; }
+        .nav-item.main-link { font-size: 18px; font-weight: 900; }
         .nav-item:hover { background: #f5f5f5; }
+        .nav-item.active { background: #f0f8f7; border-radius: 15px; }
+        .logout-btn { margin-top: auto; background: #E53935; color: white; border-radius: 20px; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
+        .main-wrapper { flex: 1; margin-left: 80px; display: flex; flex-direction: column; align-items: center; position: relative; width: calc(100% - 80px); }
+        .content-area { background: white; border-radius: 50px; margin-top: 100px; padding: 60px 50px; width: 85%; max-width: 1100px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; flex-direction: column; align-items: flex-start; height: fit-content; margin-bottom: 40px; }
 
-        /* زر تسجيل الخروج الأحمر */
-        .logout-btn {
-            margin-top: auto;
-            background: #E53935; /* لون أحمر مطابق للتصميم */
-            color: white;
-            border-radius: 20px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        /* المستطيل الأبيض الكبير للمحتوى */
-        .content-area {
-            flex: 1;
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-           min-height: 600px;
-
-          min-height: 600px;
-        }
-
-        /* رفع العنوان وتكبيره */
-        h1 {
-            font-size: 34px;
-            margin-top: 5px;
-            margin-bottom: 25px;
-        }
-
-        /* شبكة مربعين فقط */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            width: 100%;
-            max-width: 700px;
-            margin-top: 40px; /* نزلنا المربعات */
-            margin-bottom: 40px;
-        }
-
-        .management-card {
-            background: #EAF6F5;
-            border-radius: 25px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: black;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-align: center;
-        }
-
-        .management-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .card-icon-bg {
-            width: 80px;
-            height: 80px;
-            background: #2D9596;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .card-icon-bg i {
-            color: white;
-            font-size: 40px;
-        }
-
-        .card-title {
-            font-size: 16px;
-        }
-
-        /* جدول البيانات */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-top: 20px;
-            display: none;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background: #2B8F8A;
-            color: white;
-        }
-        .btn {
-            margin-top: 20px;
-            display: block;
-            width: 200px;
-            padding: 12px;
-            background: #2B8F8A;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
+        h1 { font-size: 45px; font-weight: 300; color: #1a1a1a; margin-bottom: 40px; letter-spacing: 2px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 780px; width: 100%; }
+        .form-grid .full { grid-column: 1/-1; }
+        .field label { display: block; font-size: 13px; font-weight: 800; color: #6b7280; margin-bottom: 7px; text-transform: uppercase; letter-spacing: .5px; }
+        .field input, .field select { width: 100%; padding: 12px 18px; border: 1.5px solid #e5e7eb; border-radius: 10px; font-family: 'Abhaya Libre', serif; font-size: 15px; background: #fafafa; outline: none; transition: border-color .2s; }
+        .field input:focus, .field select:focus { border-color: #12958D; background: #fff; }
+        .field .err { font-size: 12px; color: #ef4444; margin-top: 5px; display: none; }
+        .field .err.show { display: block; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 26px; border-radius: 50px; font-family: 'Abhaya Libre', serif; font-size: 15px; font-weight: 800; cursor: pointer; border: none; text-decoration: none; transition: filter .2s; }
+        .btn-primary { background: #12958D; color: #fff; } .btn-primary:hover { filter: brightness(1.1); }
+        .btn-ghost { background: transparent; color: #6b7280; border: 1.5px solid #e5e7eb; } .btn-ghost:hover { background: #e5e7eb; }
+        .alert { display: none; align-items: center; gap: 10px; padding: 14px 20px; border-radius: 10px; font-size: 14px; margin-top: 20px; }
+        .alert.show { display: flex; }
+        .alert-success { background: #d4f5e9; color: #0a6641; }
+        @media(max-width:700px){ .form-grid{ grid-template-columns:1fr; } }
     </style>
 </head>
 <body>
-    <input type="checkbox" id="menu-toggle">
-
-    <img src="images\Logo.svg" alt="Sikka Logo" class="header-logo">
-
+    <input type="checkbox" id="menu-toggle" style="display:none;">
     <label for="menu-toggle" class="overlay-bg"></label>
-
+    <div class="sidebar-small">
+        <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+    </div>
     <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons" style="align-self: flex-end; cursor: pointer; font-size: 30px; margin-bottom: 40px;">close</label>
-
-        <a href="home.html" class="nav-item main-link">
-            <i class="material-icons">home</i>
-            <span>Home</span>
-        </a>
-
-        <a href="train_management.html" class="nav-item">
-            <i class="material-icons">train</i>
-            <span>Train Management</span>
-        </a>
-
-        <a href="passenger_management.html" class="nav-item">
-            <i class="material-icons">groups</i>
-            <span>Passenger Management</span>
-        </a>
-
-        <a href="reservation_system.html" class="nav-item">
-            <i class="material-icons">confirmation_number</i>
-            <span>Reservation System</span>
-        </a>
-
-        <a href="reports.html" class="nav-item">
-            <i class="material-icons">assessment</i>
-            <span>Dashboard & Reports</span>
-        </a>
-
-        <a href="profile.html" class="nav-item main-link" style="margin-top: 15px;">
-            <i class="material-icons">person_outline</i>
-            <span>Account Details</span>
-        </a>
-
-        <a href="StartHer.html" class="logout-btn">
-            <i class="material-icons">logout</i>
-            <span>Logout</span>
-        </a>
+        <label for="menu-toggle" class="material-icons" style="align-self:flex-end;cursor:pointer;font-size:30px;margin-bottom:40px;">close</label>
+        <a href="home.html" class="nav-item"><i class="material-icons">home</i><span>Home</span></a>
+        <a href="train-management- menu.html" class="nav-item active"><i class="material-icons">train</i><span>Train Management</span></a>
+        <a href="Passenger Management.html" class="nav-item"><i class="material-icons">groups</i><span>Passenger Management</span></a>
+        <a href="Reservation-System.html" class="nav-item"><i class="material-icons">confirmation_number</i><span>Reservation System</span></a>
+        <a href="Dashboard.html" class="nav-item"><i class="material-icons">bar_chart</i><span>Dashboard &amp; Reports</span></a>
+        <a href="profile.html" class="nav-item main-link" style="margin-top:15px;"><i class="material-icons">person_outline</i><span>Account Details</span></a>
+        <a href="StartHer.html" class="logout-btn"><i class="material-icons">logout</i><span>Logout</span></a>
     </div>
-
     <div class="main-wrapper">
-        <div class="sidebar-small">
-            <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
-        </div>
-
+        <img src="images/Logo.svg" alt="Sikka Logo" class="header-logo">
         <div class="content-area">
-
-        <h1>Saved Train Schedule</h1>
-
-        <!-- المربعات -->
-        <div class="cards-grid">
-
-            <!-- Create Table -->
-            <a href="create-table.html" class="management-card">
-                <div class="card-icon-bg">
-                    <i class="material-icons">add_box</i>
-                </div>
-                <span class="card-title">Create Table</span>
-            </a>
-
-            
-<!-- View Timetable -->
-<a href="ViewTimetable.html" class="management-card">
-    <div class="card-icon-bg">
-        <i class="material-icons">schedule</i>
-    </div>
-    <span class="card-title">View Timetable</span>
-</a>
+            <h1>Create Schedule</h1>
+            <div class="form-grid">
+                <div class="field"><label>Train</label><select id="f_train"><option value="">-- Select --</option><option>Train 101</option><option>Train 102</option><option>Train 103</option></select><span class="err" id="err_train">Required.</span></div>
+                <div class="field"><label>Route</label><select id="f_route"><option value="">-- Select --</option><option>Riyadh → Dammam</option><option>Dammam → Riyadh</option><option>Abha → Tabuk</option><option>Tabuk → Abha</option><option>Hail → Madinah</option><option>Madinah → Hail</option></select><span class="err" id="err_route">Required.</span></div>
+                <div class="field"><label>Departure Time</label><input type="datetime-local" id="f_dep"><span class="err" id="err_dep">Required.</span></div>
+                <div class="field"><label>Arrival Time</label><input type="datetime-local" id="f_arr"><span class="err" id="err_arr">Must be after departure.</span></div>
+                <div class="field"><label>Available Seats</label><input type="number" id="f_seats" placeholder="e.g. 50" min="1"><span class="err" id="err_seats">Required — min 1.</span></div>
+                <div class="field"><label>Status</label><select id="f_status"><option>Active</option><option>Delayed</option><option>Cancelled</option></select></div>
+            </div>
+            <div style="display:flex;gap:14px;margin-top:32px;">
+                <button class="btn btn-primary" onclick="save()"><i class="material-icons" style="font-size:18px">save</i>Save Schedule</button>
+                <a href="train-management- menu.html" class="btn btn-ghost">Cancel</a>
+            </div>
+            <div class="alert alert-success" id="ok"><i class="material-icons">check_circle</i>Schedule saved! <a href="ViewTimetable.html" style="margin-left:8px;font-weight:800;color:inherit;text-decoration:underline;">View Timetable →</a></div>
         </div>
-
-<div class="top-buttons">
-
-
-</div>
-        <!-- جدول البيانات -->
-        <table id="savedTable">
-            <tr>
-                <th>Organization</th>
-                <th>Train</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Arrival Time</th>
-                <th>Departure Time</th>
-                <th>Notes</th>
-            </tr>
-        </table>
-
     </div>
-</div>
-
 <script>
-function showSavedTable() {
-    const table = document.getElementById("savedTable");
-    table.style.display = "table";
-
-    const saved = JSON.parse(localStorage.getItem("trainTable"));
-
-    if (!saved) {
-        alert("No saved data found");
-        return;
-    }
-
-    table.innerHTML = `
-        <tr>
-            <th>Organization</th>
-            <th>Train</th>
-            <th>From</th>
-            <th>To</th>
-            <th>Arrival Time</th>
-            <th>Departure Time</th>
-            <th>Notes</th>
-        </tr>
-    `;
-
-    saved.forEach(row => {
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-            <td>${row.org}</td>
-            <td>${row.train}</td>
-            <td>${row.from}</td>
-            <td>${row.to}</td>
-            <td>${row.arrive}</td>
-            <td>${row.depart}</td>
-            <td>${row.notes}</td>
-        `;
-
-        table.appendChild(tr);
-    });
-}
+if(!localStorage.getItem("userName")){alert("Please login first!");window.location.href="Login.html";}
+function validate(){const dep=document.getElementById("f_dep").value,arr=document.getElementById("f_arr").value;let ok=true;const chk=(id,errId,cond)=>{document.getElementById(errId).classList.toggle("show",!cond);if(!cond)ok=false;};chk("f_train","err_train",!!document.getElementById("f_train").value);chk("f_route","err_route",!!document.getElementById("f_route").value);chk("f_dep","err_dep",!!dep);chk("f_arr","err_arr",!!arr&&(!dep||new Date(arr)>new Date(dep)));chk("f_seats","err_seats",!!document.getElementById("f_seats").value&&document.getElementById("f_seats").value>=1);return ok;}
+function save(){if(!validate())return;const s={id:"SC-"+Date.now(),train:document.getElementById("f_train").value,route:document.getElementById("f_route").value,depart:document.getElementById("f_dep").value,arrive:document.getElementById("f_arr").value,seats:parseInt(document.getElementById("f_seats").value),status:document.getElementById("f_status").value};const list=JSON.parse(localStorage.getItem("schedules")||"[]");list.push(s);localStorage.setItem("schedules",JSON.stringify(list));document.getElementById("ok").classList.add("show");["f_train","f_route","f_dep","f_arr","f_seats"].forEach(id=>document.getElementById(id).value="");document.getElementById("f_status").value="Active";}
 </script>
-
 </body>
 </html>

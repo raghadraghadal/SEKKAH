@@ -140,6 +140,7 @@
 
         /* --- [5] المربع الأبيض الكبير والمربعات الأربعة --- */
         .content-area {
+        position: relative;
             flex: 1;
             background: white;
             border-radius: 30px;
@@ -227,22 +228,22 @@
             <span>Home</span>
         </a>
 
-        <a href="train_management.html" class="nav-item">
+        <a href="train-management- menu.html" class="nav-item">
             <i class="material-icons">train</i>
             <span>Train Management</span>
         </a>
 
-        <a href="passenger_management.html" class="nav-item">
+        <a href="Passenger Management.html" class="nav-item">
             <i class="material-icons">groups</i>
             <span>Passenger Management</span>
         </a>
 
-        <a href="reservation_system.html" class="nav-item">
+        <a href="Reservation-System.html" class="nav-item">
             <i class="material-icons">confirmation_number</i>
             <span>Reservation System</span>
         </a>
 
-        <a href="reports.html" class="nav-item">
+        <a href="Dashboard.html" class="nav-item">
             <i class="material-icons">assessment</i>
             <span>Dashboard & Reports</span>
         </a>
@@ -282,8 +283,10 @@
 <div class="main-card">
     <div class="page-content">
         <div class="payment-card">
-             <img src="Logo.svg" class="card-logo" alt="logo">
+             <img src="images\Logo.svg" class="card-logo" alt="logo">
         <span class="train-status status-late"></span>
+
+        
 
      <p> Train 101</p>
       <p><strong>Current Trip:</strong> From Riyadh to Dammam</p>
@@ -301,9 +304,29 @@
 <p><strong>       The card shows the train name, the previous and current route, and the train status. The train </strong> Late</p>
     <p><strong>   status circle has three colors: red for delay, green for on time, and orange for stopped.</strong> Late</p>
 
+    <a href="monitoring.html" 
+   style="
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background:#1aa6a6;
+        color:white;
+        padding:10px 18px;
+        border-radius:10px;
+        font-size:16px;
+        font-weight:bold;
+        text-decoration:none;
+        transition:0.2s;
+   "
+   onmouseover="this.style.background='#178f8f'"
+   onmouseout="this.style.background='#1aa6a6'">
+   Back
+</a>
 </div>
 
     </div>
+
+    
 </div>
 
 </body>

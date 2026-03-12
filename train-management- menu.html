@@ -25,7 +25,6 @@
             overflow: hidden;
         }
 
-        /* --- 1. الشريط الجانبي الطائر (مطابق للجدول) --- */
         .sidebar-small {
             width: 50px !important;
             background: white;
@@ -50,7 +49,6 @@
             color: #333;
         }
 
-        /* --- 2. القائمة المنزلقة (Drawer) المنحنية --- */
         .sidebar-overlay {
             position: fixed;
             left: -320px; 
@@ -93,7 +91,6 @@
             align-items: center; justify-content: center; gap: 10px; text-decoration: none;
         }
 
-        /* --- 3. المحتوى الرئيسي (اللوحة البيضاء المطابقة للجدول) --- */
         .main-wrapper {
             flex: 1;
             margin-left: 80px;
@@ -137,7 +134,6 @@
             text-transform: capitalize;
         }
 
-        /* شبكة الأزرار */
         .grid-wrapper {
             width: 100%;
             display: flex;
@@ -179,7 +175,7 @@
 
         .card-text { padding-left: 25px; color: #000; font-size: 20px; font-weight: 500; }
 
-        .last-row { width: 100%; display: flex; justify-content: center; margin-top: 10px; }
+        .last-row { width: 100%; display: flex; justify-content: center; gap: 40px; margin-top: 10px; }
 
     </style>
 </head>
@@ -207,7 +203,7 @@
             <span>Train Management</span>
         </a>
 
-        <a href="Passenger-Management.html" class="nav-item">
+        <a href="Passenger Management.html" class="nav-item">
             <i class="material-icons">people_outline</i>
             <span>Passenger Management</span>
         </a>
@@ -228,7 +224,7 @@
             <span style="font-weight: bold;">Account Details</span>
         </a>
 
-        <a href="Login.html" class="logout-btn" style="background-color: #e53935; color: white; border-radius: 25px; margin-top: 20px;">
+        <a href="StartHer.html" class="logout-btn">
             <i class="material-icons">logout</i>
             <span>Logout</span>
         </a>
@@ -267,6 +263,10 @@
                     <a href="create-schedule.html" class="card">
                         <div class="icon-box"><i class="material-icons">edit_calendar</i></div>
                         <div class="card-text">Creating train schedules</div>
+                    </a>
+                    <a href="viewTable.html" class="card">
+                        <div class="icon-box"><i class="material-icons">table_view</i></div>
+                        <div class="card-text">View Schedules</div>
                     </a>
                 </div>
             </div>
