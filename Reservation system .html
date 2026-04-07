@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Reservation System</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .htmlgit add .
+" class="nb-link active"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="page-title">Reservation System</div>
+
+  <div class="search-row">
+    <input type="text" class="search-input" id="resSearch" placeholder="Search by passenger name or booking ID..." oninput="renderRes()">
+    <button class="btn-primary" onclick="openModal()">
+      <i class="material-icons" style="font-size:16px">add</i> New Booking
+    </button>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Booking ID</th><th>Passenger</th><th>Train</th><th>Route</th><th>Seat</th><th>Date</th><th>Status</th><th>Action</th></tr>
+      </thead>
+      <tbody id="resBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2>New Booking</h2>
+    <div class="modal-field"><label>Passenger Name</label><input type="text" id="m_name" placeholder="Full name"></div>
+    <div class="modal-field">
+      <label>Train</label>
+      <select id="m_train">
+        <option value="">-- Select Train --</option>
+        <option value="Train 101">Train 101 — Riyadh → Dammam</option>
+        <option value="Train 102">Train 102 — Abha → Tabuk</option>
+        <option value="Train 103">Train 103 — Hail → Madinah</option>
+      </select>
+    </div>
+    <div class="modal-field"><label>Seat Number</label><input type="number" id="m_seat" placeholder="e.g. 12" min="1" max="50"></div>
+    <div class="modal-field"><label>Date</label><input type="date" id="m_date"></div>
+    <div id="book-err" style="color:#c62828;font-size:12px;margin-top:4px;display:none;">Please fill all fields.</div>
+    <div class="modal-actions">
+      <button class="btn-cancel-modal" onclick="closeModal()">Cancel</button>
+      <button class="btn-confirm" onclick="addBooking()">Confirm Booking</button>
+    </div>
+  </div>
+</div>
+
+<script>
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+document.getElementById('nbUser').textContent=localStorage.getItem('userName')||'Admin';
+
+const ROUTES={'Train 101':'Riyadh → Dammam','Train 102':'Abha → Tabuk','Train 103':'Hail → Madinah'};
+const defaultBookings=[
+  {id:'BK-001',name:'Anas bin Malik',train:'Train 101',route:'Riyadh → Dammam',seat:5,date:'2026-03-10',status:'Confirmed'},
+  {id:'BK-002',name:'Saad bin Ahmad',train:'Train 102',route:'Abha → Tabuk',seat:12,date:'2026-03-11',status:'Pending'},
+  {id:'BK-003',name:'Ibrahim Abdullah',train:'Train 103',route:'Hail → Madinah',seat:7,date:'2026-03-12',status:'Confirmed'},
+];
+function loadRes(){const s=localStorage.getItem('bookings');return s?JSON.parse(s):defaultBookings;}
+function saveRes(l){localStorage.setItem('bookings',JSON.stringify(l));}
+function statusCls(s){return s==='Confirmed'?'badge-confirmed':s==='Pending'?'badge-pending':'badge-cancelled';}
+
+function renderRes(){
+  const q=document.getElementById('resSearch').value.toLowerCase();
+  const list=loadRes().filter(b=>!q||b.name.toLowerCase().includes(q)||b.id.toLowerCase().includes(q));
+  const body=document.getElementById('resBody');
+  if(!list.length){body.innerHTML='<tr><td colspan="8" style="text-align:center;padding:30px;color:#aaa;">No bookings found.</td></tr>';return;}
+  body.innerHTML=list.map(b=>`<tr>
+    <td><strong>${b.id}</strong></td><td>${b.name}</td><td>${b.train}</td><td>${b.route}</td>
+    <td>${b.seat}</td><td>${b.date}</td>
+    <td><span class="badge ${statusCls(b.status)}">${b.status}</span></td>
+    <td>${b.status!=='Cancelled'?`<button class="btn-danger" onclick="cancelBooking('${b.id}')">Cancel</button>`:'—'}</td>
+  </tr>`).join('');
+}
+
+function cancelBooking(id){
+  if(!confirm('Cancel this booking?'))return;
+  const list=loadRes();const b=list.find(x=>x.id===id);if(b)b.status='Cancelled';
+  saveRes(list);renderRes();
+}
+function openModal(){
+  document.getElementById('modalOverlay').classList.add('show');
+  document.getElementById('m_date').value=new Date().toISOString().split('T')[0];
+}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('show');
+  ['m_name','m_train','m_seat','m_date'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('book-err').style.display='none';
+}
+function addBooking(){
+  const name=document.getElementById('m_name').value.trim();
+  const train=document.getElementById('m_train').value;
+  const seat=document.getElementById('m_seat').value;
+  const date=document.getElementById('m_date').value;
+  const err=document.getElementById('book-err');
+  if(!name||!train||!seat||!date){err.style.display='block';return;}
+  err.style.display='none';
+  const list=loadRes();
+  list.push({id:'BK-'+String(list.length+1).padStart(3,'0'),name,train,route:ROUTES[train],seat:parseInt(seat),date,status:'Confirmed'});
+  saveRes(list);closeModal();renderRes();
+}
+renderRes();
+</script>
+</body>
+</html>

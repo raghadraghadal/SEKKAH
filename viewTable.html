@@ -1,78 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Saved Timetables</title>
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; font-family: 'Abhaya Libre', serif; font-weight: 800; }
-        body { margin: 0; display: flex; min-height: 100vh; background-color: #EAF6F5; position: relative; padding: 20px; overflow-x: hidden; }
-
-        #menu-toggle { display: none; }
-        .header-logo { position: absolute; top: 10px; right: 30px; width: 90px; height: auto; z-index: 1000; }
-        .sidebar-small { width: 50px; background: white; border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 15px 0; box-shadow: 2px 0 10px rgba(0,0,0,0.03); height: 85vh; position: fixed; left: 10px; top: 7.5vh; z-index: 1000; }
-        .menu-btn-label { font-size: 28px; cursor: pointer; color: #333; }
-        .sidebar-overlay { position: fixed; left: -320px; width: 280px; background: white; z-index: 1100; transition: 0.3s ease-in-out; box-shadow: 5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; padding: 20px; height: 85vh; top: 7.5vh; border-radius: 25px; }
-        #menu-toggle:checked ~ .sidebar-overlay { left: 0; }
-        .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 90; display: none; }
-        #menu-toggle:checked ~ .overlay-bg { display: block; }
-        .nav-item { display: flex; align-items: center; gap: 15px; padding: 15px; cursor: pointer; border-radius: 10px; margin-bottom: 10px; color: black; text-decoration: none; }
-        .nav-item.main-link { font-size: 18px; font-weight: 900; }
-        .nav-item:hover { background: #f5f5f5; }
-        .nav-item.active { background: #f0f8f7; border-radius: 15px; }
-        .logout-btn { margin-top: auto; background: #E53935; color: white; border-radius: 20px; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
-        .main-wrapper { flex: 1; margin-left: 80px; display: flex; flex-direction: column; align-items: center; position: relative; width: calc(100% - 80px); }
-        .content-area { background: white; border-radius: 50px; margin-top: 100px; padding: 60px 50px; width: 85%; max-width: 1100px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; flex-direction: column; align-items: flex-start; height: fit-content; margin-bottom: 40px; }
-
-        h1 { font-size: 45px; font-weight: 300; color: #1a1a1a; margin-bottom: 0; letter-spacing: 2px; }
-        .top-bar { display:flex; align-items:center; justify-content:space-between; width:100%; margin-bottom:32px; flex-wrap:wrap; gap:12px; }
-        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 26px; border-radius: 50px; font-family: 'Abhaya Libre', serif; font-size: 15px; font-weight: 800; cursor: pointer; border: none; text-decoration: none; }
-        .btn-primary { background: #12958D; color: #fff; } .btn-primary:hover { filter: brightness(1.1); }
-        .btn-ghost { background: transparent; color: #6b7280; border: 1.5px solid #e5e7eb; } .btn-ghost:hover { background: #e5e7eb; }
-        .schedule-block { margin-bottom: 36px; width: 100%; }
-        .schedule-name { font-size: 14px; font-weight: 800; color: #12958D; margin-bottom: 12px; text-transform: uppercase; letter-spacing: .5px; }
-        .data-table { width: 100%; border-collapse: collapse; background: #F0F8F7; border-radius: 16px; overflow: hidden; }
-        .data-table thead th { background: #12958D; color: #fff; padding: 14px 12px; font-size: 13px; text-align: center; }
-        .data-table tbody td { padding: 15px 12px; text-align: center; font-size: 14px; border-bottom: 1px solid #e5e7eb; color: #374151; }
-        .data-table tbody tr:last-child td { border-bottom: none; }
-        .data-table tbody tr:hover { background: #EAF6F5; }
-        .empty-state { text-align: center; color: #6b7280; padding: 60px 20px; font-size: 18px; font-weight: 500; }
-        .empty-state .material-icons { font-size: 52px; display: block; margin-bottom: 12px; color: #c4e9e7; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Saved Timetables</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.schedule-block{margin-bottom:28px;}
+.schedule-label{font-size:13px;font-weight:800;color:#12958D;margin-bottom:10px;letter-spacing:.5px;text-transform:uppercase;}
+.empty-state{text-align:center;padding:60px 20px;background:white;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.empty-state i{font-size:52px;color:#c4e9e7;display:block;margin-bottom:12px;}
+.empty-state p{font-size:15px;color:#888;margin-bottom:16px;}
+</style>
 </head>
 <body>
-    <input type="checkbox" id="menu-toggle" style="display:none;">
-    <label for="menu-toggle" class="overlay-bg"></label>
-    <div class="sidebar-small">
-        <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
-    </div>
-    <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons" style="align-self:flex-end;cursor:pointer;font-size:30px;margin-bottom:40px;">close</label>
-        <a href="home.html" class="nav-item"><i class="material-icons">home</i><span>Home</span></a>
-        <a href="train-management- menu.html" class="nav-item active"><i class="material-icons">train</i><span>Train Management</span></a>
-        <a href="Passenger Management.html" class="nav-item"><i class="material-icons">groups</i><span>Passenger Management</span></a>
-        <a href="Reservation-System.html" class="nav-item"><i class="material-icons">confirmation_number</i><span>Reservation System</span></a>
-        <a href="Dashboard.html" class="nav-item"><i class="material-icons">bar_chart</i><span>Dashboard &amp; Reports</span></a>
-        <a href="profile.html" class="nav-item main-link" style="margin-top:15px;"><i class="material-icons">person_outline</i><span>Account Details</span></a>
-        <a href="StartHer.html" class="logout-btn"><i class="material-icons">logout</i><span>Logout</span></a>
-    </div>
-    <div class="main-wrapper">
-        <img src="images/Logo.svg" alt="Sikka Logo" class="header-logo">
-        <div class="content-area">
-            <div class="top-bar">
-                <h1>Saved Timetables</h1>
-                <a href="create-table.html" class="btn btn-primary"><i class="material-icons" style="font-size:18px">add</i>Create New Table</a>
-            </div>
-            <div id="listBox" style="width:100%;"></div>
-            <a href="train-management- menu.html" class="btn btn-ghost" style="margin-top:16px;"><i class="material-icons" style="font-size:18px">arrow_back</i>Back</a>
-        </div>
-    </div>
+
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link active"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px;">
+    <div class="page-title" style="margin-bottom:0">Saved Timetables</div>
+    <a href="Create table.html" class="btn-primary">
+      <i class="material-icons" style="font-size:16px">add</i> Create New Table
+    </a>
+  </div>
+
+  <div id="listBox"></div>
+
+  <div style="margin-top:8px;">
+    <a href="Train management menu .html" class="btn-ghost">
+      <i class="material-icons" style="font-size:16px">arrow_back</i> Back
+    </a>
+  </div>
+</div>
+
 <script>
-if(!localStorage.getItem("userName")){alert("Please login first!");window.location.href="Login.html";}
-const box=document.getElementById("listBox"),list=JSON.parse(localStorage.getItem("scheduleList")||"null");
-if(!list||!list.length){box.innerHTML=`<div class="empty-state"><span class="material-icons">event_busy</span>No saved timetables yet.<br><a href="create-table.html" style="color:#12958D;font-weight:800;margin-top:10px;display:inline-block;">Create your first table →</a></div>`;}
-else{list.forEach((name,idx)=>{const data=JSON.parse(localStorage.getItem(name)||"[]");const rows=data.map(r=>`<tr><td>${r.org||"—"}</td><td>${r.train||"—"}</td><td>${r.from||"—"}</td><td>${r.to||"—"}</td><td>${r.arrive||"—"}</td><td>${r.depart||"—"}</td><td>${r.notes||"—"}</td></tr>`).join("");box.innerHTML+=`<div class="schedule-block"><p class="schedule-name">Table ${idx+1} — ${name}</p><table class="data-table"><thead><tr><th>Organization</th><th>Train</th><th>From</th><th>To</th><th>Arrival</th><th>Departure</th><th>Notes</th></tr></thead><tbody>${rows}</tbody></table></div>`;});}
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+document.getElementById('nbUser').textContent=localStorage.getItem('userName')||'Admin';
+
+const box=document.getElementById('listBox');
+const list=JSON.parse(localStorage.getItem('scheduleList')||'null');
+
+if(!list||!list.length){
+  box.innerHTML=`<div class="empty-state">
+    <i class="material-icons">event_busy</i>
+    <p>No saved timetables yet.</p>
+    <a href="create-table.html" class="btn-primary"><i class="material-icons" style="font-size:16px">add</i>Create your first table</a>
+  </div>`;
+} else {
+  list.forEach((name,idx)=>{
+    const data=JSON.parse(localStorage.getItem(name)||'[]');
+    const rows=data.map(r=>`<tr>
+      <td>${r.org||'—'}</td><td>${r.train||'—'}</td><td>${r.from||'—'}</td>
+      <td>${r.to||'—'}</td><td>${r.arrive||'—'}</td><td>${r.depart||'—'}</td><td>${r.notes||'—'}</td>
+    </tr>`).join('');
+    box.innerHTML+=`<div class="schedule-block">
+      <div class="schedule-label">Table ${idx+1} — ${name}</div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Organization</th><th>Train</th><th>From</th><th>To</th><th>Arrival</th><th>Departure</th><th>Notes</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>`;
+  });
+}
 </script>
 </body>
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Train Timetable</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.edit-btn{background:#e8f4fd;color:#1565c0;border:none;border-radius:8px;padding:6px 13px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;margin-right:5px;}
+.edit-btn:hover{background:#bbdefb;}
+.save-btn{background:#12958D;color:white;border:none;border-radius:8px;padding:6px 13px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;margin-right:5px;}
+.del-btn{background:#fde8e8;color:#E53935;border:none;border-radius:8px;padding:6px 13px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;}
+.del-btn:hover{background:#fac9c9;}
+</style>
+</head>
+<body>
+
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link active"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="page-title">Train Timetable</div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Train</th><th>Route</th><th>Departure</th><th>Arrival</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:16px;display:flex;gap:12px;">
+    <a href="Create schedule.html" class="btn-primary">
+      <i class="material-icons" style="font-size:16px">add</i> Add Schedule
+    </a>
+    <a href="Train management menu .html" class="btn-ghost">
+      <i class="material-icons" style="font-size:16px">arrow_back</i> Back
+    </a>
+  </div>
+</div>
+
+<script>
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+document.getElementById('nbUser').textContent=localStorage.getItem('userName')||'Admin';
+
+const defaultRows=[
+  {train:'Train 101',route:'Riyadh → Dammam',dep:'5:00 PM',arr:'7:00 PM'},
+  {train:'Train 102',route:'Abha → Tabuk',dep:'12:00 PM',arr:'4:00 PM'},
+  {train:'Train 103',route:'Hail → Madinah',dep:'8:00 AM',arr:'11:00 AM'},
+];
+
+function render(){
+  const saved=JSON.parse(localStorage.getItem('schedules')||'null');
+  const rows=saved&&saved.length?saved.map(s=>({train:s.train,route:s.route,dep:s.depart||s.dep||'—',arr:s.arrive||s.arr||'—',id:s.id})):defaultRows;
+  document.getElementById('tableBody').innerHTML=rows.map((r,i)=>`
+    <tr id="row${i}">
+      <td><strong id="t${i}">${r.train}</strong></td>
+      <td id="r${i}">${r.route}</td>
+      <td id="d${i}">${r.dep}</td>
+      <td id="a${i}">${r.arr}</td>
+      <td>
+        <button class="edit-btn" id="eb${i}" onclick="toggleEdit(${i})">Edit</button>
+        <button class="del-btn" onclick="deleteRow(${i})">Delete</button>
+      </td>
+    </tr>`).join('');
+}
+
+function toggleEdit(i){
+  const btn=document.getElementById('eb'+i);
+  const cells=['r','d','a'].map(p=>document.getElementById(p+i));
+  if(btn.textContent==='Edit'){
+    cells.forEach(c=>{c.contentEditable='true';c.style.background='#fff5f5';c.style.outline='1px solid #12958D';c.style.borderRadius='6px';});
+    btn.textContent='Save';btn.className='save-btn';
+  } else {
+    cells.forEach(c=>{c.contentEditable='false';c.style.background='';c.style.outline='';});
+    btn.textContent='Edit';btn.className='edit-btn';
+  }
+}
+
+function deleteRow(i){
+  if(!confirm('Delete this schedule?'))return;
+  document.getElementById('row'+i).remove();
+}
+render();
+</script>
+</body>
+</html>

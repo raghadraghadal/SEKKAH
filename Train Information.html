@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Train Information</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link active"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="page-title">Train Information</div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Trip No.</th><th>Train</th><th>From</th><th>To</th><th>Arrival</th><th>Departure</th><th>Seats</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>TR-101</td><td><strong>Train 101</strong></td><td>Riyadh</td><td>Dammam</td><td>5:00 PM</td><td>7:00 PM</td><td>50</td><td><span class="badge badge-active">Active</span></td></tr>
+        <tr><td>TR-102</td><td><strong>Train 102</strong></td><td>Abha</td><td>Tabuk</td><td>12:00 PM</td><td>4:00 PM</td><td>35</td><td><span class="badge badge-delayed">Delayed</span></td></tr>
+        <tr><td>TR-103</td><td><strong>Train 103</strong></td><td>Hail</td><td>Madinah</td><td>8:00 AM</td><td>11:00 AM</td><td>22</td><td><span class="badge badge-active">Active</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:16px;display:flex;gap:12px;">
+    <a href="addNewTrain.html" class="btn-primary">
+      <i class="material-icons" style="font-size:16px">add</i> Add Train
+    </a>
+    <a href="Train management menu .html" class="btn-ghost">
+      <i class="material-icons" style="font-size:16px">arrow_back</i> Back
+    </a>
+  </div>
+</div>
+
+<script>
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+document.getElementById('nbUser').textContent=localStorage.getItem('userName')||'Admin';
+</script>
+</body>
+</html>

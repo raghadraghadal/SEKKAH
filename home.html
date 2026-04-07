@@ -1,641 +1,172 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+/* تجميع التنسيق الموحد من الداش بورد */
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-height:100vh;}
 
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+/* ── NAVBAR (Unified style) ── */
+.top-navbar{width:100%;background:white;border-bottom:1px solid #eee;padding:0 32px;display:flex;align-items:center;height:62px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+.nb-brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:32px;}
+.nb-icon{width:34px;height:34px;background:linear-gradient(135deg,#12958D,#0d7069);border-radius:9px;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;font-weight:900;font-family:'Cairo',sans-serif;}
+.nb-name{font-size:17px;font-weight:900;color:#12958D;letter-spacing:2px;}
+.nb-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nb-link{display:flex;align-items:center;gap:5px;padding:7px 11px;border-radius:9px;color:#555;text-decoration:none;font-size:13px;font-weight:800;transition:background .18s,color .18s;white-space:nowrap;}
+.nb-link i{font-size:17px;}
+.nb-link:hover{background:#EAF6F5;color:#12958D;}
+.nb-link.active{background:#EAF6F5;color:#12958D;}
+.nb-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.nb-user{display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:25px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:800;}
+.nb-user:hover{background:#EAF6F5;color:#12958D;}
+.nb-user i{font-size:17px;}
+.nb-logout{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:25px;background:#fde8e8;color:#E53935;text-decoration:none;font-size:13px;font-weight:800;}
+.nb-logout:hover{background:#fac9c9;}
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800;
-            font-size: 14px;
-        }
+/* ── PAGE CONTENT ── */
+.page-body{padding:28px 36px;}
 
-        body {
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-            background-color: #EAF6F5;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 20px;
-            overflow-x: hidden;
-        }
+/* Welcome Banner */
+.welcome-banner {
+  background: linear-gradient(135deg, #12958D, #1a7fc1);
+  border-radius: 20px;
+  padding: 32px 36px;
+  color: white;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 30px rgba(18,149,141,0.25);
+}
+.wb-left .wb-greet { font-size: 13px; opacity: .7; letter-spacing: 1px; margin-bottom: 4px; }
+.wb-left .wb-title { font-size: 26px; font-weight: 900; margin-bottom: 4px; }
+.wb-left .wb-sub   { font-size: 14px; opacity: .75; font-weight: 500; }
+.wb-icon { font-size: 64px; opacity: .2; }
 
-        #menu-toggle {
-            display: none;
-        }
+/* Stats Strip (Simplified versions) */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.stat-card{background:white;border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+.stat-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:#EAF6F5;}
+.stat-icon i{font-size:24px; color:#12958D;}
+.stat-val{font-size:26px;font-weight:900;color:#1a1a1a;line-height:1;}
+.stat-lbl{font-size:12px;color:#888;margin-top:3px;}
 
-        .header-logo {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            width: 100px;
-            z-index: 1;
-        }
+/* Quick Access Cards */
+.section-title { font-size: 15px; font-weight: 800; color: #1a1a1a; margin-bottom: 16px; text-transform: uppercase; }
+.cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.mgmt-card {
+  background: white; border-radius: 20px; padding: 28px 20px;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  text-decoration: none; color: #1a1a1a; transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 2px solid transparent;
+}
+.mgmt-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(18,149,141,0.18); border-color: #c4e9e7; }
+.mgmt-card-icon { width: 64px; height: 64px; background: #EAF6F5; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.mgmt-card:hover .mgmt-card-icon { background: #12958D; }
+.mgmt-card-icon i { color: #12958D; font-size: 30px; }
+.mgmt-card:hover .mgmt-card-icon i { color: white; }
+.mgmt-card-title { font-size: 14px; font-weight: 900; color: #333; }
+.mgmt-card-desc  { font-size: 12px; color: #aaa; margin-top: 5px; font-weight: 500; }
 
-        .main-wrapper {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-            align-items: stretch;
-        }
-
-        .sidebar-small {
-            width: 65px;
-            background: white;
-            border-radius: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .menu-btn-label {
-            font-size: 32px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        /* نفس ستايل الداشبورد */
-        .sidebar-overlay {
-            position: fixed;
-            left: -320px;
-            width: 280px;
-            background: white;
-            z-index: 1100;
-            transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            height: 85vh;
-            top: 7.5vh;
-            border-radius: 25px;
-        }
-
-        #menu-toggle:checked~.sidebar-overlay {
-            left: 0;
-        }
-
-        .overlay-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 90;
-            display: none;
-        }
-
-        #menu-toggle:checked~.overlay-bg {
-            display: block;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 10px;
-            margin-bottom: 5px;
-            color: black;
-            text-decoration: none;
-        }
-
-        .nav-item.main-link {
-            font-size: 20px;
-            font-weight: 900;
-        }
-
-        .nav-item:hover {
-            background: #f5f5f5;
-        }
-
-        .nav-item.active {
-            background: #f0f8f7;
-        }
-
-        .logout-btn {
-            margin-top: auto;
-            background: #E53935;
-            color: white;
-            border-radius: 20px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .content-area {
-            flex: 1;
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 600px;
-        }
-
-        .welcome-title {
-            font-size: 28px;
-            margin: 40px 0 60px 0;
-            text-align: center;
-            color: #333;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .management-card {
-            background: #EAF6F5;
-            border-radius: 25px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: black;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-align: center;
-        }
-
-        .management-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-icon-bg {
-            width: 80px;
-            height: 80px;
-            background: #2D9596;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .card-icon-bg i {
-            color: white;
-            font-size: 40px;
-        }
-
-        .card-title {
-            font-size: 16px;
-        }
-
-        #home-user-name {
-            font-size: 35px;
-            font-weight: 900;
-            display: inline-block;
-            margin: 0 5px;
-        }
-
-        @media (max-width: 768px) {
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+@media(max-width:900px){
+  .cards-grid, .stats-grid{ grid-template-columns: repeat(2,1fr); }
+  .nb-link span{ display:none; }
+}
+</style>
 </head>
-
 <body>
-    <input type="checkbox" id="menu-toggle">
 
-    <img src="images/Logo.svg" alt="Sikka Logo" class="header-logo">
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link active"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
 
-    <label for="menu-toggle" class="overlay-bg"></label>
+<div class="page-body">
 
-    <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons"
-            style="align-self:flex-end; cursor:pointer; font-size:30px; margin-bottom:40px;">close</label>
-
-        <a href="home.html" class="nav-item active">
-            <i class="material-icons">home</i>
-            <span>Home</span>
-        </a>
-
-        <a href="train-management- menu.html" class="nav-item">
-            <i class="material-icons">train</i>
-            <span>Train Management</span>
-        </a>
-
-        <a href="Passenger Management.html" class="nav-item">
-            <i class="material-icons">groups</i>
-            <span>Passenger Management</span>
-        </a>
-
-        <a href="Reservation-System.html" class="nav-item">
-            <i class="material-icons">confirmation_number</i>
-            <span>Reservation System</span>
-        </a>
-
-        <a href="Dashboard.html" class="nav-item">
-            <i class="material-icons">bar_chart</i>
-            <span>Dashboard & Reports</span>
-        </a>
-
-        <a href="profile.html" class="nav-item main-link" style="margin-top:15px;">
-            <i class="material-icons">person_outline</i>
-            <span>Account Details</span>
-        </a>
-
-        <a href="StartHer.html" class="logout-btn">
-            <i class="material-icons">logout</i>
-            <span>Logout</span>
-        </a>
+  <div class="welcome-banner">
+    <div class="wb-left">
+      <div class="wb-greet">GOOD DAY</div>
+      <div class="wb-title">Welcome back, <span id="home-user-name">User</span>! 👋</div>
+      <div class="wb-sub">What would you like to manage today?</div>
     </div>
+    <i class="material-icons wb-icon">train</i>
+  </div>
 
-    <div class="main-wrapper">
-        <div class="sidebar-small">
-            <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
-        </div>
-
-        <div class="content-area">
-            <h1 class="welcome-title">
-                Welcome <span id="home-user-name" style="color: #2D9596;">User</span>! What’s on the agenda today?
-            </h1>
-
-            <div class="cards-grid">
-                <a href="train-management- menu.html" class="management-card">
-                    <div class="card-icon-bg"><i class="material-icons">train</i></div>
-                    <span class="card-title">Train Management</span>
-                </a>
-
-                <a href="Passenger Management.html" class="management-card">
-                    <div class="card-icon-bg"><i class="material-icons">people</i></div>
-                    <span class="card-title">Passenger Management</span>
-                </a>
-
-                <a href="Reservation-System.html" class="management-card">
-                    <div class="card-icon-bg"><i class="material-icons">confirmation_number</i></div>
-                    <span class="card-title">Reservation System</span>
-                </a>
-
-                <a href="Dashboard.html" class="management-card">
-                    <div class="card-icon-bg"><i class="material-icons">assessment</i></div>
-                    <span class="card-title">Dashboard & Reports</span>
-                </a>
-            </div>
-        </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="material-icons">train</i></div>
+      <div><div class="stat-val" id="statTrains">3</div><div class="stat-lbl">Total Trains</div></div>
     </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="material-icons">confirmation_number</i></div>
+      <div><div class="stat-val" id="statBookings">3</div><div class="stat-lbl">Total Bookings</div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="material-icons">groups</i></div>
+      <div><div class="stat-val" id="statPassengers">3</div><div class="stat-lbl">Passengers</div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="material-icons">route</i></div>
+      <div><div class="stat-val">10</div><div class="stat-lbl">Active Routes</div></div>
+    </div>
+  </div>
 
-    <script>
-        if (!localStorage.getItem("userName")) {
-            alert("Please login first!");
-            window.location.href = "Login.html";
-        }
+  <div class="section-title">Quick Access</div>
+  <div class="cards-grid">
+    <a href="Train management menu .html" class="mgmt-card">
+      <div class="mgmt-card-icon"><i class="material-icons">train</i></div>
+      <div class="mgmt-card-title">Train Management</div>
+      <div class="mgmt-card-desc">Add and monitor trains</div>
+    </a>
+    <a href="Passenger Management.html" class="mgmt-card">
+      <div class="mgmt-card-icon"><i class="material-icons">people</i></div>
+      <div class="mgmt-card-title">Passenger Management</div>
+      <div class="mgmt-card-desc">Manage passenger records</div>
+    </a>
+    <a href="Reservation system .html" class="mgmt-card">
+      <div class="mgmt-card-icon"><i class="material-icons">confirmation_number</i></div>
+      <div class="mgmt-card-title">Reservation System</div>
+      <div class="mgmt-card-desc">Book and manage reservations</div>
+    </a>
+    <a href="Dashboard.html" class="mgmt-card">
+      <div class="mgmt-card-icon"><i class="material-icons">assessment</i></div>
+      <div class="mgmt-card-title">Dashboard & Reports</div>
+      <div class="mgmt-card-desc">Revenue and booking reports</div>
+    </a>
+  </div>
+</div>
 
-        document.getElementById("home-user-name").innerText =
-            localStorage.getItem("userName") || "Guest";
-    </script>
+<script>
+// التحقق من تسجيل الدخول
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+const name = localStorage.getItem('userName') || 'User';
+document.getElementById('home-user-name').textContent = name;
+document.getElementById('nbUser').textContent = name;
+
+// تحديث الإحصائيات الحية
+const b = JSON.parse(localStorage.getItem('bookings')||'[]');
+const p = JSON.parse(localStorage.getItem('passengers')||'[]');
+const t = JSON.parse(localStorage.getItem('trains')||'[]');
+
+if(b.length) document.getElementById('statBookings').textContent = b.length;
+if(p.length) document.getElementById('statPassengers').textContent = p.length;
+if(t.length) document.getElementById('statTrains').textContent = t.length;
+</script>
+
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
- <html lang="en" dir="ltr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800;
-            font-size: 14px;
-        }
-
-        body {
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-            background-color: #EAF6F5;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-
-        #menu-toggle {
-            display: none;
-        }
-
-        .header-logo {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            width: 100px;
-            z-index: 1;
-        }
-
-        .main-wrapper {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-            align-items: stretch;
-        }
-
-        .sidebar-small {
-            width: 65px;
-            background: white;
-            border-radius: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .menu-btn-label {
-            font-size: 32px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 280px;
-            height: 100%;
-            background: white;
-            z-index: 100;
-            transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        #menu-toggle:checked~.sidebar-overlay {
-            left: 0;
-        }
-
-        .overlay-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 90;
-            display: none;
-        }
-
-        #menu-toggle:checked~.overlay-bg {
-            display: block;
-        }
-
-        .close-btn-label {
-            align-self: flex-end;
-            cursor: pointer;
-            font-size: 30px;
-            margin-bottom: 40px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            color: black;
-            text-decoration: none;
-        }
-
-        .nav-item:hover {
-            background: #f5f5f5;
-        }
-
-        .logout-btn {
-            margin-top: auto;
-            background: #E53935;
-            color: white;
-            border-radius: 20px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .content-area {
-            flex: 1;
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 600px;
-        }
-
-        /* تنسيق جملة الترحيب */
-        .welcome-title {
-            font-size: 28px;
-            margin: 40px 0 60px 0;
-            text-align: center;
-            color: #333;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .management-card {
-            background: #EAF6F5;
-            border-radius: 25px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: black;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-align: center;
-        }
-
-        .management-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-icon-bg {
-            width: 80px;
-            height: 80px;
-            background: #2D9596;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .card-icon-bg i {
-            color: white;
-            font-size: 40px;
-        }
-
-        .card-title {
-            font-size: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <input type="checkbox" id="menu-toggle">
-
-    <img src="Logo.svg" alt="Sikka Logo" class="header-logo">
-
-    <label for="menu-toggle" class="overlay-bg"></label>
-
-    <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons close-btn-label">close</label>
-
-        <a href="home.html" class="nav-item">
-            <i class="material-icons">home</i>
-            <span>Home</span>
-        </a>
-
-        <a href="profile.html" class="nav-item">
-            <i class="material-icons">person_outline</i>
-            <span>Account Details</span>
-        </a>
-
-        <a href="StartHer.html" class="logout-btn">
-            <i class="material-icons">logout</i>
-            <span>Logout</span>
-        </a>
-    </div>
-
-    <div class="main-wrapper">
-        <div class="sidebar-small">
-            <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
-        </div>
-
-        <div class="content-area">
-            <h1 class="welcome-title">Welcome <span id="home-user-name" style="color: #2D9596; font-size: inherit; font-weight: inherit;">User</span>! What’s on the agenda today?</h1>
-
-            <div class="cards-grid">
-
-                <a href="train_management.html" class="management-card">
-                    <div class="card-icon-bg">
-                        <i class="material-icons">train</i>
-                    </div>
-                    <span class="card-title">Train Management</span>
-                </a>
-
-                <a href="passenger_management.html" class="management-card">
-                    <div class="card-icon-bg">
-                        <i class="material-icons">people</i>
-                    </div>
-                    <span class="card-title">Passenger Management</span>
-                </a>
-
-                <a href="reservation_system.html" class="management-card">
-                    <div class="card-icon-bg">
-                        <i class="material-icons">confirmation_number</i>
-                    </div>
-                    <span class="card-title">Reservation System</span>
-                </a>
-
-                <a href="reports.html" class="management-card">
-                    <div class="card-icon-bg">
-                        <i class="material-icons">assessment</i>
-                    </div>
-                    <span class="card-title">Dashboard & Reports</span>
-                </a>
-
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const savedName = localStorage.getItem("userName");
-        if (savedName) {
-            document.getElementById("home-user-name").innerText = savedName;
-        } else {
-            document.getElementById("home-user-name").innerText = "Guest";
-        }
-    </script>
-</body>
-
-</html> 
- -->

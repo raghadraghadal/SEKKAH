@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Train Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-height:100vh;}
+
+/* NAVBAR */
+.top-navbar{width:100%;background:white;border-bottom:1px solid #eee;padding:0 32px;display:flex;align-items:center;height:62px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+.nb-brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:32px;}
+.nb-icon{width:34px;height:34px;background:linear-gradient(135deg,#12958D,#0d7069);border-radius:9px;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;font-weight:900;font-family:'Cairo',sans-serif;}
+.nb-name{font-size:17px;font-weight:900;color:#12958D;letter-spacing:2px;}
+.nb-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nb-link{display:flex;align-items:center;gap:5px;padding:7px 11px;border-radius:9px;color:#555;text-decoration:none;font-size:13px;font-weight:800;transition:background .18s,color .18s;white-space:nowrap;}
+.nb-link i{font-size:17px;}
+.nb-link:hover{background:#EAF6F5;color:#12958D;}
+.nb-link.active{background:#EAF6F5;color:#12958D;}
+.nb-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.nb-user{display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:25px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:800;}
+.nb-user:hover{background:#EAF6F5;color:#12958D;}
+.nb-user i{font-size:17px;}
+.nb-logout{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:25px;background:#fde8e8;color:#E53935;text-decoration:none;font-size:13px;font-weight:800;}
+.nb-logout:hover{background:#fac9c9;}
+
+/* HERO HEADER */
+.train-hero{
+  background: linear-gradient(135deg, #0d6b65 0%, #12958D 50%, #1a9d95 100%);
+  padding: 40px 36px 0;
+  position: relative;
+  overflow: hidden;
+}
+.train-hero::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:280px;height:280px;border-radius:50%;
+  background:rgba(255,255,255,0.06);
+}
+.train-hero::after{
+  content:'';position:absolute;bottom:-40px;left:30%;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,0.04);
+}
+
+.hero-content{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;}
+.hero-text{}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);
+  border-radius:25px;padding:5px 14px;margin-bottom:14px;
+  font-size:11px;color:rgba(255,255,255,0.9);letter-spacing:2px;text-transform:uppercase;
+}
+.hero-badge-dot{width:6px;height:6px;background:#2DD4BF;border-radius:50%;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:42px;font-weight:900;color:white;
+  line-height:1.1;margin-bottom:10px;
+}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.65);font-weight:500;margin-bottom:28px;}
+
+/* train illustration in hero */
+.hero-train{
+  position:relative;z-index:2;
+  filter:drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+  animation:floatT 4s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes floatT{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* TABS */
+.tabs-row{
+  background:white;padding:0 36px;
+  display:flex;gap:0;border-bottom:1px solid #eee;
+}
+.tab{text-decoration:none;
+  padding:14px 20px;font-size:13px;font-weight:800;
+  color:#888;border-bottom:3px solid transparent;
+  cursor:pointer;transition:color .2s,border-color .2s;
+  white-space:nowrap;
+}
+.tab.active{color:#12958D;border-bottom-color:#12958D;}
+.tab:hover{color:#12958D;}
+
+/* CARDS GRID */
+.page-body{padding:28px 36px;}
+
+/* ═══ 8 CREATIVE CARDS ═══ */
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+
+/* Base card */
+.action-card{
+  background:white;
+  border-radius:22px;
+  padding:0;
+  text-decoration:none;
+  color:#1a1a1a;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 3px 14px rgba(0,0,0,0.07);
+  border:1.5px solid transparent;
+  transition:transform .28s cubic-bezier(0.34,1.56,0.64,1), box-shadow .28s, border-color .2s;
+}
+.action-card:hover{
+  transform:translateY(-7px) scale(1.02);
+  box-shadow:0 16px 40px rgba(18,149,141,0.18);
+}
+
+/* Coloured top bar */
+.card-bar{
+  height:6px;
+  width:100%;
+  border-radius:0;
+}
+.card-inner{
+  padding:22px 20px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  flex:1;
+}
+
+/* Big icon circle */
+.card-icon-circle{
+  width:54px;height:54px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:2px;
+  transition:transform .3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.action-card:hover .card-icon-circle{transform:scale(1.18) rotate(-6deg);}
+.card-icon-circle i{font-size:26px;}
+
+.card-title{font-size:14px;font-weight:900;color:#1a1a1a;line-height:1.3;}
+.card-desc{font-size:11px;color:#aaa;font-weight:500;line-height:1.5;flex:1;}
+
+/* Bottom row */
+.card-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:8px;
+}
+.card-tag{
+  font-size:10px;font-weight:800;letter-spacing:1px;
+  text-transform:uppercase;padding:3px 10px;border-radius:20px;
+}
+.card-go{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .2s;
+}
+.action-card:hover .card-go{transform:translateX(3px);}
+.card-go i{font-size:15px;}
+
+/* per-card colour themes */
+.ac-1 .card-bar{background:linear-gradient(90deg,#12958D,#2DD4BF);}
+.ac-1 .card-icon-circle{background:#EAF6F5;}
+.ac-1 .card-icon-circle i{color:#12958D;}
+.ac-1 .card-tag{background:#EAF6F5;color:#12958D;}
+.ac-1 .card-go{background:#EAF6F5;}
+.ac-1 .card-go i{color:#12958D;}
+.ac-1:hover{border-color:#12958D;}
+
+.ac-2 .card-bar{background:linear-gradient(90deg,#1d4ed8,#60a5fa);}
+.ac-2 .card-icon-circle{background:#dbeafe;}
+.ac-2 .card-icon-circle i{color:#1d4ed8;}
+.ac-2 .card-tag{background:#dbeafe;color:#1d4ed8;}
+.ac-2 .card-go{background:#dbeafe;}
+.ac-2 .card-go i{color:#1d4ed8;}
+.ac-2:hover{border-color:#60a5fa;}
+
+.ac-3 .card-bar{background:linear-gradient(90deg,#0a6641,#22c55e);}
+.ac-3 .card-icon-circle{background:#d4f5e9;}
+.ac-3 .card-icon-circle i{color:#0a6641;}
+.ac-3 .card-tag{background:#d4f5e9;color:#0a6641;}
+.ac-3 .card-go{background:#d4f5e9;}
+.ac-3 .card-go i{color:#0a6641;}
+.ac-3:hover{border-color:#22c55e;}
+
+.ac-4 .card-bar{background:linear-gradient(90deg,#92400e,#f59e0b);}
+.ac-4 .card-icon-circle{background:#fef3c7;}
+.ac-4 .card-icon-circle i{color:#92400e;}
+.ac-4 .card-tag{background:#fef3c7;color:#92400e;}
+.ac-4 .card-go{background:#fef3c7;}
+.ac-4 .card-go i{color:#92400e;}
+.ac-4:hover{border-color:#f59e0b;}
+
+.ac-5 .card-bar{background:linear-gradient(90deg,#6d28d9,#a78bfa);}
+.ac-5 .card-icon-circle{background:#ede9fe;}
+.ac-5 .card-icon-circle i{color:#6d28d9;}
+.ac-5 .card-tag{background:#ede9fe;color:#6d28d9;}
+.ac-5 .card-go{background:#ede9fe;}
+.ac-5 .card-go i{color:#6d28d9;}
+.ac-5:hover{border-color:#a78bfa;}
+
+.ac-6 .card-bar{background:linear-gradient(90deg,#9d174d,#f472b6);}
+.ac-6 .card-icon-circle{background:#fce7f3;}
+.ac-6 .card-icon-circle i{color:#9d174d;}
+.ac-6 .card-tag{background:#fce7f3;color:#9d174d;}
+.ac-6 .card-go{background:#fce7f3;}
+.ac-6 .card-go i{color:#9d174d;}
+.ac-6:hover{border-color:#f472b6;}
+
+.ac-7 .card-bar{background:linear-gradient(90deg,#0e7490,#22d3ee);}
+.ac-7 .card-icon-circle{background:#cffafe;}
+.ac-7 .card-icon-circle i{color:#0e7490;}
+.ac-7 .card-tag{background:#cffafe;color:#0e7490;}
+.ac-7 .card-go{background:#cffafe;}
+.ac-7 .card-go i{color:#0e7490;}
+.ac-7:hover{border-color:#22d3ee;}
+
+.ac-8 .card-bar{background:linear-gradient(90deg,#b45309,#fb923c);}
+.ac-8 .card-icon-circle{background:#ffedd5;}
+.ac-8 .card-icon-circle i{color:#b45309;}
+.ac-8 .card-tag{background:#ffedd5;color:#b45309;}
+.ac-8 .card-go{background:#ffedd5;}
+.ac-8 .card-go i{color:#b45309;}
+.ac-8:hover{border-color:#fb923c;}
+
+@media(max-width:1100px){.cards-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:800px){.cards-grid{grid-template-columns:repeat(2,1fr);}.hero-train{display:none;}}
+
+/* quick stats strip */
+.quick-stats{display:flex;gap:12px;margin-bottom:22px;}
+.qs{background:white;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+.qs-icon{width:36px;height:36px;border-radius:10px;background:#EAF6F5;display:flex;align-items:center;justify-content:center;}
+.qs-icon i{font-size:18px;color:#12958D;}
+.qs-val{font-size:20px;font-weight:900;color:#1a1a1a;line-height:1;}
+.qs-lbl{font-size:11px;color:#aaa;}
+
+@media(max-width:900px){.cards-grid{grid-template-columns:repeat(2,1fr);}.hero-train{display:none;}}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link active"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="train-hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge"><div class="hero-badge-dot"></div>Operations Center</div>
+      <div class="hero-title">Train<br>Management</div>
+      <div class="hero-sub">Manage your fleet, schedules and timetables</div>
+    </div>
+    <!-- Mini train SVG -->
+    <div class="hero-train">
+      <svg width="320" height="120" viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.25)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0.1)"/>
+          </linearGradient>
+        </defs>
+        <rect x="40" y="30" width="340" height="70" rx="12" fill="url(#tg)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+        <path d="M40,30 Q14,50 14,65 Q14,88 40,95 L40,30Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <rect x="40" y="30" width="340" height="14" rx="7" fill="rgba(255,255,255,0.2)"/>
+        <g fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.3)" stroke-width="1">
+          <rect x="58"  y="45" width="38" height="26" rx="5"/>
+          <rect x="106" y="45" width="38" height="26" rx="5"/>
+          <rect x="154" y="45" width="38" height="26" rx="5"/>
+          <rect x="202" y="45" width="38" height="26" rx="5"/>
+          <rect x="250" y="45" width="38" height="26" rx="5"/>
+          <rect x="298" y="45" width="38" height="26" rx="5"/>
+          <rect x="346" y="45" width="28" height="26" rx="5"/>
+        </g>
+        <rect x="40" y="82" width="340" height="5" rx="2" fill="rgba(45,212,191,0.5)"/>
+        <line x1="0" y1="106" x2="400" y2="106" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+        <line x1="0" y1="112" x2="400" y2="112" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+        <g fill="rgba(255,255,255,0.2)">
+          <rect x="20" y="100" width="5" height="12" rx="1"/><rect x="55" y="100" width="5" height="12" rx="1"/>
+          <rect x="90" y="100" width="5" height="12" rx="1"/><rect x="125" y="100" width="5" height="12" rx="1"/>
+          <rect x="160" y="100" width="5" height="12" rx="1"/><rect x="195" y="100" width="5" height="12" rx="1"/>
+          <rect x="230" y="100" width="5" height="12" rx="1"/><rect x="265" y="100" width="5" height="12" rx="1"/>
+          <rect x="300" y="100" width="5" height="12" rx="1"/><rect x="335" y="100" width="5" height="12" rx="1"/>
+          <rect x="370" y="100" width="5" height="12" rx="1"/>
+        </g>
+        <g fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5">
+          <circle cx="100" cy="108" r="12"/><circle cx="180" cy="108" r="12"/>
+          <circle cx="270" cy="108" r="12"/><circle cx="350" cy="108" r="12"/>
+        </g>
+        <g fill="rgba(45,212,191,0.6)">
+          <circle cx="100" cy="108" r="5"/><circle cx="180" cy="108" r="5"/>
+          <circle cx="270" cy="108" r="5"/><circle cx="350" cy="108" r="5"/>
+        </g>
+        <ellipse cx="16" cy="62" rx="4" ry="7" fill="#FFFDE7" opacity=".8"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-row">
+  <a href="Train management menu .html" class="tab active">All Actions</a>
+  <a href="Train Information.html" class="tab">Fleet</a>
+  <a href="Viewtimetable.html" class="tab">Schedules</a>
+  <a href="monitoring.html" class="tab">Monitoring</a>
+</div>
+
+<!-- BODY -->
+<div class="page-body">
+
+  <!-- Quick Stats -->
+  <div class="quick-stats">
+    <div class="qs">
+      <div class="qs-icon"><i class="material-icons">train</i></div>
+      <div><div class="qs-val" id="qsTrains">3</div><div class="qs-lbl">Total Trains</div></div>
+    </div>
+    <div class="qs">
+      <div class="qs-icon"><i class="material-icons">schedule</i></div>
+      <div><div class="qs-val" id="qsSch">4</div><div class="qs-lbl">Schedules</div></div>
+    </div>
+    <div class="qs">
+      <div class="qs-icon"><i class="material-icons">check_circle</i></div>
+      <div><div class="qs-val">2</div><div class="qs-lbl">Active</div></div>
+    </div>
+    <div class="qs">
+      <div class="qs-icon"><i class="material-icons">route</i></div>
+      <div><div class="qs-val">10</div><div class="qs-lbl">Routes</div></div>
+    </div>
+  </div>
+
+  <!-- 8 Creative Action Cards -->
+  <div class="cards-grid">
+
+    <a href="addNewTrain.html" class="action-card ac-1">
+      <div class="card-bar"></div>
+      <div class="card-inner">
+        <div class="card-icon-circle"><i class="material-icons">add_circle</i></div>
+        <div class="card-title">Add New Train</div>
+        <div class="card-desc">Register a new train with number, capacity and availability status</div>
+        <div class="card-foot">
+          <span class="card-tag">Fleet</span>
+          <div class="card-go"><i class="material-icons">arrow_forward</i></div>
+        </div>
+      </div>
+    </a>
+
+    <a href="Train Information.html" class="action-card ac-2">
+      <div class="card-bar"></div>
+      <div class="card-inner">
+        <div class="card-icon-circle"><i class="material-icons">list_alt</i></div>
+        <div class="card-title">Train Information</div>
+        <div class="card-desc">Browse all trains with status, capacity and trip details</div>
+        <div class="card-foot">
+          <span class="card-tag">Info</span>
+          <div class="card-go"><i class="material-icons">arrow_forward</i></div>
+        </div>
+      </div>
+    </a>
+
+    <a href="monitoring.html" class="action-card ac-3">
+      <div class="card-bar"></div>
+      <div class="card-inner">
+        <div class="card-icon-circle"><i class="material-icons">sensors</i></div>
+        <div class="card-title">Train Monitoring</div>
+        <div class="card-desc">Live status of all active trains and their current routes</div>
+        <div class="card-foot">
+          <span class="card-tag">Live</span>
+          <div class="card-go"><i class="material-icons">arrow_forward</i></div>
+        </div>
+      </div>
+    </a>
+
+    <a href="Create schedule.html" class="action-card ac-4">
+      <div class="card-bar"></div>
+      <div class="card-inner">
+        <div class="card-icon-circle"><i class="material-icons">schedule</i></div>
+        <div class="card-title">Create Schedule</div>
+        <div class="card-desc">Build departure and arrival schedules for any train route</div>
+        <div class="card-foot">
+          <span class="card-tag">New</span>
+          <div class="card-go"><i class="material-icons">arrow_forward</i></div>
+        </div>
+      </div>
+    </a>
+
+    <a href="Viewtimetable.html" class="action-card ac-5">
+      <div class="card-bar"></div>
+      <div class="card-inner">
+        <div class="card-icon-circle"><i class="material-icons">table_view</i></div>
+        <div class="card-title">View Timetable</div>
+        <div class="card-desc">See the full timetable with options to edit or delete entries</div>
+        <div class="card-foot">
+          <span class="card-tag">Table</span>
+          <div class="card-go"><i class="material-icons">arrow_forward</i></div>
+        </div>
+      </div>
+    </a>
+
+    <a href="Viewtable.html" class="action-card ac-6">
+      <div class="card-bar"></div>
+      <div class="card-inner">
+        <div class="card-icon-circle"><i class="material-icons">grid_view</i></div>
+        <div class="card-title">View Schedules</div>
+        <div class="card-desc">Browse all saved schedule tables stored in the system</div>
+        <div class="card-foot">
+          <span class="card-tag">Saved</span>
+          <div class="card-go"><i class="material-icons">arrow_forward</i></div>
+        </div>
+      </div>
+    </a>
+
+    <a href="Create table.html" class="action-card ac-7">
+      <div class="card-bar"></div>
+      <div class="card-inner">
+        <div class="card-icon-circle"><i class="material-icons">add_chart</i></div>
+        <div class="card-title">Create Table</div>
+        <div class="card-desc">Build a custom multi-row timetable for any organization</div>
+        <div class="card-foot">
+          <span class="card-tag">Build</span>
+          <div class="card-go"><i class="material-icons">arrow_forward</i></div>
+        </div>
+      </div>
+    </a>
+
+    <a href="Dashboard.html" class="action-card ac-8">
+      <div class="card-bar"></div>
+      <div class="card-inner">
+        <div class="card-icon-circle"><i class="material-icons">bar_chart</i></div>
+        <div class="card-title">Train Reports</div>
+        <div class="card-desc">Access revenue and occupancy reports for all trains</div>
+        <div class="card-foot">
+          <span class="card-tag">Reports</span>
+          <div class="card-go"><i class="material-icons">arrow_forward</i></div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<script>
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+document.getElementById('nbUser').textContent=localStorage.getItem('userName')||'Admin';
+const t=JSON.parse(localStorage.getItem('trains')||'[]');
+const s=JSON.parse(localStorage.getItem('schedules')||'[]');
+if(t.length)document.getElementById('qsTrains').textContent=t.length;
+if(s.length)document.getElementById('qsSch').textContent=s.length;
+</script>
+</body>
+</html>

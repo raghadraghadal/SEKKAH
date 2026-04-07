@@ -1,335 +1,188 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passenger Management</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Passenger Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-height:100vh;}
 
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+/* NAVBAR */
+.top-navbar{width:100%;background:white;border-bottom:1px solid #eee;padding:0 32px;display:flex;align-items:center;height:62px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+.nb-brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:32px;}
+.nb-icon{width:34px;height:34px;background:linear-gradient(135deg,#12958D,#0d7069);border-radius:9px;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;font-weight:900;font-family:'Cairo',sans-serif;}
+.nb-name{font-size:17px;font-weight:900;color:#12958D;letter-spacing:2px;}
+.nb-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nb-link{display:flex;align-items:center;gap:5px;padding:7px 11px;border-radius:9px;color:#555;text-decoration:none;font-size:13px;font-weight:800;transition:background .18s,color .18s;white-space:nowrap;}
+.nb-link i{font-size:17px;}
+.nb-link:hover{background:#EAF6F5;color:#12958D;}
+.nb-link.active{background:#EAF6F5;color:#12958D;}
+.nb-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.nb-user{display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:25px;background:#f5f5f5;text-decoration:none;color:#333;font-size:13px;font-weight:800;transition:background .18s;}
+.nb-user:hover{background:#EAF6F5;color:#12958D;}
+.nb-user i{font-size:17px;}
+.nb-logout{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:25px;background:#fde8e8;color:#E53935;text-decoration:none;font-size:13px;font-weight:800;}
+.nb-logout:hover{background:#fac9c9;}
 
-    <style>
-        :root {
-            --dark-teal: #12958D;
-            --light-teal: #EAF6F5;
-            --bg-page: #EAF6F5;
-        }
+/* PAGE */
+.page-body{padding:28px 36px;}
+.page-title{font-size:32px;font-weight:800;color:#1a1a1a;margin-bottom:24px;letter-spacing:.5px;}
 
-        * {
-            box-sizing: border-box;
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800;
-        }
+/* SEARCH ROW */
+.search-row{display:flex;gap:12px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
+.search-input{flex:1;min-width:200px;padding:11px 20px;border:1.5px solid #e0e0e0;border-radius:25px;font-size:14px;font-family:'Abhaya Libre',serif;outline:none;background:#fafafa;transition:border-color .2s;}
+.search-input:focus{border-color:#12958D;background:white;}
+.btn-add{background:#12958D;color:white;border:none;border-radius:25px;padding:11px 24px;font-size:14px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:'Abhaya Libre',serif;transition:background .2s;}
+.btn-add:hover{background:#0d7069;}
 
-        body {
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-            background-color: var(--bg-page);
-            overflow: hidden;
-        }
+/* TABLE */
+.table-wrap{background:white;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
+.pass-table{width:100%;border-collapse:collapse;}
+.pass-table thead th{background:#12958D;color:white;padding:15px 12px;font-size:13px;font-weight:800;text-align:center;}
+.pass-table tbody td{padding:15px 10px;text-align:center;border-bottom:1px solid #f0f9f8;font-size:14px;color:#333;}
+.pass-table tbody tr:last-child td{border-bottom:none;}
+.pass-table tbody tr:hover{background:#f8fffe;}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#12958D,#1a7fc1);display:inline-flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:900;}
+.btn-edit{background:#e8f4fd;color:#1565c0;border:none;border-radius:8px;padding:6px 13px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;margin-right:5px;}
+.btn-edit:hover{background:#bbdefb;}
+.btn-del{background:#fde8e8;color:#E53935;border:none;border-radius:8px;padding:6px 13px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;}
+.btn-del:hover{background:#fac9c9;}
+.empty{text-align:center;padding:40px;color:#aaa;font-size:15px;}
 
-        .sidebar-small {
-            width: 50px;
-            background: white;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px 0;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.03);
-            height: 85vh;
-            position: fixed;
-            left: 10px;
-            top: 7.5vh;
-            z-index: 1000;
-        }
-
-        .menu-btn-label { font-size: 28px; cursor: pointer; color: #333; }
-
-        #menu-toggle { display: none; }
-
-        .sidebar-overlay {
-            position: fixed;
-            left: -320px;
-            width: 280px;
-            background: white;
-            z-index: 1100;
-            transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            height: 85vh;
-            top: 7.5vh;
-            border-radius: 25px;
-        }
-
-        #menu-toggle:checked ~ .sidebar-overlay { left: 10px; }
-
-        .overlay-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3); z-index: 90; display: none;
-        }
-
-        #menu-toggle:checked ~ .overlay-bg { display: block; }
-
-        .close-btn { align-self: flex-end; cursor: pointer; font-size: 30px; margin-bottom: 30px; }
-
-        .nav-item {
-            display: flex; align-items: center; gap: 15px; padding: 15px;
-            cursor: pointer; border-radius: 10px; margin-bottom: 5px;
-            color: black; text-decoration: none; transition: 0.3s;
-        }
-        .nav-item.main-link { font-size: 20px; font-weight: 900; }
-        .nav-item:hover { background: #f5f5f5; }
-        .nav-item.active { background: #f0f8f7; border-radius: 15px; }
-
-        .logout-btn {
-            margin-top: auto; background: #E53935; color: white;
-            border-radius: 20px; padding: 10px; display: flex;
-            align-items: center; justify-content: center; gap: 10px; text-decoration: none;
-        }
-
-        .main-wrapper {
-            flex: 1;
-            margin-left: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            width: calc(100% - 80px);
-            overflow-y: auto;
-            padding: 20px 0;
-        }
-
-        .header-logo {
-            position: absolute; top: 10px; right: 30px; width: 90px; z-index: 1000;
-        }
-
-        .content-area {
-            background: white;
-            border-radius: 50px;
-            margin-top: 60px;
-            padding: 40px 50px;
-            width: 90%;
-            max-width: 1150px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            min-height: 600px;
-        }
-
-        .page-title { font-size: 45px; font-weight: 500; margin: 0 0 30px; color: #1a1a1a; letter-spacing: 1px; }
-
-        .top-row { display: flex; gap: 15px; margin-bottom: 25px; align-items: center; flex-wrap: wrap; }
-        .search-input { flex: 1; min-width: 200px; padding: 12px 20px; border: 1.5px solid #e0e0e0; border-radius: 30px; font-size: 15px; outline: none; }
-        .btn-add { background: #12958D; color: white; border: none; border-radius: 30px; padding: 12px 28px; font-size: 16px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-
-        .pass-table { width: 100%; border-collapse: collapse; background: #F0F8F7; border-radius: 20px; overflow: hidden; }
-        .pass-table thead th { background: #12958D; color: white; padding: 16px 12px; font-size: 14px; text-align: center; }
-        .pass-table tbody td { padding: 18px 10px; text-align: center; border-right: 1.5px solid rgba(18,149,141,0.15); font-size: 15px; color: #333; }
-        .pass-table tbody td:last-child { border-right: none; }
-
-        .btn-edit { background: #8FC5C3; color: black; border: none; border-radius: 10px; padding: 7px 14px; cursor: pointer; margin-right: 5px; }
-        .btn-delete { background: #F94F4F; color: white; border: none; border-radius: 10px; padding: 7px 14px; cursor: pointer; }
-
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-overlay.show { display: flex; }
-        .modal { background: white; border-radius: 30px; padding: 40px; width: 480px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
-        .modal h2 { font-size: 28px; margin: 0 0 25px; }
-        .modal-field { margin-bottom: 18px; }
-        .modal-field input { width: 100%; padding: 12px 18px; border: 1.5px solid #e0e0e0; border-radius: 20px; outline: none; background: #f9f9f9; }
-        .modal-actions { display: flex; gap: 15px; margin-top: 25px; justify-content: flex-end; }
-        .btn-confirm { background: #12958D; color: white; border: none; border-radius: 20px; padding: 12px 30px; cursor: pointer; }
-        .btn-cancel-modal { background: transparent; color: #333; border: 1.5px solid #ddd; border-radius: 20px; padding: 12px 30px; cursor: pointer; }
-    </style>
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:400;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal{background:white;border-radius:24px;padding:36px;width:460px;max-width:95vw;box-shadow:0 12px 40px rgba(0,0,0,0.15);}
+.modal h2{font-size:24px;font-weight:800;margin-bottom:22px;color:#1a1a1a;}
+.modal-field{margin-bottom:16px;}
+.modal-field label{display:block;font-size:11px;color:#888;margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px;}
+.modal-field input{width:100%;padding:11px 16px;border:1.5px solid #e0e0e0;border-radius:12px;font-size:14px;font-family:'Abhaya Libre',serif;background:#fafafa;outline:none;transition:border-color .2s;}
+.modal-field input:focus{border-color:#12958D;background:white;}
+.modal-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:22px;}
+.btn-confirm{background:#12958D;color:white;border:none;border-radius:12px;padding:11px 26px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;}
+.btn-cancel-modal{background:transparent;color:#555;border:1.5px solid #e0e0e0;border-radius:12px;padding:11px 22px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;}
+</style>
 </head>
 <body>
 
-<input type="checkbox" id="menu-toggle">
-<label for="menu-toggle" class="overlay-bg"></label>
+<!-- NAVBAR -->
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link active"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
 
-<div class="sidebar-small">
-    <label for="menu-toggle">
-        <i class="material-icons menu-btn-label">menu</i>
-    </label>
+<div class="page-body">
+  <div class="page-title">Passenger Management</div>
+
+  <div class="search-row">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search by name, phone, or national ID...">
+    <button class="btn-add" onclick="openModal()">
+      <i class="material-icons" style="font-size:18px">person_add</i> Register Passenger
+    </button>
+  </div>
+
+  <div class="table-wrap">
+    <table class="pass-table">
+      <thead>
+        <tr><th>#</th><th>Passenger</th><th>National ID</th><th>Phone</th><th>Email</th><th>Registered</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="passBody"></tbody>
+    </table>
+  </div>
 </div>
 
-<div class="sidebar-overlay">
-    <label for="menu-toggle" class="material-icons close-btn">close</label>
-
-    <a href="home.html" class="nav-item main-link">
-        <i class="material-icons">home</i>
-        <span>Home</span>
-    </a>
-
-    <a href="train-management- menu.html" class="nav-item">
-        <i class="material-icons">train</i>
-        <span>Train Management</span>
-    </a>
-
-    <a href="Passenger Management.html" class="nav-item active">
-        <i class="material-icons">people_outline</i>
-        <span>Passenger Management</span>
-    </a>
-
-    <a href="Reservation-System.html" class="nav-item">
-        <i class="material-icons">confirmation_number</i>
-        <span>Reservation System</span>
-    </a>
-
-    <a href="Dashboard.html" class="nav-item">
-        <i class="material-icons">bar_chart</i>
-        <span>Dashboard & Reports</span>
-    </a>
-
-    <a href="profile.html" class="nav-item main-link" style="margin-top:15px;">
-        <i class="material-icons">person_outline</i>
-        <span>Account Details</span>
-    </a>
-
-    <a href="StartHer.html" class="logout-btn">
-        <i class="material-icons">logout</i>
-        <span>Logout</span>
-    </a>
-</div>
-
-<div class="main-wrapper">
-    <img src="images/Logo.svg" alt="Sikka Logo" class="header-logo">
-
-    <div class="content-area">
-        <h1 class="page-title">Passenger Management</h1>
-
-        <div class="top-row">
-            <input type="text" class="search-input" id="searchInput" placeholder="Search by name, phone, or national ID...">
-            <button class="btn-add" onclick="openModal()">
-                <i class="material-icons" style="font-size:20px;">person_add</i> Register Passenger
-            </button>
-        </div>
-
-        <table class="pass-table" id="passTable">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Full Name</th>
-                    <th>National ID</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Registered</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="passBody"></tbody>
-        </table>
-    </div>
-</div>
-
+<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
-    <div class="modal">
-        <h2 id="modalTitle">Register Passenger</h2>
-        <input type="hidden" id="m_index" value="-1">
-        <div class="modal-field">
-            <label>Full Name</label>
-            <input type="text" id="m_name">
-        </div>
-        <div class="modal-field">
-            <label>National ID</label>
-            <input type="text" id="m_nid" maxlength="10">
-        </div>
-        <div class="modal-field">
-            <label>Phone</label>
-            <input type="tel" id="m_phone">
-        </div>
-        <div class="modal-field">
-            <label>Email</label>
-            <input type="email" id="m_email">
-        </div>
-        <div class="modal-actions">
-            <button class="btn-cancel-modal" onclick="closeModal()">Cancel</button>
-            <button class="btn-confirm" id="modalSaveBtn" onclick="savePassenger()">Register</button>
-        </div>
+  <div class="modal">
+    <h2 id="modalTitle">Register Passenger</h2>
+    <input type="hidden" id="m_index" value="-1">
+    <div class="modal-field"><label>Full Name</label><input type="text" id="m_name"></div>
+    <div class="modal-field"><label>National ID</label><input type="text" id="m_nid" maxlength="10"></div>
+    <div class="modal-field"><label>Phone</label><input type="tel" id="m_phone"></div>
+    <div class="modal-field"><label>Email</label><input type="email" id="m_email"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel-modal" onclick="closeModal()">Cancel</button>
+      <button class="btn-confirm" onclick="savePassenger()">Register</button>
     </div>
+  </div>
 </div>
 
 <script>
-    const defaultPassengers = [
-        { id: "P-001", name: "Anas bin Malik",       nid: "1023456789", phone: "0501234567", email: "anas@example.com",    date: "2026-01-10" },
-        { id: "P-002", name: "Saad bin Ahmad",        nid: "1034567890", phone: "0509876543", email: "saad@example.com",    date: "2026-01-15" },
-        { id: "P-003", name: "Ibrahim bin Abdullah",  nid: "1045678901", phone: "0551234567", email: "ibrahim@example.com", date: "2026-02-03" },
-    ];
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+document.getElementById('nbUser').textContent = localStorage.getItem('userName')||'Admin';
 
-    function load() { const s = localStorage.getItem("passengers"); return s ? JSON.parse(s) : defaultPassengers; }
-    function save(list) { localStorage.setItem("passengers", JSON.stringify(list)); }
+const defaultPassengers=[
+  {id:'P-001',name:'Anas bin Malik',nid:'1023456789',phone:'0501234567',email:'anas@example.com',date:'2026-01-10'},
+  {id:'P-002',name:'Saad bin Ahmad',nid:'1034567890',phone:'0509876543',email:'saad@example.com',date:'2026-01-15'},
+  {id:'P-003',name:'Ibrahim bin Abdullah',nid:'1045678901',phone:'0551234567',email:'ibrahim@example.com',date:'2026-02-03'},
+];
+function load(){const s=localStorage.getItem('passengers');return s?JSON.parse(s):defaultPassengers;}
+function save(l){localStorage.setItem('passengers',JSON.stringify(l));}
+function initials(n){return(n||'?').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();}
 
-    function render(filter = "") {
-        const list = load();
-        const body = document.getElementById("passBody");
-        const filtered = filter
-            ? list.filter(p =>
-                p.name.toLowerCase().includes(filter.toLowerCase()) ||
-                p.phone.includes(filter) ||
-                p.nid.includes(filter))
-            : list;
-        body.innerHTML = filtered.map((p, i) => `
-            <tr>
-                <td>${i + 1}</td>
-                <td>${p.name}</td>
-                <td>${p.nid}</td>
-                <td>${p.phone}</td>
-                <td>${p.email}</td>
-                <td>${p.date}</td>
-                <td>
-                    <button class="btn-edit" onclick="openEdit('${p.id}')">Edit</button>
-                    <button class="btn-delete" onclick="deletePassenger('${p.id}')">Delete</button>
-                </td>
-            </tr>
-        `).join("");
-    }
+function render(filter=''){
+  const list=load();
+  const body=document.getElementById('passBody');
+  const filtered=filter?list.filter(p=>p.name.toLowerCase().includes(filter.toLowerCase())||p.phone.includes(filter)||p.nid.includes(filter)):list;
+  if(!filtered.length){body.innerHTML=`<tr><td colspan="7" class="empty">No passengers found.</td></tr>`;return;}
+  body.innerHTML=filtered.map((p,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td><div style="display:flex;align-items:center;gap:10px;justify-content:center">
+        <div class="avatar">${initials(p.name)}</div><strong>${p.name}</strong></div></td>
+      <td>${p.nid}</td><td>${p.phone}</td><td>${p.email}</td><td>${p.date}</td>
+      <td>
+        <button class="btn-edit" onclick="openEdit('${p.id}')">Edit</button>
+        <button class="btn-del" onclick="deleteP('${p.id}')">Delete</button>
+      </td>
+    </tr>`).join('');
+}
 
-    function openModal() {
-        document.getElementById("modalTitle").textContent = "Register Passenger";
-        document.getElementById("m_index").value = "-1";
-        ["m_name","m_nid","m_phone","m_email"].forEach(id => document.getElementById(id).value = "");
-        document.getElementById("modalOverlay").classList.add("show");
-    }
-
-    function openEdit(pid) {
-        const p = load().find(x => x.id === pid);
-        document.getElementById("modalTitle").textContent = "Edit Passenger";
-        document.getElementById("m_index").value = pid;
-        document.getElementById("m_name").value = p.name;
-        document.getElementById("m_nid").value = p.nid;
-        document.getElementById("m_phone").value = p.phone;
-        document.getElementById("m_email").value = p.email;
-        document.getElementById("modalOverlay").classList.add("show");
-    }
-
-    function closeModal() { document.getElementById("modalOverlay").classList.remove("show"); }
-
-    function savePassenger() {
-        const name  = document.getElementById("m_name").value.trim();
-        const nid   = document.getElementById("m_nid").value.trim();
-        const phone = document.getElementById("m_phone").value.trim();
-        const email = document.getElementById("m_email").value.trim();
-        const pid   = document.getElementById("m_index").value;
-
-        if (!name || !nid || !phone || !email) { alert("Please fill all fields"); return; }
-        const list = load();
-        if (pid === "-1") {
-            list.push({ id: "P-"+Date.now(), name, nid, phone, email, date: new Date().toISOString().split('T')[0] });
-        } else {
-            const idx = list.findIndex(x => x.id === pid);
-            list[idx] = { ...list[idx], name, nid, phone, email };
-        }
-        save(list); closeModal(); render();
-    }
-
-    function deletePassenger(pid) {
-        if (confirm("Delete this record?")) { save(load().filter(p => p.id !== pid)); render(); }
-    }
-
-    document.getElementById("searchInput").addEventListener("input", function() { render(this.value); });
-    render();
+function openModal(){
+  document.getElementById('modalTitle').textContent='Register Passenger';
+  document.getElementById('m_index').value='-1';
+  ['m_name','m_nid','m_phone','m_email'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function openEdit(pid){
+  const p=load().find(x=>x.id===pid);if(!p)return;
+  document.getElementById('modalTitle').textContent='Edit Passenger';
+  document.getElementById('m_index').value=pid;
+  document.getElementById('m_name').value=p.name;
+  document.getElementById('m_nid').value=p.nid;
+  document.getElementById('m_phone').value=p.phone;
+  document.getElementById('m_email').value=p.email;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
+function savePassenger(){
+  const name=document.getElementById('m_name').value.trim();
+  const nid=document.getElementById('m_nid').value.trim();
+  const phone=document.getElementById('m_phone').value.trim();
+  const email=document.getElementById('m_email').value.trim();
+  const pid=document.getElementById('m_index').value;
+  if(!name||!nid||!phone||!email){alert('Please fill all fields');return;}
+  const list=load();
+  if(pid==='-1'){list.push({id:'P-'+Date.now(),name,nid,phone,email,date:new Date().toISOString().split('T')[0]});}
+  else{const idx=list.findIndex(x=>x.id===pid);list[idx]={...list[idx],name,nid,phone,email};}
+  save(list);closeModal();render();
+}
+function deleteP(pid){if(!confirm('Delete this record?'))return;save(load().filter(p=>p.id!==pid));render();}
+document.getElementById('searchInput').addEventListener('input',function(){render(this.value);});
+render();
 </script>
-
 </body>
 </html>

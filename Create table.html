@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Create Table</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.table-input-wrap{background:white;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow-x:auto;margin-bottom:20px;}
+.input-table{width:100%;border-collapse:collapse;min-width:750px;}
+.input-table thead th{background:#12958D;color:white;padding:13px 10px;font-size:13px;font-weight:800;text-align:center;}
+.input-table tbody td{padding:7px 6px;border-bottom:1px solid #f0f9f8;}
+.input-table tbody tr:nth-child(even) td{background:#f8fffe;}
+.input-table tbody input{width:100%;padding:8px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-family:'Abhaya Libre',serif;font-size:13px;font-weight:800;background:white;outline:none;transition:border-color .2s;}
+.input-table tbody input:focus{border-color:#12958D;}
+.row-num{font-size:13px;font-weight:800;color:#aaa;text-align:center;width:36px;padding:0 8px;}
+.btn-secondary{background:#EAF6F5;color:#12958D;border:1.5px solid #c4e9e7;border-radius:25px;padding:10px 22px;font-size:14px;font-weight:800;font-family:'Abhaya Libre',serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .2s;}
+.btn-secondary:hover{background:#c4e9e7;}
+</style>
+</head>
+<body>
+
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link active"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="page-title">Create New Table</div>
+
+  <div class="table-input-wrap">
+    <table class="input-table">
+      <thead>
+        <tr><th>#</th><th>Organization</th><th>Train</th><th>From</th><th>To</th><th>Arrival</th><th>Departure</th><th>Notes</th></tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;">
+    <button class="btn-secondary" onclick="addRow()">
+      <i class="material-icons" style="font-size:16px">add</i> Add Row
+    </button>
+    <button class="btn-primary" onclick="saveTable()">
+      <i class="material-icons" style="font-size:16px">save</i> Save Table
+    </button>
+    <a href="Viewtable.html" class="btn-ghost">
+      <i class="material-icons" style="font-size:16px">table_view</i> View Saved
+    </a>
+    <a href="Train management menu .html" class="btn-ghost">
+      <i class="material-icons" style="font-size:16px">arrow_back</i> Back
+    </a>
+  </div>
+
+  <div class="alert alert-success" id="successMsg" style="margin-top:16px;">
+    <i class="material-icons">check_circle</i>
+    Table saved!
+    <a href="Viewtable.html" style="margin-left:8px;font-weight:800;color:inherit;text-decoration:underline;">View all →</a>
+  </div>
+</div>
+
+<script>
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+document.getElementById('nbUser').textContent=localStorage.getItem('userName')||'Admin';
+
+let n=0;
+function addRow(){
+  n++;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td class="row-num">${n}</td>
+    <td><input type="text" id="org${n}" placeholder="Saudi Railways"></td>
+    <td><input type="text" id="trn${n}" placeholder="Train 101"></td>
+    <td><input type="text" id="frm${n}" placeholder="Riyadh"></td>
+    <td><input type="text" id="too${n}" placeholder="Dammam"></td>
+    <td><input type="time" id="arr${n}"></td>
+    <td><input type="time" id="dep${n}"></td>
+    <td><input type="text" id="nts${n}" placeholder="Optional"></td>`;
+  document.getElementById('tableBody').appendChild(tr);
+}
+for(let i=0;i<5;i++) addRow();
+
+function saveTable(){
+  const rows=[];
+  for(let i=1;i<=n;i++){
+    const g=id=>{const el=document.getElementById(id+i);return el?el.value.trim():'';};
+    rows.push({org:g('org'),train:g('trn'),from:g('frm'),to:g('too'),arrive:g('arr'),depart:g('dep'),notes:g('nts')});
+  }
+  if(!rows.some(r=>r.train||r.from||r.to)){alert('Fill at least one row.');return;}
+  const list=JSON.parse(localStorage.getItem('scheduleList')||'[]');
+  const name='schedule_'+(list.length+1);
+  localStorage.setItem(name,JSON.stringify(rows));
+  list.push(name);
+  localStorage.setItem('scheduleList',JSON.stringify(list));
+  document.getElementById('successMsg').classList.add('show');
+}
+</script>
+</body>
+</html>

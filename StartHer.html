@@ -1,392 +1,243 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StartHer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Welcome</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #12958D;
+  --teal-light: #f0f9f8;
+  --text: #1a1a1a;
+  --muted: #666;
+}
 
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+body {
+  margin: 0;
+  font-family: 'Cairo', sans-serif;
+  background: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800;
-            font-size: 14px;
-        }
+/* NAV */
+.top-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 48px;
+  position: sticky; top: 0; background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #f0f0f0; z-index: 50;
+}
+.nav-logo-row { display: flex; align-items: center; gap: 12px; }
+.nav-logo-box {
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, var(--teal), #1a7fc1);
+  border-radius: 12px; display: flex;
+  align-items: center; justify-content: center;
+  color: white; font-size: 18px; font-weight: 900;
+}
+.nav-logo-text { font-size: 22px; font-weight: 900; color: var(--teal); letter-spacing: 1px; }
+.nav-logo-ar { font-size: 10px; color: #aaa; font-weight: 500; text-transform: uppercase; }
 
-        body {
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-            background-color: #EAF6F5;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            /* ضروري جداً لمنع التمرير بسبب بروز نصف الدائرة */
-            overflow: hidden;
-        }
+.nav-links { display: flex; gap: 12px; align-items: center; }
 
-        .header-logo {
-            position: absolute;
-            top: 40px;
-            /* الشعار الآن مثبت في أقصى اليمين فوق منطقة الدائرة */
-            right: 40px;
-            width: 130px;
-            z-index: 20;
-        }
+/* REUSABLE BUTTONS */
+.btn-primary {
+  background: var(--teal); color: white; text-decoration: none;
+  padding: 12px 28px; border-radius: 10px; font-weight: 700;
+  transition: 0.3s; display: flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: #0d6b65; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(18,149,141,0.25); }
 
-        .main-container {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 50px;
-            position: relative;
-        }
+.btn-outline {
+  border: 2px solid #eee; color: var(--text); text-decoration: none;
+  padding: 10px 24px; border-radius: 10px; font-weight: 700; transition: 0.3s;
+}
+.btn-outline:hover { background: #f9f9f9; border-color: #ddd; }
 
-        .text-section {
-            flex: 1;
-            max-width: 500px;
-            z-index: 10;
-        }
+/* HERO */
+.hero {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 48px;
+  gap: 60px;
+  max-width: 1300px; margin: 0 auto; width: 100%;
+}
+.hero-left { flex: 1.2; max-width: 580px; }
 
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #f1f5f9;
+  border-radius: 30px; padding: 6px 14px;
+  margin-bottom: 20px;
+  font-size: 12px; color: #64748b;
+  font-weight: 700;
+}
+.hero-badge-dot {
+  width: 8px; height: 8px;
+  background: #22c55e; border-radius: 50%;
+}
 
+.hero-title {
+  font-size: 68px; font-weight: 900;
+  color: var(--text); line-height: 1.1;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+.hero-title .accent { color: var(--teal); }
 
-        .sub-heading {
-            font-size: 20px;
-            color: #666;
-            margin-bottom: 40px;
-            font-weight: 500;
-        }
+.hero-desc {
+  font-size: 19px; color: var(--muted);
+  line-height: 1.6; margin-bottom: 36px;
+  font-weight: 400; max-width: 480px;
+}
 
-        .button-group {
-            display: flex;
-            gap: 20px;
-        }
+.hero-btns { display: flex; gap: 12px; }
 
-        /* 1. لتكبير العنوان الرئيسي Seekah Welcomes you! */
-        .main-heading {
-            font-size: 80px;
-            /* قمت بزيادتها من 55px إلى 70px */
-            color: #2D9596;
-            line-height: 1.1;
-            margin: 0 0 20px 0;
-        }
+.hero-stats {
+  display: flex; gap: 40px;
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 1px solid #f0f0f0;
+}
+.hero-stat .num { font-size: 28px; font-weight: 900; color: var(--text); }
+.hero-stat .num span { color: var(--teal); }
+.hero-stat .lbl { font-size: 11px; color: #999; text-transform: uppercase; margin-top: 4px; }
 
-        /* 2. لتكبير النص داخل الأزرار */
-        .btn {
-            padding: 15px 40px;
-            /* زدت حجم الحشوة قليلاً لتناسب النص الأكبر */
-            border-radius: 30px;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.3s;
-            text-align: center;
-            min-width: 160px;
-            font-size: 22px;
-            /* قمت بزيادة حجم الخط هنا */
-            font-weight: 800;
-            /* الحفاظ على سماكة الخط */
-        }
+/* TRAIN IMAGE WRAP */
+.hero-right {
+  flex: 1; max-width: 500px;
+  display: flex; align-items: center; justify-content: center;
+}
+.train-wrap {
+  position: relative;
+  width: 100%;
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-15px); }
+}
 
-        .login-btn {
-            background-color: #2D9596;
-            color: white;
-            border: 2px solid #2D9596;
-        }
-
-        .create-btn {
-            background-color: transparent;
-            color: #2D9596;
-            border: 2px solid #2D9596;
-        }
-
-        .image-section {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            position: relative;
-            align-items: center;
-        }
-
-        /* تعديل الدائرة ليظهر نصفها فقط ملتصقاً بالحافة */
-        .bg-circle {
-            position: fixed;
-            /* لتظل ثابتة في خلفية الصفحة */
-            width: 1000px;
-            /* قطر كبير جداً */
-            height: 1000px;
-            background: white;
-            border-radius: 50%;
-            /* التعديل السحري: إزاحة لليمين بمقدار نصف قطرها بالضبط */
-            right: -500px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-
-        /* صورة القطار الخاصة بكِ من فيجما */
-        .train-img {
-            position: absolute;
-            width: 700px;
-            /* عرض القطار */
-            height: auto;
-            /* بروز ربع القطار خارج الدائرة جهة اليسار */
-            right: -150px;
-            z-index: 5;
-        }
-
-        @media (max-width: 1000px) {
-            .main-container {
-                flex-direction: column;
-                text-align: center;
-                padding-top: 100px;
-            }
-
-            .image-section {
-                order: -1;
-                margin-bottom: 50px;
-            }
-
-            .bg-circle {
-                right: -250px;
-                width: 500px;
-                height: 500px;
-            }
-
-            .train-img {
-                position: relative;
-                right: 0;
-                width: 100%;
-            }
-
-            .button-group {
-                justify-content: center;
-            }
-
-            .header-logo {
-                right: 50%;
-                transform: translateX(50%);
-                width: 100px;
-            }
-        }
-    </style>
+/* FEATURES */
+.features {
+  background: #fff;
+  padding: 60px 48px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+}
+.feature-item {
+  padding: 20px;
+}
+.feature-icon-box {
+  width: 48px; height: 48px;
+  background: var(--teal-light); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.feature-icon-box i { color: var(--teal); font-size: 24px; }
+.feature-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.feature-desc  { font-size: 14px; color: var(--muted); line-height: 1.5; }
+</style>
 </head>
-
 <body>
 
-    <img src="images\Logobyname.svg" alt="Sikka Logo" class="header-logo">
+<nav class="top-nav">
+  <div class="nav-logo-row">
+    <div class="nav-logo-box">سِ</div>
+    <div>
+      <div class="nav-logo-text">SEKKAH</div>
+      <div class="nav-logo-ar">Saudi Rail Management</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="Login.html" class="btn-outline">Login</a>
+    <a href="SingUp.html" class="btn-primary">Join Now</a>
+  </div>
+</nav>
 
-    <div class="main-container">
-        <div class="text-section">
-            <h1 class="main-heading">Seekah Welcomes you!</h1>
-            <p class="sub-heading">We wish you a unique experience.</p>
-
-            <div class="button-group">
-                <a href="Login.html" class="btn login-btn">Log in</a>
-                <a href="SingUp.html" class="btn create-btn">Create Account</a>
-            </div>
+<div style="flex:1; display:flex; align-items:center; justify-content:center;">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        System Online
+      </div>
+      <div class="hero-title">
+        Welcome to <br><span class="accent">SEKKAH</span>
+      </div>
+      <p class="hero-desc">
+        Your simplified gateway to manage Saudi rail operations. Clean, smart, and built for the future of transport.
+      </p>
+      <div class="hero-btns">
+        <a href="Login.html" class="btn-primary">
+          <i class="material-icons">east</i> Enter Dashboard
+        </a>
+        <a href="SingUp.html" class="btn-outline">Register</a>
+      </div>
+      
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">10<span>+</span></div>
+          <div class="lbl">Routes</div>
         </div>
-
-        <div class="image-section">
-            <div class="bg-circle"></div>
-            <img src="images\Train.svg" alt="Sikka Train" class="train-img">
+        <div class="hero-stat">
+          <div class="num">300<span>+</span></div>
+          <div class="lbl">Daily Trips</div>
         </div>
+        <div class="hero-stat">
+          <div class="num">Live</div>
+          <div class="lbl">Tracking</div>
+        </div>
+      </div>
     </div>
 
-</body>
+    <div class="hero-right">
+      <div class="train-wrap">
+        <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#e2e8f0"/></linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0d6b65"/><stop offset="100%" stop-color="#12958D"/></linearGradient>
+          </defs>
+          <ellipse cx="270" cy="252" rx="175" ry="8" fill="rgba(0,0,0,0.05)"/>
+          <rect x="75" y="94" width="390" height="124" rx="16" fill="url(#g1)"/>
+          <path d="M75,94 Q28,128 28,156 Q28,188 75,198 L75,94Z" fill="url(#g2)"/>
+          <rect x="75" y="94" width="390" height="18" rx="10" fill="url(#g2)"/>
+          <rect x="96" y="112" width="46" height="35" rx="7" fill="white" opacity="0.6"/>
+          <rect x="156" y="112" width="46" height="35" rx="7" fill="white" opacity="0.6"/>
+          <rect x="216" y="112" width="46" height="35" rx="7" fill="white" opacity="0.6"/>
+          <rect x="276" y="112" width="46" height="35" rx="7" fill="white" opacity="0.6"/>
+          <circle cx="130" cy="216" r="16" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+          <circle cx="205" cy="216" r="16" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+          <circle cx="300" cy="216" r="16" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="features">
+  <div class="feature-item">
+    <div class="feature-icon-box"><i class="material-icons">map</i></div>
+    <div class="feature-title">Smart Maps</div>
+    <div class="feature-desc">Visualize all active routes across the Kingdom instantly.</div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-icon-box"><i class="material-icons">confirmation_number</i></div>
+    <div class="feature-title">Easy Booking</div>
+    <div class="feature-desc">Manage tickets and passenger lists with zero friction.</div>
+  </div>
+  <div class="feature-item">
+    <div class="feature-icon-box"><i class="material-icons">analytics</i></div>
+    <div class="feature-title">Fast Reports</div>
+    <div class="feature-desc">Get the data you need to keep things running smoothly.</div>
+  </div>
+</div>
+
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StartHer</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            box-sizing: border-box;
-            /* توحيد الخط والوزن والحجم 14px */
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800; 
-            font-size: 14px;
-        }
-
-        body {
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-            background-color: #EAF6F5; /* لون الخلفية السماوي الموحد للمشروع */
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* الشعار في الزاوية العلوية اليمنى كما في التصميم */
-        .header-logo {
-            position: absolute;
-            top: 30px;
-            right: 50px;
-            width: 120px;
-            z-index: 10;
-        }
-
-        /* الحاوية الرئيسية المرنة */
-        .main-container {
-            width: 100%;
-            max-width: 1200px; /* العرض الموحد المتفق عليه */
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 50px;
-            position: relative;
-        }
-
-        /* قسم النصوص على اليسار */
-        .text-section {
-            flex: 1;
-            max-width: 500px;
-            z-index: 5;
-        }
-
-        .main-heading {
-            font-size: 55px; /* حجم كبير للعنوان الرئيسي */
-            color: #2D9596; /* اللون الأخضر الغامق الخاص بسكة */
-            line-height: 1.1;
-            margin: 0 0 20px 0;
-        }
-
-        .sub-heading {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 40px;
-            font-weight: 500; /* أنحف قليلاً من العنوان */
-        }
-
-        /* قسم الأزرار */
-        .button-group {
-            display: flex;
-            gap: 20px;
-        }
-
-        /* تنسيق الأزرار العام */
-        .btn {
-            padding: 12px 35px;
-            border-radius: 25px;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.3s;
-            text-align: center;
-            min-width: 140px;
-        }
-
-        /* زر Log in الملون */
-        .login-btn {
-            background-color: #2D9596;
-            color: white;
-            border: 2px solid #2D9596;
-        }
-
-        .login-btn:hover {
-            background-color: #247a7b;
-        }
-
-        /* زر Create Account المفرغ */
-        .create-btn {
-            background-color: transparent;
-            color: #2D9596;
-            border: 2px solid #2D9596;
-        }
-
-        .create-btn:hover {
-            background-color: rgba(45, 149, 150, 0.1);
-        }
-
-        /* قسم الصورة (القطار والخلفية الدائرية) */
-        .image-section {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-            position: relative;
-        }
-
-        /* الشكل الدائري الأبيض خلف القطار */
-        .bg-circle {
-            position: absolute;
-            width: 700px;
-            height: 700px;
-            background: white;
-            border-radius: 50%;
-            right: -250px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-
-        /* صورة القطار */
-        .train-img {
-            width: 120%; /* لتكون بارزة كما في التصميم */
-            max-width: 800px;
-            z-index: 2;
-            position: relative;
-            transform: translateX(100px); /* دفع الصورة لليمين قليلاً */
-        }
-
-        /* التجاوب مع الشاشات الصغيرة */
-        @media (max-width: 900px) {
-            .main-container {
-                flex-direction: column;
-                text-align: center;
-                padding-top: 100px;
-            }
-            .image-section { order: -1; margin-bottom: 50px; }
-            .bg-circle { right: 50%; transform: translate(50%, -50%); width: 400px; height: 400px; }
-            .train-img { transform: none; width: 100%; }
-            .button-group { justify-content: center; }
-            .main-heading { font-size: 40px; }
-        }
-    </style>
-</head>
-<body>
-
-    <img src="الشعار بالاسم.svg" alt="Sikka Logo" class="header-logo">
-
-    <div class="main-container">
-        <div class="text-section">
-            <h1 class="main-heading">Seekah Welcomes you!</h1>
-            <p class="sub-heading">We wish you a uniqe experience.</p>
-            
-            <div class="button-group">
-                <a href="login.html" class="btn login-btn">Log in</a>
-                
-                <a href="create_account.html" class="btn create-btn">Create Account</a>
-            </div>
-        </div>
-
-        <div class="image-section">
-            <div class="bg-circle"></div>
-            <img src="train.png" alt="Sikka Train" class="train-img">
-        </div>
-    </div>
-
-</body>
-</html> -->

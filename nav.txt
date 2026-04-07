@@ -1,0 +1,1 @@
+<!-- This file is a reference — nav code is inlined in each page -->

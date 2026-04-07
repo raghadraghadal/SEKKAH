@@ -1,148 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <title>Signup Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Create Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Cairo',sans-serif;min-height:100vh;background:#f0f9f8;display:flex;overflow-x:hidden;}
 
-  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+.left{
+  width:38%;background:linear-gradient(145deg,#0d1f1e,#12312e,#0a6b65);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:space-between;padding:52px 48px;
+}
+.orb1{position:absolute;top:-60px;right:-60px;width:250px;height:250px;border-radius:50%;background:rgba(18,149,141,.12);}
+.orb2{position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;border-radius:50%;background:rgba(45,212,191,.06);}
+.tracks{position:absolute;inset:0;overflow:hidden;opacity:.1;}
+.track{position:absolute;height:1.5px;background:#2DD4BF;animation:sl 5s linear infinite;}
+.track:nth-child(1){top:30%;width:50%;animation-delay:0s;}
+.track:nth-child(2){top:55%;width:35%;animation-delay:2s;}
+.track:nth-child(3){top:75%;width:55%;animation-delay:1s;}
+@keyframes sl{0%{left:-65%}100%{left:110%}}
 
-  <style>
-    body {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(180deg, #d3e9e7, #e8f5f4);
-      /* تطبيق الخط الجديد هنا */
-      font-family: 'Abhaya Libre', serif;
-    }
+.brand{display:flex;align-items:center;gap:12px;position:relative;z-index:2;}
+.brand-box{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#12958D,#2DD4BF);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:white;}
+.brand-name{font-size:20px;font-weight:900;color:white;letter-spacing:2.5px;}
 
-    .card {
-      background: white;
-      padding: 50px 40px;
-      border-radius: 40px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      width: 350px;
-      text-align: center;
-    }
+.left-mid{position:relative;z-index:2;}
+.left-mid h1{font-family:'Playfair Display',serif;font-size:46px;font-weight:900;color:white;line-height:1.1;margin-bottom:14px;}
+.left-mid h1 span{color:#2DD4BF;}
+.left-mid p{color:rgba(255,255,255,.5);font-size:13px;line-height:1.8;}
 
-    .input-group {
-      position: relative;
-      margin-bottom: 25px;
-      text-align: left;
-    }
+.steps{position:relative;z-index:2;display:flex;flex-direction:column;gap:14px;}
+.step{display:flex;align-items:center;gap:14px;}
+.snum{width:30px;height:30px;border-radius:50%;background:rgba(45,212,191,.15);border:1.5px solid rgba(45,212,191,.35);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#2DD4BF;flex-shrink:0;}
+.stxt{font-size:13px;color:rgba(255,255,255,.6);}
 
-    .input-group input {
-      width: 100%;
-      padding: 18px 20px;
-      border: 1.5px solid #e0e0e0;
-      border-radius: 30px;
-      box-sizing: border-box;
-      font-size: 16px;
-      outline: none;
-      transition: all 0.3s ease;
-      font-family: 'Abhaya Libre', serif;
-      /* التأكد من تطبيق الخط هنا أيضاً */
-    }
+.right{width:62%;display:flex;align-items:center;justify-content:center;padding:44px 56px;overflow-y:auto;}
 
-    .input-group input:focus {
-      border-color: #6fbdb6;
-    }
+.card{width:100%;max-width:560px;animation:fadeUp .5s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
-    .input-group label {
-      position: absolute;
-      top: 18px;
-      left: 20px;
-      color: #aaa;
-      pointer-events: none;
-      transition: all 0.3s ease;
-      background: white;
-      padding: 0 5px;
-      font-size: 16px;
-    }
+.card-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;color:#0d1f1e;margin-bottom:5px;}
+.card-sub{font-size:13px;color:#7a9896;margin-bottom:32px;}
 
-    .input-group input:focus+label,
-    .input-group input:not(:placeholder-shown)+label {
-      top: -10px;
-      left: 15px;
-      font-size: 12px;
-      color: #6fbdb6;
-      font-weight: bold;
-    }
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;}
+.grid .full{grid-column:1/-1;}
 
-    button {
-      width: 100%;
-      padding: 18px;
-      background-color: #4a9d95;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      font-size: 25px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: all 0.2s ease;
-      font-family: 'Abhaya Libre', serif;
-      /* تحديث الخط في الزر */
-      letter-spacing: 1px;
-    }
+.field label{display:block;font-size:11px;font-weight:700;color:#7a9896;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;}
+.field input{width:100%;padding:13px 16px;border:1.5px solid #d0e8e6;border-radius:12px;font-size:14px;font-family:'Cairo',sans-serif;background:white;color:#0d1f1e;outline:none;transition:border-color .2s,box-shadow .2s;}
+.field input:focus{border-color:#12958D;box-shadow:0 0 0 3px rgba(18,149,141,.1);}
+.field-err{font-size:11px;color:#e53935;margin-top:4px;display:none;}
 
-    button:active {
-      transform: scale(0.95);
-      background-color: #387a74;
-    }
+.pw-wrap{position:relative;}
+.pw-wrap input{padding-right:44px;}
+.eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);color:#bbb;cursor:pointer;font-size:17px;}
+.eye:hover{color:#12958D;}
 
-    .footer-text {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #666;
-      font-weight: 800;
-    }
-  </style>
+.str-bar{height:3px;background:#eee;border-radius:4px;overflow:hidden;margin-top:6px;}
+.str-fill{height:100%;width:0;border-radius:4px;transition:width .4s,background .4s;}
+.str-lbl{font-size:10px;color:#aaa;margin-top:3px;}
+
+.terms{display:flex;align-items:flex-start;gap:10px;margin-top:4px;font-size:13px;color:#7a9896;grid-column:1/-1;}
+.terms input[type=checkbox]{accent-color:#12958D;margin-top:2px;width:14px;height:14px;flex-shrink:0;}
+.link{color:#12958D;text-decoration:none;font-weight:700;}
+
+.btn{width:100%;padding:15px;background:linear-gradient(135deg,#12958D,#0d7069);border:none;border-radius:13px;color:white;font-size:15px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s,box-shadow .2s;box-shadow:0 6px 24px rgba(18,149,141,.3);margin-top:22px;}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(18,149,141,.45);}
+
+.bottom{text-align:center;margin-top:20px;font-size:13px;color:#7a9896;}
+
+/* success overlay */
+.suc{position:fixed;inset:0;background:rgba(240,249,248,.97);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.suc.show{display:flex;}
+.suc-icon{width:78px;height:78px;border-radius:50%;background:#EAF6F5;border:3px solid #12958D;display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.175,.885,.32,1.275) both;}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.suc-icon i{font-size:36px;color:#12958D;}
+.suc h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:#0d1f1e;}
+.suc p{font-size:13px;color:#7a9896;}
+.suc-bar{width:180px;height:2px;background:#ddd;border-radius:4px;overflow:hidden;}
+.suc-fill{height:100%;width:0;background:#12958D;animation:fill 2.3s ease forwards;}
+@keyframes fill{to{width:100%}}
+
+@media(max-width:900px){body{flex-direction:column;}.left,.right{width:100%;}.left{padding:38px 28px;}.left-mid h1{font-size:34px;}.right{padding:32px 24px;}.grid{grid-template-columns:1fr;}.grid .full{grid-column:1;}}
+</style>
 </head>
-
 <body>
 
-  <div class="card">
-    <form id="signupForm">
-      <div class="input-group">
-        <input type="text" id="name" placeholder=" " required>
-        <label for="name">Enter your name</label>
-      </div>
-      <div class="input-group">
-        <input type="email" id="email" placeholder=" " required>
-        <label for="email">Enter your email</label>
-      </div>
-      <div class="input-group">
-        <input type="password" id="pass" placeholder=" " required>
-        <label for="pass">Password</label>
-      </div>
-      <button type="submit" id="signupBtn">Signup</button>
-    </form>
-    <div class="footer-text">
-      Already have an account?
-      <a href="Login.html" style="color: #4a9d95; text-decoration: none; font-weight: bold;">Login</a>
-    </div>
+<div class="left">
+  <div class="orb1"></div><div class="orb2"></div>
+  <div class="tracks"><div class="track"></div><div class="track"></div><div class="track"></div></div>
+
+  <div class="brand">
+    <div class="brand-box">سِ</div>
+    <div class="brand-name">SEKKAH</div>
   </div>
 
-  <script>
-    const signupForm = document.getElementById('signupForm');
+  <div class="left-mid">
+    <h1>Join the<br><span>Network.</span></h1>
+    <p>Create your admin account and start managing Saudi Arabia's rail operations today.</p>
+  </div>
 
-    signupForm.addEventListener('submit', function (e) {
-      e.preventDefault();
+  <div class="steps">
+    <div class="step"><div class="snum">1</div><div class="stxt">Fill in your account details</div></div>
+    <div class="step"><div class="snum">2</div><div class="stxt">Set a strong password</div></div>
+    <div class="step"><div class="snum">3</div><div class="stxt">Start managing operations</div></div>
+  </div>
+</div>
 
-      const name = document.getElementById('name').value.trim();
-      const pass = document.getElementById('pass').value;
+<div class="right">
+  <div class="card">
+    <div class="card-title">Create Account</div>
+    <div class="card-sub">Get started with your SEKKAH operations account</div>
 
-      // حفظ البيانات
-      localStorage.setItem(name, pass);
+    <div class="grid">
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="f_name" placeholder="Your full name">
+        <div class="field-err" id="e_name">Required</div>
+      </div>
+      <div class="field">
+        <label>Username</label>
+        <input type="text" id="f_user" placeholder="Choose a username">
+        <div class="field-err" id="e_user">Required</div>
+      </div>
+      <div class="field full">
+        <label>Email</label>
+        <input type="email" id="f_email" placeholder="your@email.com">
+        <div class="field-err" id="e_email">Enter a valid email</div>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="f_pw" placeholder="Min. 6 characters" oninput="checkStr()">
+          <i class="material-icons eye" onclick="tpw('f_pw')">visibility_off</i>
+        </div>
+        <div class="str-bar"><div class="str-fill" id="sf"></div></div>
+        <div class="str-lbl" id="sl"></div>
+        <div class="field-err" id="e_pw">Min. 6 characters</div>
+      </div>
+      <div class="field">
+        <label>Confirm Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="f_cpw" placeholder="Repeat password">
+          <i class="material-icons eye" onclick="tpw('f_cpw')">visibility_off</i>
+        </div>
+        <div class="field-err" id="e_cpw">Passwords don't match</div>
+      </div>
+      <div class="terms">
+        <input type="checkbox" id="terms">
+        <label for="terms">I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a></label>
+      </div>
+    </div>
 
-      alert("Account created successfully!");
-      window.location.href = "Login.html";
-    });
-  </script>
+    <button class="btn" onclick="doSignup()">
+      <i class="material-icons" style="font-size:18px">person_add</i> Create Account
+    </button>
+    <div class="bottom">Already have an account? <a href="Login.html" class="link">Sign in</a></div>
+  </div>
+</div>
+
+<div class="suc" id="suc">
+  <div class="suc-icon"><i class="material-icons">check</i></div>
+  <h2>Account Created!</h2>
+  <p>Redirecting to login...</p>
+  <div class="suc-bar"><div class="suc-fill"></div></div>
+</div>
+
+<script>
+function tpw(id){const e=document.getElementById(id);e.type=e.type==='password'?'text':'password';}
+function checkStr(){
+  const v=document.getElementById('f_pw').value;
+  const sf=document.getElementById('sf'),sl=document.getElementById('sl');
+  if(!v){sf.style.width='0';sl.textContent='';return;}
+  let s=0;if(v.length>=6)s++;if(v.length>=10)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
+  const lvl=[{w:'20%',bg:'#ef4444',t:'Weak'},{w:'40%',bg:'#f97316',t:'Fair'},{w:'60%',bg:'#eab308',t:'Good'},{w:'80%',bg:'#22c55e',t:'Strong'},{w:'100%',bg:'#12958D',t:'Excellent'}][Math.min(s,4)];
+  sf.style.width=lvl.w;sf.style.background=lvl.bg;sl.textContent=lvl.t;sl.style.color=lvl.bg;
+}
+function doSignup(){
+  const name=document.getElementById('f_name').value.trim();
+  const user=document.getElementById('f_user').value.trim();
+  const email=document.getElementById('f_email').value.trim();
+  const pw=document.getElementById('f_pw').value;
+  const cpw=document.getElementById('f_cpw').value;
+  const terms=document.getElementById('terms').checked;
+  let ok=true;
+  ['e_name','e_user','e_email','e_pw','e_cpw'].forEach(id=>document.getElementById(id).style.display='none');
+  if(!name){document.getElementById('e_name').style.display='block';ok=false;}
+  if(!user){document.getElementById('e_user').style.display='block';ok=false;}
+  if(!email||!email.includes('@')){document.getElementById('e_email').style.display='block';ok=false;}
+  if(pw.length<6){document.getElementById('e_pw').style.display='block';ok=false;}
+  if(pw!==cpw){document.getElementById('e_cpw').style.display='block';ok=false;}
+  if(!terms){alert('Please accept the Terms of Service.');ok=false;}
+  if(!ok)return;
+  localStorage.setItem('userName',name);localStorage.setItem('userUsername',user);localStorage.setItem('userEmail',email);
+  document.getElementById('suc').classList.add('show');
+  setTimeout(()=>location.href='Login.html',2400);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter')doSignup();});
+</script>
 </body>
-
 </html>

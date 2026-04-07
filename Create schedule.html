@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Create Schedule</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.form-card{background:white;border-radius:20px;padding:36px 40px;box-shadow:0 2px 12px rgba(0,0,0,0.06);max-width:860px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:8px;}
+.form-grid .full{grid-column:1/-1;}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link active"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
+
+<div class="page-body">
+  <div class="page-title">Create Schedule</div>
+
+  <div class="form-card">
+    <div class="form-grid">
+      <div class="field">
+        <label>Train</label>
+        <select id="f_train">
+          <option value="">-- Select Train --</option>
+          <option>Train 101</option><option>Train 102</option><option>Train 103</option>
+        </select>
+        <span class="err" id="err_train">Required.</span>
+      </div>
+      <div class="field">
+        <label>Route</label>
+        <select id="f_route">
+          <option value="">-- Select Route --</option>
+          <option>Riyadh → Dammam</option><option>Dammam → Riyadh</option>
+          <option>Abha → Tabuk</option><option>Tabuk → Abha</option>
+          <option>Hail → Madinah</option><option>Madinah → Hail</option>
+        </select>
+        <span class="err" id="err_route">Required.</span>
+      </div>
+      <div class="field">
+        <label>Departure Time</label>
+        <input type="datetime-local" id="f_dep">
+        <span class="err" id="err_dep">Required.</span>
+      </div>
+      <div class="field">
+        <label>Arrival Time</label>
+        <input type="datetime-local" id="f_arr">
+        <span class="err" id="err_arr">Must be after departure.</span>
+      </div>
+      <div class="field">
+        <label>Available Seats</label>
+        <input type="number" id="f_seats" placeholder="e.g. 50" min="1">
+        <span class="err" id="err_seats">Required — min 1.</span>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="f_status">
+          <option>Active</option><option>Delayed</option><option>Cancelled</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:24px;">
+      <button class="btn-primary" onclick="save()">
+        <i class="material-icons" style="font-size:16px">save</i> Save Schedule
+      </button>
+      <a href="Train management menu .html" class="btn-ghost">Cancel</a>
+    </div>
+
+    <div class="alert alert-success" id="ok">
+      <i class="material-icons">check_circle</i>
+      Schedule saved!
+      <a href="Viewtimetable.html" style="margin-left:8px;font-weight:800;color:inherit;text-decoration:underline;">View Timetable →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+document.getElementById('nbUser').textContent=localStorage.getItem('userName')||'Admin';
+
+function validate(){
+  const dep=document.getElementById('f_dep').value,arr=document.getElementById('f_arr').value;
+  let ok=true;
+  const chk=(id,errId,cond)=>{document.getElementById(errId).classList.toggle('show',!cond);if(!cond)ok=false;};
+  chk('f_train','err_train',!!document.getElementById('f_train').value);
+  chk('f_route','err_route',!!document.getElementById('f_route').value);
+  chk('f_dep','err_dep',!!dep);
+  chk('f_arr','err_arr',!!arr&&(!dep||new Date(arr)>new Date(dep)));
+  chk('f_seats','err_seats',!!document.getElementById('f_seats').value&&+document.getElementById('f_seats').value>=1);
+  return ok;
+}
+function save(){
+  if(!validate())return;
+  const s={id:'SC-'+Date.now(),train:document.getElementById('f_train').value,route:document.getElementById('f_route').value,depart:document.getElementById('f_dep').value,arrive:document.getElementById('f_arr').value,seats:+document.getElementById('f_seats').value,status:document.getElementById('f_status').value};
+  const list=JSON.parse(localStorage.getItem('schedules')||'[]');
+  list.push(s);localStorage.setItem('schedules',JSON.stringify(list));
+  document.getElementById('ok').classList.add('show');
+  ['f_train','f_route','f_dep','f_arr','f_seats'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f_status').value='Active';
+}
+</script>
+</body>
+</html>

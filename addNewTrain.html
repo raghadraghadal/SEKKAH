@@ -1,196 +1,144 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Train</title>
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <style>
-        * { box-sizing: border-box; font-family: 'Abhaya Libre', serif; }
-
-        body { margin: 0; display: flex; min-height: 100vh; background-color: #EAF6F5; position: relative; padding: 20px; overflow-x: hidden; }
-
-        #menu-toggle { display: none; }
-        .header-logo { position: absolute; top: 10px; right: 30px; width: 90px; height: auto; z-index: 1000; }
-
-        .sidebar-small { width: 50px; background: white; border-radius: 20px; display: flex; flex-direction: column; align-items: center; padding: 15px 0; box-shadow: 2px 0 10px rgba(0,0,0,0.03); height: 85vh; position: fixed; left: 10px; top: 7.5vh; z-index: 1000; }
-        .menu-btn-label { font-size: 28px; cursor: pointer; color: #333; }
-
-        .sidebar-overlay { position: fixed; left: -320px; width: 280px; background: white; z-index: 1100; transition: 0.3s ease-in-out; box-shadow: 5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; padding: 20px; height: 85vh; top: 7.5vh; border-radius: 25px; }
-        #menu-toggle:checked ~ .sidebar-overlay { left: 0; }
-
-        .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 90; display: none; }
-        #menu-toggle:checked ~ .overlay-bg { display: block; }
-
-        .nav-item { display: flex; align-items: center; gap: 15px; padding: 15px; cursor: pointer; border-radius: 10px; margin-bottom: 10px; color: black; text-decoration: none; }
-        .nav-item.main-link { font-size: 18px; font-weight: 900; }
-        .nav-item:hover { background: #f5f5f5; }
-        .nav-item.active { background: #f0f8f7; border-radius: 15px; }
-        .logout-btn { margin-top: auto; background: #E53935; color: white; border-radius: 20px; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
-
-        .main-wrapper { flex: 1; margin-left: 80px; display: flex; flex-direction: column; align-items: center; position: relative; width: calc(100% - 80px); }
-
-        .content-area { background: white; border-radius: 50px; margin-top: 100px; padding: 60px 50px; width: 85%; max-width: 1100px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; flex-direction: column; align-items: flex-start; height: fit-content; margin-bottom: 40px; }
-
-        h1 { font-size: 45px; font-weight: 300; color: #1a1a1a; margin-bottom: 40px; letter-spacing: 2px; }
-
-        .train-form { max-width: 700px; width: 100%; }
-        .form-row { display: flex; align-items: center; margin-bottom: 40px; gap: 30px; }
-        .form-row label { width: 160px; font-size: 28px; font-weight: 800; color: black; flex-shrink: 0; }
-        .required-star { color: #E53935; display: none; margin-left: 4px; }
-
-        .input-box { width: 320px; height: 52px; border: none; border-radius: 30px; background: #F5F5F5; padding: 0 24px; font-size: 26px; font-weight: 500; outline: none; font-family: 'Abhaya Libre', serif; }
-
-        .status-buttons { display: flex; gap: 30px; }
-        .status-btn { width: 155px; height: 52px; border: none; border-radius: 30px; font-size: 24px; font-weight: 500; cursor: pointer; opacity: 0.75; transition: 0.2s; font-family: 'Abhaya Libre', serif; }
-        .status-btn.active { opacity: 1; outline: 3px solid rgba(0,0,0,0.08); }
-        .available   { background: rgba(109,235,124,0.96); color: black; }
-        .unavailable { background: #F94F4F; color: black; }
-
-        .form-actions { display: flex; justify-content: flex-end; align-items: center; gap: 35px; margin-top: 60px; }
-        .add-btn    { width: 230px; height: 78px; border: none; border-radius: 12px; background: #8FC5C3; color: white; font-size: 30px; font-weight: 500; cursor: pointer; font-family: 'Abhaya Libre', serif; }
-        .cancel-btn { border: none; background: transparent; color: #243B72; font-size: 30px; font-weight: 500; cursor: pointer; font-family: 'Abhaya Libre', serif; }
-
-        .message { margin-top: 25px; font-size: 24px; font-weight: 800; }
-
-        .preview-table { margin-top: 30px; width: 100%; max-width: 700px; border-collapse: collapse; display: none; }
-        .preview-table th, .preview-table td { border: 1px solid #ddd; padding: 12px; text-align: center; font-size: 18px; }
-        .preview-table th { background: #8FC5C3; color: black; }
-
-        @media(max-width:900px) { .form-row { flex-direction: column; align-items: flex-start; } .form-row label { width: auto; font-size: 24px; } .input-box { width: 100%; } .status-buttons { flex-wrap: wrap; } .form-actions { justify-content: flex-start; flex-wrap: wrap; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Add New Train</title>
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.form-card{background:white;border-radius:20px;padding:36px 40px;box-shadow:0 2px 12px rgba(0,0,0,0.06);max-width:700px;}
+.form-row{display:flex;align-items:center;gap:24px;margin-bottom:28px;flex-wrap:wrap;}
+.form-row label{width:150px;font-size:15px;font-weight:800;color:#333;flex-shrink:0;}
+.form-input{flex:1;min-width:200px;height:48px;border:1.5px solid #e5e7eb;border-radius:12px;background:#fafafa;padding:0 18px;font-size:15px;font-weight:800;font-family:'Abhaya Libre',serif;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:#12958D;background:white;}
+.req-star{color:#E53935;display:none;margin-left:3px;}
+.status-btns{display:flex;gap:14px;}
+.status-btn{height:44px;padding:0 24px;border:2px solid transparent;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;transition:all .2s;opacity:.7;}
+.status-btn.active{opacity:1;transform:scale(1.04);}
+.btn-avail{background:#d4f5e9;color:#0a6641;border-color:#d4f5e9;}
+.btn-avail.active{border-color:#0a6641;}
+.btn-unavail{background:#fde8e8;color:#991b1b;border-color:#fde8e8;}
+.btn-unavail.active{border-color:#991b1b;}
+.form-actions{display:flex;gap:14px;margin-top:32px;justify-content:flex-end;}
+.msg{margin-top:16px;font-size:14px;font-weight:800;padding:10px 16px;border-radius:10px;display:none;}
+.msg.success{background:#d4f5e9;color:#0a6641;display:block;}
+.msg.error{background:#fde8e8;color:#991b1b;display:block;}
+.preview-wrap{margin-top:24px;background:#f8fffe;border-radius:14px;overflow:hidden;display:none;}
+.preview-wrap table{width:100%;border-collapse:collapse;}
+.preview-wrap thead th{background:#12958D;color:white;padding:12px;font-size:13px;text-align:center;}
+.preview-wrap tbody td{padding:12px;text-align:center;font-size:14px;border-bottom:1px solid #EAF6F5;}
+</style>
 </head>
 <body>
 
-    <input type="checkbox" id="menu-toggle" style="display:none;">
-    <label for="menu-toggle" class="overlay-bg"></label>
+<nav class="top-navbar">
+  <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+  <div class="nb-links">
+    <a href="home.html" class="nb-link"><i class="material-icons">home</i><span>Home</span></a>
+    <a href="Train management menu .html" class="nb-link active"><i class="material-icons">train</i><span>Train Management</span></a>
+    <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+    <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+    <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+  </div>
+  <div class="nb-right">
+    <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+    <a href="StartHer.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+  </div>
+</nav>
 
-    <div class="sidebar-small">
-        <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
+<div class="page-body">
+  <div class="page-title">Add New Train</div>
+
+  <div class="form-card">
+    <div class="form-row">
+      <label>Train Number <span class="req-star" id="s1">*</span></label>
+      <input type="number" id="trainNumber" class="form-input" placeholder="e.g. 101">
+    </div>
+    <div class="form-row">
+      <label>Capacity <span class="req-star" id="s2">*</span></label>
+      <input type="number" id="capacity" class="form-input" placeholder="e.g. 50">
+    </div>
+    <div class="form-row">
+      <label>Status <span class="req-star" id="s3">*</span></label>
+      <div class="status-btns">
+        <button type="button" class="status-btn btn-avail" id="availBtn">✓ Available</button>
+        <button type="button" class="status-btn btn-unavail" id="unavailBtn">✗ Unavailable</button>
+      </div>
     </div>
 
-    <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons" style="align-self:flex-end;cursor:pointer;font-size:30px;margin-bottom:40px;">close</label>
-        <a href="home.html"                  class="nav-item"><i class="material-icons">home</i><span>Home</span></a>
-        <a href="train-management- menu.html" class="nav-item active"><i class="material-icons">train</i><span>Train Management</span></a>
-        <a href="Passenger Management.html"  class="nav-item"><i class="material-icons">groups</i><span>Passenger Management</span></a>
-        <a href="Reservation-System.html"    class="nav-item"><i class="material-icons">confirmation_number</i><span>Reservation System</span></a>
-        <a href="Dashboard.html"             class="nav-item"><i class="material-icons">bar_chart</i><span>Dashboard &amp; Reports</span></a>
-        <a href="profile.html" class="nav-item main-link" style="margin-top:15px;"><i class="material-icons">person_outline</i><span>Account Details</span></a>
-        <a href="StartHer.html" class="logout-btn"><i class="material-icons">logout</i><span>Logout</span></a>
+    <div class="form-actions">
+      <a href="Train management menu .html" class="btn-ghost">Cancel</a>
+      <button class="btn-primary" onclick="addTrain()">
+        <i class="material-icons" style="font-size:16px">add</i> Add Train
+      </button>
     </div>
 
-    <div class="main-wrapper">
-        <img src="images/Logo.svg" alt="Sikka Logo" class="header-logo">
-        <div class="content-area">
-            <h1>Add new train</h1>
+    <div class="msg" id="msg"></div>
 
-            <div class="train-form">
-                <div class="form-row">
-                    <label for="trainNumber">Train Number : <span id="starTrain" class="required-star">*</span></label>
-                    <input type="number" id="trainNumber" class="input-box" placeholder="1xx">
-                </div>
-                <div class="form-row">
-                    <label for="capacity">Capacity <span id="starCapacity" class="required-star">*</span></label>
-                    <input type="number" id="capacity" class="input-box" placeholder="50">
-                </div>
-                <div class="form-row">
-                    <label>State: <span id="starState" class="required-star">*</span></label>
-                    <div class="status-buttons">
-                        <button type="button" class="status-btn available"   id="availableBtn">Available</button>
-                        <button type="button" class="status-btn unavailable" id="unavailableBtn">Unavailable</button>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="add-btn"    id="addBtn">Add+</button>
-                    <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
-                </div>
-                <div class="message" id="message"></div>
-                <table class="preview-table" id="previewTable">
-                    <thead><tr><th>Train Number</th><th>Capacity</th><th>Status</th></tr></thead>
-                    <tbody id="previewBody"></tbody>
-                </table>
-            </div>
-        </div>
+    <div class="preview-wrap" id="preview">
+      <table>
+        <thead><tr><th>Train Number</th><th>Capacity</th><th>Status</th></tr></thead>
+        <tbody id="previewBody"></tbody>
+      </table>
     </div>
+  </div>
+</div>
 
 <script>
-    if (!localStorage.getItem("userName")) { alert("Please login first!"); window.location.href = "Login.html"; }
+if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
+document.getElementById('nbUser').textContent=localStorage.getItem('userName')||'Admin';
 
-    const trainNumberInput = document.getElementById("trainNumber");
-    const capacityInput    = document.getElementById("capacity");
-    const availableBtn     = document.getElementById("availableBtn");
-    const unavailableBtn   = document.getElementById("unavailableBtn");
-    const message          = document.getElementById("message");
-    const previewTable     = document.getElementById("previewTable");
-    const previewBody      = document.getElementById("previewBody");
-    const starTrain        = document.getElementById("starTrain");
-    const starCapacity     = document.getElementById("starCapacity");
-    const starState        = document.getElementById("starState");
+let selectedStatus = '';
 
-    let selectedState = "";
+document.getElementById('availBtn').onclick = function(){
+  selectedStatus='Available';
+  this.classList.add('active');
+  document.getElementById('unavailBtn').classList.remove('active');
+};
+document.getElementById('unavailBtn').onclick = function(){
+  selectedStatus='Unavailable';
+  this.classList.add('active');
+  document.getElementById('availBtn').classList.remove('active');
+};
 
-    availableBtn.addEventListener("click", function () {
-        selectedState = "Available";
-        availableBtn.classList.add("active");
-        unavailableBtn.classList.remove("active");
-    });
+function addTrain(){
+  const num = document.getElementById('trainNumber').value.trim();
+  const cap = document.getElementById('capacity').value.trim();
+  const msg = document.getElementById('msg');
 
-    unavailableBtn.addEventListener("click", function () {
-        selectedState = "Unavailable";
-        unavailableBtn.classList.add("active");
-        availableBtn.classList.remove("active");
-    });
+  document.querySelectorAll('.req-star').forEach(s=>s.style.display='none');
 
-    document.getElementById("addBtn").addEventListener("click", function () {
-        // reset stars
-        starTrain.style.display = "none";
-        starCapacity.style.display = "none";
-        starState.style.display = "none";
+  if(!num){document.getElementById('s1').style.display='inline';}
+  if(!cap){document.getElementById('s2').style.display='inline';}
+  if(!selectedStatus){document.getElementById('s3').style.display='inline';}
+  if(!num||!cap||!selectedStatus){
+    msg.textContent='Please fill all fields.';
+    msg.className='msg error';return;
+  }
+  if(+num<=0||+cap<=0){
+    msg.textContent='Values must be greater than 0.';
+    msg.className='msg error';return;
+  }
 
-        const trainNumber = trainNumberInput.value.trim();
-        const capacity    = capacityInput.value.trim();
+  const trains=JSON.parse(localStorage.getItem('trains')||'[]');
+  trains.push({number:num,capacity:cap,status:selectedStatus});
+  localStorage.setItem('trains',JSON.stringify(trains));
 
-        // ✅ الإصلاح: || بدل المسافات
-        if (trainNumber === "" || capacity === "" || selectedState === "") {
-            if (trainNumber === "")  starTrain.style.display    = "inline";
-            if (capacity === "")     starCapacity.style.display = "inline";
-            if (selectedState === "") starState.style.display   = "inline";
-            message.textContent = "Please fill in all fields and choose the train state.";
-            message.style.color = "red";
-            return;
-        }
+  const row=document.createElement('tr');
+  row.innerHTML=`<td>Train ${num}</td><td>${cap}</td><td>${selectedStatus}</td>`;
+  document.getElementById('previewBody').appendChild(row);
+  document.getElementById('preview').style.display='block';
 
-        if (Number(trainNumber) <= 0 || Number(capacity) <= 0) {
-            message.textContent = "Invalid input. Please enter numbers greater than 0.";
-            message.style.color = "red";
-            return;
-        }
+  msg.textContent='Train added successfully!';
+  msg.className='msg success';
 
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${trainNumber}</td><td>${capacity}</td><td>${selectedState}</td>`;
-        previewBody.appendChild(row);
-        previewTable.style.display = "table";
-
-        // حفظ في localStorage
-        const trains = JSON.parse(localStorage.getItem("trains") || "[]");
-        trains.push({ number: trainNumber, capacity: capacity, status: selectedState });
-        localStorage.setItem("trains", JSON.stringify(trains));
-
-        message.textContent = "Train added successfully.";
-        message.style.color = "green";
-
-        trainNumberInput.value = "";
-        capacityInput.value    = "";
-        selectedState = "";
-        availableBtn.classList.remove("active");
-        unavailableBtn.classList.remove("active");
-    });
-
-    document.getElementById("cancelBtn").addEventListener("click", function () {
-        window.location.href = "train-management- menu.html";
-    });
+  document.getElementById('trainNumber').value='';
+  document.getElementById('capacity').value='';
+  selectedStatus='';
+  document.querySelectorAll('.status-btn').forEach(b=>b.classList.remove('active'));
+}
 </script>
 </body>
 </html>

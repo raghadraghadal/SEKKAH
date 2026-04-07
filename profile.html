@@ -1,867 +1,415 @@
-<!-- <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sikkah - Profile</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    <style>
-        /* --- [1] الإعدادات العامة للمشروع --- */
-        * {
-            box-sizing: border-box;
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800;
-            font-size: 16px;
-        }
-
-        body {
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-            background-color: #EAF6F5;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 20px;
-        }
-
-        #menu-toggle {
-            display: none;
-        }
-
-        .header-logo {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            width: 100px;
-            z-index: 1;
-        }
-
-        /* --- [2] القائمة الجانبية المحدثة (نفس الهوم) --- */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 280px;
-            height: 100%;
-            background: white;
-            z-index: 100;
-            transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        #menu-toggle:checked~.sidebar-overlay {
-            left: 0;
-        }
-
-        .overlay-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 90;
-            display: none;
-        }
-
-        #menu-toggle:checked~.overlay-bg {
-            display: block;
-        }
-
-        .close-btn-label {
-            align-self: flex-end;
-            cursor: pointer;
-            font-size: 30px;
-            margin-bottom: 40px;
-        }
-
-        /* تنسيق الأزرار داخل المنيو */
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 10px;
-            margin-bottom: 5px;
-            color: black;
-            text-decoration: none;
-        }
-
-        /* تمييز الروابط الرئيسية (Home & Account) */
-        .nav-item.main-link {
-            font-size: 17px;
-            font-weight: 900;
-        }
-
-        .nav-item:hover {
-            background: #f5f5f5;
-        }
-
-        .logout-btn {
-            margin-top: auto;
-            background: #E53935;
-            color: white;
-            border-radius: 20px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        /* --- [3] تنسيق محتوى البروفايل --- */
-        .main-wrapper {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-            align-items: stretch;
-        }
-
-        .sidebar-small {
-            width: 65px;
-            background: white;
-            border-radius: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .content-area {
-            flex: 1;
-            background: white;
-            border-radius: 30px;
-            padding: 60px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            min-height: 600px;
-        }
-
-        .welcome-section {
-            margin-bottom: 50px;
-            font-size: 20px;
-        }
-
-        .profile-layout {
-            display: flex;
-            gap: 100px;
-            flex-wrap: wrap;
-        }
-
-        .avatar-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 150px;
-        }
-
-        .avatar-circle {
-            width: 110px;
-            height: 110px;
-            background: #f0f0f0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .input-box {
-            flex: 1;
-            background: #F5F5F5;
-            border: none;
-            border-radius: 25px;
-            padding: 12px 25px;
-            outline: none;
-        }
-
-        .field-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        #welcome-name {
-            font-size: 20px;
-            /* كبري هذا الرقم حسب رغبتك */
-            font-weight: 600;
-            /* لجعل الخط عريض جداً وبروز الاسم */
-            margin-left: 5px;
-            /* إضافة مسافة بسيطة بين كلمة welcome والاسم */
-            display: inline-block;
-        }
-    </style>
-</head>
-
-<body>
-
-    <input type="checkbox" id="menu-toggle">
-
-    <img src="images\Logo.svg" alt="Sikka Logo" class="header-logo">
-
-    <label for="menu-toggle" class="overlay-bg"></label>
-
-    <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons close-btn-label">close</label>
-
-        <a href="home.html" class="nav-item main-link">
-            <i class="material-icons">home</i>
-            <span>Home</span>
-        </a>
-
-        <a href="train-management- menu.html" class="nav-item">
-            <i class="material-icons">train</i>
-            <span>Train Management</span>
-        </a>
-
-        <a href="Passenger Management.html" class="nav-item">
-            <i class="material-icons">groups</i>
-            <span>Passenger Management</span>
-        </a>
-
-        <a href="Reservation-System.html" class="nav-item">
-            <i class="material-icons">confirmation_number</i>
-            <span>Reservation System</span>
-        </a>
-
-        <a href="Dashboard.html" class="nav-item">
-            <i class="material-icons">assessment</i>
-            <span>Dashboard & Reports</span>
-        </a>
-
-        <a href="profile.html" class="nav-item main-link" style="margin-top: 15px;">
-            <i class="material-icons">person_outline</i>
-            <span>Account Details</span>
-        </a>
-
-        <a href="StartHer.html" class="logout-btn">
-            <i class="material-icons">logout</i>
-            <span>Logout</span>
-        </a>
-    </div>
-
-    <div class="main-wrapper">
-        <div class="sidebar-small">
-            <label for="menu-toggle" class="material-icons" style="font-size: 32px; cursor: pointer;">menu</label>
-        </div>
-
-        <div class="content-area">
-            <div class="welcome-section">
-                Hi,<br>
-                welcome <span id="welcome-name" style="color: #2D9596;">Loading...</span>
-            </div>
-
-            <div class="profile-layout">
-                <div class="avatar-wrapper">
-                    <div class="avatar-circle">
-                        <i class="material-icons" style="font-size: 70px; color: #ccc;">person</i>
-                    </div>
-                    <span id="user-display-name">Loading...</span>
-                </div>
-
-                <div class="inputs-container" style="flex: 1; max-width: 450px;">
-                    <div class="field-group">
-                        <span class="label-text" style="width:120px">Full Name</span>
-                        <input type="text" id="full-name-input" class="input-box" value="" readonly>
-                    </div>
-
-                    <div class="field-group">
-                        <span class="label-text" style="width:120px">Email</span>
-                        <input type="text" class="input-box" value="User.M@gmail.com" readonly>
-                    </div>
-
-                    <div class="field-group">
-                        <span class="label-text" style="width:120px">Password</span>
-                        <input type="password" class="input-box" value="********" readonly>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // هذا الكود يمنع الدخول غير المصرح به
-        if (!localStorage.getItem("userName")) {
-            alert("Please login first!");
-            window.location.href = "Login.html";
-        }
-        // جلب الاسم المحفوظ وتحديث عناصر الصفحة
-        const savedName = localStorage.getItem("userName");
-
-        if (savedName) {
-            document.getElementById("user-display-name").innerText = savedName;
-            document.getElementById("welcome-name").innerText = savedName;
-            document.getElementById("full-name-input").value = savedName;
-        } else {
-            document.getElementById("user-display-name").innerText = "Guest";
-            document.getElementById("welcome-name").innerText = "Guest";
-            document.getElementById("full-name-input").value = "Guest User";
-        }
-    </script>
-
-</body>
-
-</html> -->
-
-
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sikkah - Profile</title>
+    <title>Profile – SEKKAH</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
-        /* --- [1] الإعدادات العامة للمشروع --- */
         :root {
             --dark-teal: #12958D;
             --light-teal: #EAF6F5;
             --bg-page: #EAF6F5;
         }
 
-        * {
-            box-sizing: border-box;
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800;
-        }
+        * { box-sizing: border-box; font-family: 'Abhaya Libre', serif; font-weight: 800; }
 
         body {
             margin: 0;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
             background-color: var(--bg-page);
-            overflow: hidden; /* لمنع التمرير المزدوج */
         }
 
-        /* --- [2] الشريط الجانبي الصغير (Sidebar Small) - محدث ليتطابق مع صورة 80 --- */
-        .sidebar-small {
-            width: 50px !important; /* نفس عرض صورة 80 */
-            background: white;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px 0;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.03);
-            height: 85vh;
-            position: fixed;
-            left: 10px;
-            top: 7.5vh;
-            z-index: 1000;
+        /* ── TOP NAVBAR ── */
+        .top-navbar {
+            width: 100%; background: white; border-bottom: 1px solid #f0f0f0;
+            padding: 0 28px; display: flex; align-items: center; height: 62px;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
         }
-
-        .menu-btn-label {
-            font-size: 28px;
-            cursor: pointer;
-            color: #333;
+        .navbar-brand { display:flex; align-items:center; gap:10px; text-decoration:none; margin-right:32px; }
+        .navbar-brand-icon {
+            width:34px; height:34px; background:linear-gradient(135deg,#12958D,#1a7fc1);
+            border-radius:9px; display:flex; align-items:center; justify-content:center;
+            color:white; font-size:14px; font-weight:900;
         }
-
-        #menu-toggle { display: none; }
-
-        /* --- [3] القائمة الجانبية المنسدلة (Sidebar Overlay) - محدثة --- */
-        .sidebar-overlay {
-            position: fixed;
-            left: -320px; 
-            width: 280px;
-            background: white;
-            z-index: 1100;
-            transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            height: 85vh;
-            top: 7.5vh;
-            border-radius: 25px;
+        .navbar-brand-name { font-size:17px; font-weight:900; color:#12958D; letter-spacing:2px; }
+        .navbar-links { display:flex; align-items:center; gap:3px; flex:1; }
+        .navbar-link {
+            display:flex; align-items:center; gap:6px; padding:7px 12px;
+            border-radius:9px; color:#555; text-decoration:none;
+            font-size:13px; font-weight:800; transition:background .2s,color .2s; white-space:nowrap;
         }
-
-        #menu-toggle:checked ~ .sidebar-overlay { left: 10px; }
-
-        .overlay-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3); z-index: 90; display: none;
+        .navbar-link i { font-size:17px; }
+        .navbar-link:hover { background:#EAF6F5; color:#12958D; }
+        .navbar-link.active { background:#EAF6F5; color:#12958D; }
+        .navbar-right { display:flex; align-items:center; gap:8px; margin-left:auto; }
+        .navbar-user {
+            display:flex; align-items:center; gap:7px; padding:6px 13px;
+            border-radius:25px; background:#EAF6F5; cursor:pointer;
+            text-decoration:none; color:#12958D; font-size:13px; font-weight:800;
+            transition:background .2s;
         }
-
-        #menu-toggle:checked ~ .overlay-bg { display: block; }
-
-        .close-btn { align-self: flex-end; cursor: pointer; font-size: 30px; margin-bottom: 30px; }
-
-        /* تنسيق الروابط داخل القائمة */
-        .nav-item {
-            display: flex; align-items: center; gap: 15px; padding: 15px;
-            cursor: pointer; border-radius: 10px; margin-bottom: 10px;
-            color: black; text-decoration: none; transition: 0.3s;
+        .navbar-user i { font-size:17px; }
+        .navbar-logout {
+            display:flex; align-items:center; gap:6px; padding:6px 14px;
+            border-radius:25px; background:#fde8e8; color:#E53935;
+            text-decoration:none; font-size:13px; font-weight:800; transition:background .2s;
         }
+        .navbar-logout:hover { background:#fac9c9; }
 
-        .nav-item:hover { background: #f5f5f5; }
-        
-        /* تمييز صفحة البروفايل كصفحة نشطة */
-        .nav-item.active { background: #f0f8f7; border-radius: 15px; }
-
-        .logout-btn {
-            margin-top: auto; background: #E53935; color: white;
-            border-radius: 20px; padding: 10px; display: flex;
-            align-items: center; justify-content: center; gap: 10px; text-decoration: none;
-        }
-
-        /* --- [4] محتوى الصفحة الأساسي --- */
+        /* ── MAIN ── */
         .main-wrapper {
             flex: 1;
-            margin-left: 80px; /* مسافة لتعويض مكان الشريط الثابت */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px 20px;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 700px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            position: relative;
-            width: calc(100% - 80px);
-            overflow-y: auto; /* للسماح بالتمرير داخل المحتوى فقط */
+            gap: 24px;
         }
 
-        .header-logo {
-            position: absolute;
-            top: 10px;
-            right: 30px;
-            width: 90px;
-            z-index: 1000;
-        }
-
-        .content-area {
-            background: white;
-            border-radius: 50px;
-            margin-top: 100px;
-            padding: 60px 50px;
-            width: 85%;
-            max-width: 1100px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            min-height: 500px;
-        }
-
-        /* تنسيقات البروفايل الداخلية (بدون تغيير) */
-        .welcome-section { margin-bottom: 50px; font-size: 20px; }
-        .profile-layout { display: flex; gap: 100px; flex-wrap: wrap; }
-        .avatar-wrapper { display: flex; flex-direction: column; align-items: center; width: 150px; }
-        .avatar-circle {
-            width: 110px; height: 110px; background: #f0f0f0; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 15px;
-        }
-        .input-box { flex: 1; background: #F5F5F5; border: none; border-radius: 25px; padding: 12px 25px; outline: none; }
-        .field-group { display: flex; align-items: center; margin-bottom: 30px; }
-        #welcome-name { color: #2D9596; font-weight: 600; margin-left: 5px; display: inline-block; }
-    </style>
-</head>
-
-<body>
-
-    <input type="checkbox" id="menu-toggle">
-    <label for="menu-toggle" class="overlay-bg"></label>
-
-    <div class="sidebar-small">
-        <label for="menu-toggle">
-            <i class="material-icons menu-btn-label">menu</i>
-        </label>
-    </div>
-
-    <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons close-btn">close</label>
-
-        <a href="home.html" class="nav-item">
-            <i class="material-icons">home</i>
-            <span style="font-weight: bold;">Home</span>
-        </a>
-
-        <a href="train-management- menu.html" class="nav-item">
-            <i class="material-icons">train</i>
-            <span>Train Management</span>
-        </a>
-
-        <a href="Passenger Management.html" class="nav-item">
-            <i class="material-icons">people_outline</i>
-            <span>Passenger Management</span>
-        </a>
-
-        <a href="Reservation-System.html" class="nav-item">
-            <i class="material-icons">confirmation_number</i>
-            <span>Reservation System</span>
-        </a>
-
-        <a href="Dashboard.html" class="nav-item">
-            <i class="material-icons">bar_chart</i>
-            <span>Dashboard & Reports</span>
-        </a>
-
-        <br><br> 
-        <a href="profile.html" class="nav-item active">
-            <i class="material-icons">person_outline</i>
-            <span style="font-weight: bold;">Account Details</span>
-        </a>
-
-        <a href="StartHer.html" class="logout-btn">
-            <i class="material-icons">logout</i>
-            <span>Logout</span>
-        </a>
-    </div>
-
-    <div class="main-wrapper">
-        <img src="images/Logo.svg" alt="Sikka Logo" class="header-logo">
-
-        <div class="content-area">
-            <div class="welcome-section">
-                Hi,<br>
-                welcome <span id="welcome-name">Loading...</span>
-            </div>
-
-            <div class="profile-layout">
-                <div class="avatar-wrapper">
-                    <div class="avatar-circle">
-                        <i class="material-icons" style="font-size: 70px; color: #ccc;">person</i>
-                    </div>
-                    <span id="user-display-name">Loading...</span>
-                </div>
-
-                <div class="inputs-container" style="flex: 1; max-width: 450px;">
-                    <div class="field-group">
-                        <span class="label-text" style="width:120px">Full Name</span>
-                        <input type="text" id="full-name-input" class="input-box" value="" readonly>
-                    </div>
-
-                    <div class="field-group">
-                        <span class="label-text" style="width:120px">Email</span>
-                        <input type="text" class="input-box" value="User.M@gmail.com" readonly>
-                    </div>
-
-                    <div class="field-group">
-                        <span class="label-text" style="width:120px">Password</span>
-                        <input type="password" class="input-box" value="********" readonly>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // التحقق من تسجيل الدخول
-        if (!localStorage.getItem("userName")) {
-            alert("Please login first!");
-            window.location.href = "Login.html";
-        }
-        // تحديث البيانات من الـ LocalStorage
-        const savedName = localStorage.getItem("userName");
-        if (savedName) {
-            document.getElementById("user-display-name").innerText = savedName;
-            document.getElementById("welcome-name").innerText = savedName;
-            document.getElementById("full-name-input").value = savedName;
-        }
-    </script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>profile</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800; 
-            font-size: 14px;
-        }
-
-        body {
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-            background-color: #EAF6F5;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 20px;
-        }
-
-        #menu-toggle {
-            display: none;
-        }
-
-        .header-logo {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            width: 100px;
-            z-index: 1;
-        }
-
-        .main-wrapper {
-            display: flex;
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-            align-items: stretch;
-        }
-
-        .sidebar-small {
-            width: 65px;
+        /* Avatar card */
+        .avatar-card {
             background: white;
             border-radius: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .menu-btn-label {
-            font-size: 32px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 280px;
-            height: 100%;
-            background: white;
-            z-index: 100;
-            transition: 0.3s ease-in-out;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        #menu-toggle:checked ~ .sidebar-overlay {
-            left: 0;
-        }
-
-        .overlay-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.3);
-            z-index: 90;
-            display: none;
-        }
-
-        #menu-toggle:checked ~ .overlay-bg {
-            display: block;
-        }
-
-        .close-btn-label {
-            align-self: flex-end;
-            cursor: pointer;
-            font-size: 30px;
-            margin-bottom: 40px;
-        }
-
-        .nav-item {
+            padding: 40px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            color: black;
-            text-decoration: none; 
-        }
-
-        .nav-item:hover {
-            background: #f5f5f5;
-        }
-
-        .logout-btn {
-            margin-top: auto;
-            background: #E53935;
-            color: white;
-            border-radius: 20px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            border: none;
-            width: 100%;
-            font-family: inherit;
-            text-decoration: none; 
-        }
-
-        .content-area {
-            flex: 1;
-            background: white;
-            border-radius: 30px;
-            padding: 60px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            min-height: 600px;
-        }
-
-        .welcome-section {
-            margin-bottom: 50px;
-            font-size: 20px;
-        }
-
-        .profile-layout {
-            display: flex;
-            gap: 100px;
-            flex-wrap: wrap;
-        }
-
-        .avatar-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 150px;
+            gap: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            animation: fadeUp 0.4s ease both;
         }
 
         .avatar-circle {
-            width: 110px;
-            height: 110px;
-            background: #f0f0f0;
+            width: 90px; height: 90px;
             border-radius: 50%;
+            background: linear-gradient(135deg, #12958D, #1a7fc1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 38px; color: white; flex-shrink: 0;
+            box-shadow: 0 8px 24px rgba(18,149,141,0.3);
+        }
+
+        .avatar-info h2 {
+            margin: 0 0 4px;
+            font-size: 26px;
+            color: #1a1a1a;
+        }
+
+        .avatar-info .role-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: #EAF6F5; color: #12958D;
+            padding: 4px 14px; border-radius: 20px; font-size: 13px;
+        }
+
+        /* Section cards */
+        .section-card {
+            background: white;
+            border-radius: 30px;
+            padding: 35px 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            animation: fadeUp 0.4s ease both;
+        }
+        .section-card:nth-child(2) { animation-delay: 0.05s; }
+        .section-card:nth-child(3) { animation-delay: 0.1s; }
+
+        .section-title {
+            font-size: 20px;
+            color: #1a1a1a;
+            margin: 0 0 25px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
+            gap: 10px;
+        }
+        .section-title i { color: #12958D; font-size: 22px; }
+
+        .field-group { display: flex; flex-direction: column; gap: 16px; }
+
+        .field-row { display: flex; flex-direction: column; gap: 6px; }
+
+        .field-row label {
+            font-size: 13px;
+            color: #888;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .inputs-container {
-            flex: 1;
-            max-width: 450px;
-        }
-
-        .field-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .input-box {
-            flex: 1;
-            background: #F5F5F5;
-            border: none;
-            border-radius: 25px;
-            padding: 12px 25px;
+        .field-row input {
+            padding: 13px 20px;
+            border: 1.5px solid #e8e8e8;
+            border-radius: 16px;
+            font-size: 15px;
+            font-family: 'Abhaya Libre', serif;
+            font-weight: 800;
             outline: none;
+            background: #fafafa;
+            color: #1a1a1a;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .field-row input:focus {
+            border-color: #12958D;
+            background: #fff;
+        }
+
+        .field-row input:disabled {
+            background: #f5f5f5;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+
+        /* Password toggle */
+        .input-wrapper { position: relative; }
+        .input-wrapper input { width: 100%; padding-right: 50px; }
+        .toggle-pw {
+            position: absolute; right: 16px; top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer; color: #aaa;
+            font-size: 20px;
+            user-select: none;
+            transition: color 0.2s;
+        }
+        .toggle-pw:hover { color: #12958D; }
+
+        /* Divider */
+        .divider {
+            height: 1px; background: #f0f0f0; margin: 8px 0;
+        }
+
+        /* Buttons */
+        .btn-save {
+            background: #12958D; color: white; border: none;
+            border-radius: 20px; padding: 13px 35px;
+            font-size: 15px; font-family: 'Abhaya Libre', serif;
+            font-weight: 800; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 10px;
+        }
+        .btn-save:hover { background: #0e7a73; }
+        .btn-save:active { transform: scale(0.97); }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 30px; right: 30px;
+            background: #12958D; color: white;
+            padding: 14px 24px; border-radius: 16px;
+            font-size: 14px; display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 8px 24px rgba(18,149,141,0.35);
+            transform: translateY(80px); opacity: 0;
+            transition: all 0.35s ease;
+            z-index: 9999;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.error { background: #E53935; box-shadow: 0 8px 24px rgba(229,57,53,0.3); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <input type="checkbox" id="menu-toggle">
-
-    <img src="Logo.svg" alt="Sikka Logo" class="header-logo">
-
-    <label for="menu-toggle" class="overlay-bg"></label>
-
-    <div class="sidebar-overlay">
-        <label for="menu-toggle" class="material-icons close-btn-label">close</label>
-        
-        <a href="home.html" class="nav-item">
-            <i class="material-icons">home</i>
-            <span>Home</span>
-        </a>
-        
-        <a href="profile.html" class="nav-item">
-            <i class="material-icons">person_outline</i>
-            <span>Account Details</span>
-        </a>
-
-        <a href="StartHer.html" class="logout-btn">
-            <i class="material-icons">logout</i>
-            <span>Logout</span>
-        </a>
+<!-- NAVBAR -->
+<nav class="top-navbar">
+    <a href="home.html" class="navbar-brand">
+        <div class="navbar-brand-icon">سِ</div>
+        <div class="navbar-brand-name">SEKKAH</div>
+    </a>
+    <div class="navbar-links">
+        <a href="home.html"                   class="navbar-link"><i class="material-icons">home</i><span>Home</span></a>
+        <a href="Train management menu .html"  class="navbar-link"><i class="material-icons">train</i><span>Train Management</span></a>
+        <a href="Passenger Management.html"   class="navbar-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+        <a href="Reservation system .html"     class="navbar-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+        <a href="Dashboard.html"              class="navbar-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
     </div>
+    <div class="navbar-right">
+        <a href="Profile.html" class="navbar-user active"><i class="material-icons">person_outline</i><span id="navUserName">Admin</span></a>
+        <a href="StartHer.html" class="navbar-logout"><i class="material-icons">logout</i><span>Logout</span></a>
+    </div>
+</nav>
 
-    <div class="main-wrapper">
-        <div class="sidebar-small">
-            <label for="menu-toggle" class="material-icons menu-btn-label">menu</label>
-        </div>
+<!-- MAIN -->
+<div class="main-wrapper">
+    <div class="profile-container">
 
-        <div class="content-area">
-            <div class="welcome-section">
-                Hi,<br>
-                welcome Anas
-            </div>
-
-            <div class="profile-layout">
-                <div class="avatar-wrapper">
-                    <div class="avatar-circle">
-                        <i class="material-icons" style="font-size: 70px; color: #ccc;">person</i>
-                    </div>
-                    <span id="user-display-name">Loading...</span>
-                </div>
-
-                <div class="inputs-container">
-                    <div class="field-group">
-                        <span class="label-text" style="width:120px">Full Name</span>
-                        <input type="text" class="input-box" value="Anas ibn Malik" readonly>
-                    </div>
-
-                    <div class="field-group">
-                        <span class="label-text" style="width:120px">Email</span>
-                        <input type="text" class="input-box" value="Anas.M@gmail.com" readonly>
-                    </div>
-
-                    <div class="field-group">
-                        <span class="label-text" style="width:120px">Password</span>
-                        <input type="password" class="input-box" value="********" readonly>
-                    </div>
-                </div>
+        <!-- Avatar Card -->
+        <div class="avatar-card">
+            <div class="avatar-circle" id="avatarInitial">A</div>
+            <div class="avatar-info">
+                <h2 id="displayName">Admin</h2>
+                <span class="role-badge">
+                    <i class="material-icons" style="font-size:15px;">verified_user</i>
+                    System Administrator
+                </span>
             </div>
         </div>
+
+        <!-- Account Info -->
+        <div class="section-card">
+            <div class="section-title">
+                <i class="material-icons">manage_accounts</i>
+                Account Information
+            </div>
+            <div class="field-group">
+                <div class="field-row">
+                    <label>Full Name</label>
+                    <input type="text" id="inputName" placeholder="Enter your name">
+                </div>
+                <div class="field-row">
+                    <label>Email Address</label>
+                    <input type="email" id="inputEmail" placeholder="Enter your email">
+                </div>
+            </div>
+            <button class="btn-save" onclick="saveInfo()">
+                <i class="material-icons" style="font-size:18px;">save</i>
+                Save Changes
+            </button>
+        </div>
+
+        <!-- Change Password -->
+        <div class="section-card">
+            <div class="section-title">
+                <i class="material-icons">lock_outline</i>
+                Change Password
+            </div>
+            <div class="field-group">
+                <div class="field-row">
+                    <label>Current Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="currentPw" placeholder="••••••••">
+                        <span class="toggle-pw material-icons" onclick="togglePw('currentPw', this)">visibility</span>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="field-row">
+                    <label>New Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="newPw" placeholder="••••••••">
+                        <span class="toggle-pw material-icons" onclick="togglePw('newPw', this)">visibility</span>
+                    </div>
+                </div>
+                <div class="field-row">
+                    <label>Confirm New Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="confirmPw" placeholder="••••••••">
+                        <span class="toggle-pw material-icons" onclick="togglePw('confirmPw', this)">visibility</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-save" onclick="changePassword()">
+                <i class="material-icons" style="font-size:18px;">lock_reset</i>
+                Update Password
+            </button>
+        </div>
+
     </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+    <i class="material-icons" id="toastIcon" style="font-size:18px;">check_circle</i>
+    <span id="toastMsg">Saved successfully</span>
+</div>
+
 <script>
-    // جلب الاسم المحفوظ من الذاكرة
-    const savedName = localStorage.getItem("userName");
+    // Load saved data
+    function loadProfile() {
+        const name  = localStorage.getItem('userName')  || 'Admin';
+        const email = localStorage.getItem('userEmail') || '';
 
-    // إذا وجدنا اسماً، نعرضه في الصفحة
-    if (savedName) {
-        document.getElementById("user-display-name").innerText = savedName;
+        document.getElementById('inputName').value  = name;
+        document.getElementById('inputEmail').value = email;
+        document.getElementById('displayName').textContent = name;
+        document.getElementById('navUserName').textContent = name;
+
+        // Avatar initial
+        const initial = name.trim().charAt(0).toUpperCase() || 'A';
+        document.getElementById('avatarInitial').textContent = initial;
     }
+
+    // Save info
+    function saveInfo() {
+        const name  = document.getElementById('inputName').value.trim();
+        const email = document.getElementById('inputEmail').value.trim();
+
+        if (!name || !email) { showToast('Please fill all fields', true); return; }
+        if (!email.includes('@')) { showToast('Enter a valid email', true); return; }
+
+        localStorage.setItem('userName', name);
+        localStorage.setItem('userEmail', email);
+
+        document.getElementById('displayName').textContent = name;
+        document.getElementById('navUserName').textContent = name;
+        document.getElementById('avatarInitial').textContent = name.charAt(0).toUpperCase();
+
+        showToast('Profile updated successfully');
+    }
+
+    // Change password
+    function changePassword() {
+        const current = document.getElementById('currentPw').value;
+        const newPw   = document.getElementById('newPw').value;
+        const confirm = document.getElementById('confirmPw').value;
+
+        if (!current || !newPw || !confirm) { showToast('Please fill all password fields', true); return; }
+
+        const saved = localStorage.getItem('userPassword') || '123456';
+        if (current !== saved) { showToast('Current password is incorrect', true); return; }
+        if (newPw.length < 6)  { showToast('New password must be at least 6 characters', true); return; }
+        if (newPw !== confirm)  { showToast('Passwords do not match', true); return; }
+
+        localStorage.setItem('userPassword', newPw);
+        document.getElementById('currentPw').value = '';
+        document.getElementById('newPw').value = '';
+        document.getElementById('confirmPw').value = '';
+
+        showToast('Password changed successfully');
+    }
+
+    // Toggle password visibility
+    function togglePw(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.textContent = 'visibility_off';
+        } else {
+            input.type = 'password';
+            icon.textContent = 'visibility';
+        }
+    }
+
+    // Toast notification
+    function showToast(msg, isError = false) {
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMsg');
+        const toastIcon = document.getElementById('toastIcon');
+
+        toastMsg.textContent = msg;
+        toastIcon.textContent = isError ? 'error_outline' : 'check_circle';
+        toast.className = 'toast' + (isError ? ' error' : '');
+
+        // show
+        setTimeout(() => toast.classList.add('show'), 10);
+        // hide after 3s
+        setTimeout(() => toast.classList.remove('show'), 3200);
+    }
+
+    loadProfile();
 </script>
+
 </body>
 </html>
-
- -->
