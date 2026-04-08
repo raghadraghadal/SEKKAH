@@ -1,6 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEKKAH — Create Account</title>
+    <!-- استدعاء الخطوط والأيقونات من جوجل -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        /* إعدادات عامة: تنسيق المسافات والخطوط */
+        *{box-sizing:border-box; margin:0; padding:0;}
+        body{
+            font-family:'Cairo',sans-serif; 
+            min-height:100vh; 
+            background:#f0f9f8; /* لون خلفية الصفحة كاملة */
+            display:flex; 
+            overflow-x:hidden;
+        }
+
+        /* --- الجانب الأيسر (اللوحة الملونة) --- */
+        .left{
+            width:38%; 
+            /* لتغيير ألوان التدرج، عدلي الأكواد السداسية (Hex Codes) هنا */
+            background:linear-gradient(145deg,#0d1f1e,#12312e,#0a6b65); 
+            position:relative; 
+            overflow:hidden; 
+            display:flex; 
+            flex-direction:column; 
+            justify-content:space-between; 
+            padding:52px 48px;
+        }
+
+        /* الدوائر المضيئة في الخلفية (أغراض جمالية) */
+        .orb1{position:absolute; top:-60px; right:-60px; width:250px; height:250px; border-radius:50%; background:rgba(18,149,141,.12);}
+        .orb2{position:absolute; bottom:-40px; left:-40px; width:200px; height:200px; border-radius:50%; background:rgba(45,212,191,.06);}
+
+        /* خطوط مسار القطار المتحركة في الخلفية */
+        .tracks{position:absolute; inset:0; overflow:hidden; opacity:.1;}
+        .track{
+            position:absolute; 
+            height:1.5px; 
+            background:#2DD4BF; 
+            animation:sl 5s linear infinite; /* حركة الأنميشن */
+        }
+        /* توقيت حركة كل خط */
+        .track:nth-child(1){top:30%; width:50%; animation-delay:0s;}
+        .track:nth-child(2){top:55%; width:35%; animation-delay:2s;}
+        .track:nth-child(3){top:75%; width:55%; animation-delay:1s;}
+
+        /* أنميشن الحركة من اليسار لليمين */
+        @keyframes sl{0%{left:-65%} 100%{left:110%}}
+
+        /* --- الشعار (Logo) --- */
+        .brand{display:flex; align-items:center; gap:12px; position:relative; z-index:2;}
+        .brand-box{
+            width:42px; height:42px; 
+            border-radius:11px; 
+            background:linear-gradient(135deg,#12958D,#2DD4BF); /* لون مربع حرف (سِ) */
+            display:flex; align-items:center; justify-content:center; 
+            font-size:17px; font-weight:900; color:white;
+        }
+        .brand-name{
+            font-size:20px; font-weight:900; color:white; 
+            letter-spacing:2.5px; /* تباعد الحروف في كلمة SEKKAH */
+        }
+
+        /* --- النصوص في الجانب الأيسر --- */
+        .left-mid{position:relative; z-index:2;}
+        .left-mid h1{
+            font-family:'Playfair Display',serif; 
+            font-size:46px; font-weight:900; color:white; line-height:1.1; margin-bottom:14px;
+        }
+        .left-mid h1 span{color:#2DD4BF;} /* لون الكلمة الملونة في العنوان */
+        .left-mid p{color:rgba(255,255,255,.5); font-size:13px; line-height:1.8;}
+
+        /* خطوات التسجيل في الجانب الأيسر */
+        .steps{position:relative; z-index:2; display:flex; flex-direction:column; gap:14px;}
+        .step{display:flex; align-items:center; gap:14px;}
+        .snum{
+            width:30px; height:30px; border-radius:50%; 
+            background:rgba(45,212,191,.15); border:1.5px solid rgba(45,212,191,.35); 
+            display:flex; align-items:center; justify-content:center; 
+            font-size:12px; font-weight:700; color:#2DD4BF; flex-shrink:0;
+        }
+        .stxt{font-size:13px; color:rgba(255,255,255,.6);}
+
+        /* --- الجانب الأيمن (منطقة الفورم) --- */
+        .right{width:62%; display:flex; align-items:center; justify-content:center; padding:44px 56px; overflow-y:auto;}
+        
+        /* كرت التسجيل الأبيض */
+        .card{
+            width:100%; max-width:560px; 
+            animation:fadeUp .5s ease both; /* أنميشن ظهور الكرت من الأسفل */
+        }
+        @keyframes fadeUp{from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:translateY(0)}}
+        
+        .card-title{font-family:'Playfair Display',serif; font-size:30px; font-weight:900; color:#0d1f1e; margin-bottom:5px;}
+        .card-sub{font-size:13px; color:#7a9896; margin-bottom:32px;}
+
+        /* شبكة توزيع الحقول (عمودين) */
+        .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px 20px;}
+        .grid .full{grid-column:1/-1;} /* لجعل الحقل يأخذ العرض كاملاً */
+
+        /* تصميم خانة الإدخال */
+        .field label{
+            display:block; font-size:11px; font-weight:700; color:#7a9896; 
+            text-transform:uppercase; letter-spacing:1px; margin-bottom:7px;
+        }
+        .field input{
+            width:100%; padding:13px 16px; 
+            border:1.5px solid #d0e8e6; /* لون الإطار الافتراضي */
+            border-radius:12px; font-size:14px; font-family:'Cairo',sans-serif; 
+            background:white; color:#0d1f1e; outline:none; 
+            transition:border-color .2s, box-shadow .2s;
+        }
+        /* لون الإطار عند الضغط على الخانة (Focus) */
+        .field input:focus{
+            border-color:#12958D; 
+            box-shadow:0 0 0 3px rgba(18,149,141,.12);
+        }
+        /* نصوص الخطأ الحمراء */
+        .field-err{font-size:11px; color:#e53935; margin-top:4px; display:none;}
+
+        /* إعدادات حقل كلمة المرور (أيقونة العين) */
+        .pw-wrap{position:relative;}
+        .pw-wrap input{padding-right:44px;}
+        .eye{position:absolute; right:13px; top:50%; transform:translateY(-50%); color:#bbb; cursor:pointer; font-size:17px;}
+
+        /* شريط قوة كلمة المرور */
+        .str-bar{height:3px; background:#eee; border-radius:4px; overflow:hidden; margin-top:6px;}
+        .str-fill{height:100%; width:0; border-radius:4px; transition:width .4s, background .4s;}
+        .str-lbl{font-size:10px; color:#aaa; margin-top:3px;}
+
+        /* خيار الموافقة على الشروط */
+        .terms{display:flex; align-items:flex-start; gap:10px; margin-top:4px; font-size:13px; color:#7a9896; grid-column:1/-1;}
+        .terms input[type=checkbox]{accent-color:#12958D; margin-top:2px; width:14px; height:14px; flex-shrink:0;}
+        .link{color:#12958D; text-decoration:none; font-weight:700;}
+
+        /* زر إنشاء الحساب */
+        .btn{
+            width:100%; padding:15px; 
+            background:linear-gradient(135deg,#12958D,#0d7069); /* لون الزر */
+            border:none; border-radius:13px; color:white; 
+            font-size:15px; font-weight:700; font-family:'Cairo',sans-serif; 
+            cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; 
+            transition:transform .15s, box-shadow .2s; 
+            box-shadow:0 6px 24px rgba(18,149,141,.3); /* ظل الزر */
+            margin-top:22px;
+        }
+        /* تأثير عند تمرير الماوس فوق الزر */
+        .btn:hover{transform:translateY(-2px); box-shadow:0 10px 32px rgba(18,149,141,.45);}
+
+        .bottom{text-align:center; margin-top:20px; font-size:13px; color:#7a9896;}
+
+        /* واجهة النجاح التي تظهر بعد الضغط على الزر */
+        .suc{position:fixed; inset:0; background:rgba(240,249,248,.97); z-index:500; display:none; flex-direction:column; align-items:center; justify-content:center; gap:16px;}
+        .suc.show{display:flex;}
+        .suc-icon{
+            width:78px; height:78px; border-radius:50%; 
+            background:#EAF6F5; border:3px solid #12958D; 
+            display:flex; align-items:center; justify-content:center; 
+            animation:pop .5s cubic-bezier(.175,.885,.32,1.275) both;
+        }
+        @keyframes pop{from{transform:scale(0)} to{transform:scale(1)}}
+        .suc-icon i{font-size:36px; color:#12958D;}
+        .suc h2{font-family:'Playfair Display',serif; font-size:26px; font-weight:900; color:#0d1f1e;}
+
+        /* استجابة الشاشات (الجوال) */
+        @media(max-width:900px){
+            body{flex-direction:column;}
+            .left, .right{width:100%;}
+            .left{padding:38px 28px;}
+            .right{padding:32px 24px;}
+            .grid{grid-template-columns:1fr;}
+            .grid .full{grid-column:1;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- الجانب الأيسر (الهوية والخطوات) -->
+<div class="left">
+    <div class="orb1"></div><div class="orb2"></div>
+    <div class="tracks"><div class="track"></div><div class="track"></div><div class="track"></div></div>
+    <div class="brand">
+        <div class="brand-box">سِ</div>
+        <div class="brand-name">SEKKAH</div>
+    </div>
+    <div class="left-mid">
+        <h1>Join the<br><span>Network.</span></h1>
+        <p>Create your admin account and start managing Saudi Arabia's rail operations today.</p>
+    </div>
+    <div class="steps">
+        <div class="step"><div class="snum">1</div><div class="stxt">Fill in your account details</div></div>
+        <div class="step"><div class="snum">2</div><div class="stxt">Set a strong password</div></div>
+        <div class="step"><div class="snum">3</div><div class="stxt">Start managing operations</div></div>
+    </div>
+</div>
+
+<!-- الجانب الأيمن (نموذج الإدخال) -->
+<div class="right">
+    <div class="card">
+        <div class="card-title">Create Account</div>
+        <div class="card-sub">Get started with your SEKKAH operations account</div>
+        <div class="grid">
+            <div class="field">
+                <label>Full Name</label>
+                <input type="text" id="f_name" placeholder="Your full name">
+                <div class="field-err" id="e_name">Required</div>
+            </div>
+            <div class="field">
+                <label>Username</label>
+                <input type="text" id="f_user" placeholder="Choose a username">
+                <div class="field-err" id="e_user">Required</div>
+            </div>
+            <div class="field full">
+                <label>Email</label>
+                <input type="email" id="f_email" placeholder="your@email.com">
+                <div class="field-err" id="e_email">Enter a valid email</div>
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <div class="pw-wrap">
+                    <input type="password" id="f_pw" placeholder="Min. 6 characters" oninput="checkStr()">
+                    <i class="material-icons eye" onclick="tpw('f_pw')">visibility_off</i>
+                </div>
+                <div class="str-bar"><div class="str-fill" id="sf"></div></div>
+                <div class="str-lbl" id="sl"></div>
+                <div class="field-err" id="e_pw">Min. 6 characters</div>
+            </div>
+            <div class="field">
+                <label>Confirm Password</label>
+                <div class="pw-wrap">
+                    <input type="password" id="f_cpw" placeholder="Repeat password">
+                    <i class="material-icons eye" onclick="tpw('f_cpw')">visibility_off</i>
+                </div>
+                <div class="field-err" id="e_cpw">Passwords don't match</div>
+            </div>
+            <div class="terms">
+                <input type="checkbox" id="terms">
+                <label for="terms">I agree to the <a href="#" class="link">Terms of Service</a></label>
+            </div>
+        </div>
+        <button class="btn" onclick="doSignup()">
+            <i class="material-icons" style="font-size:18px">person_add</i> Create Account
+        </button>
+        <div class="bottom">Already have an account? <a href="Login.html" class="link">Sign in</a></div>
+    </div>
+</div>
+
+<!-- رسالة النجاح المنبثقة -->
+<div class="suc" id="suc">
+    <div class="suc-icon"><i class="material-icons">check</i></div>
+    <h2>Account Created!</h2>
+    <p>Redirecting to login...</p>
+    <div class="suc-bar"><div class="suc-fill"></div></div>
+</div>
+
+<script>
+// وظيفة إظهار/إخفاء كلمة المرور عند الضغط على العين
+function tpw(id){
+    const e = document.getElementById(id); 
+    e.type = e.type === 'password' ? 'text' : 'password'; 
+}
+
+// وظيفة فحص قوة كلمة المرور وتغيير لون الشريط (قوي/ضعيف)
+function checkStr(){
+    const v = document.getElementById('f_pw').value; 
+    const sf = document.getElementById('sf'), sl = document.getElementById('sl'); 
+    if(!v){ sf.style.width='0'; sl.textContent=''; return; } 
+    
+    let s = 0; 
+    if(v.length >= 6) s++; // إذا كان الطول مناسباً
+    if(v.length >= 10) s++; // إذا كانت طويلة جداً
+    if(/[A-Z]/.test(v)) s++; // إذا كانت تحتوي على حرف كبير
+    if(/[0-9]/.test(v)) s++; // إذا كانت تحتوي على أرقام
+    if(/[^A-Za-z0-9]/.test(v)) s++; // إذا كانت تحتوي على رموز
+    
+    // الألوان والنسب بناءً على القوة المحسوبة
+    const lvl = [
+        {w:'20%', bg:'#ef4444', t:'Weak'},
+        {w:'40%', bg:'#f97316', t:'Fair'},
+        {w:'60%', bg:'#eab308', t:'Good'},
+        {w:'80%', bg:'#22c55e', t:'Strong'},
+        {w:'100%', bg:'#12958D', t:'Excellent'}
+    ][Math.min(s, 4)];
+
+    sf.style.width = lvl.w; 
+    sf.style.background = lvl.bg; 
+    sl.textContent = lvl.t; 
+    sl.style.color = lvl.bg; 
+}
+
+// الوظيفة الأساسية التي تنفذ عند الضغط على الزر
+function doSignup(){
+    const name = document.getElementById('f_name').value.trim(); 
+    const user = document.getElementById('f_user').value.trim(); 
+    const email = document.getElementById('f_email').value.trim(); 
+    const pw = document.getElementById('f_pw').value; 
+    const cpw = document.getElementById('f_cpw').value; 
+    const terms = document.getElementById('terms').checked; 
+    
+    let ok = true; 
+    
+    // تصفير رسائل الخطأ قبل الفحص
+    ['e_name','e_user','e_email','e_pw','e_cpw'].forEach(id => document.getElementById(id).style.display='none');
+    
+    // التحقق من صحة المدخلات (Validation)
+    if(!name){ document.getElementById('e_name').style.display='block'; ok=false; }
+    if(!user){ document.getElementById('e_user').style.display='block'; ok=false; }
+    if(!email || !email.includes('@')){ document.getElementById('e_email').style.display='block'; ok=false; }
+    if(pw.length < 6){ document.getElementById('e_pw').style.display='block'; ok=false; }
+    if(pw !== cpw){ document.getElementById('e_cpw').style.display='block'; ok=false; }
+    if(!terms){ alert('Please accept the Terms of Service.'); ok=false; }
+    
+    if(!ok) return; // توقف إذا كان هناك نقص في البيانات
+
+    // --- الجزء الأهم: تخزين البيانات في ذاكرة المتصفح ---
+    localStorage.setItem('userName', name); 
+    localStorage.setItem('userUsername', user); 
+    localStorage.setItem('userEmail', email); 
+    localStorage.setItem('userPassword', pw); 
+    localStorage.setItem('isLoggedIn', 'false'); 
+
+    // إظهار واجهة النجاح
+    document.getElementById('suc').classList.add('show');
+    
+    // توجيه المستخدم لصفحة تسجيل الدخول بعد 2.4 ثانية
+    setTimeout(() => location.href='Login.html', 2400);
+}
+</script>
+</body>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SEKKAH — Create Account</title>
@@ -202,4 +537,4 @@ function doSignup(){
 document.addEventListener('keydown',e=>{if(e.key==='Enter')doSignup();});
 </script>
 </body>
-</html>
+</html> -->

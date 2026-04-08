@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
+        /* إعدادات الألوان المتغيرة */
         :root {
             --dark-teal: #12958D;
             --light-teal: #EAF6F5;
             --bg-page: #EAF6F5;
         }
 
+        /* تنسيقات الخطوط العامة */
         * { box-sizing: border-box; font-family: 'Abhaya Libre', serif; font-weight: 800; }
 
         body {
@@ -25,7 +27,7 @@
             background-color: var(--bg-page);
         }
 
-        /* ── TOP NAVBAR ── */
+        /* ── شريط التنقل العلوي (Navbar) ── */
         .top-navbar {
             width: 100%; background: white; border-bottom: 1px solid #f0f0f0;
             padding: 0 28px; display: flex; align-items: center; height: 62px;
@@ -63,7 +65,7 @@
         }
         .navbar-logout:hover { background:#fac9c9; }
 
-        /* ── MAIN ── */
+        /* ── تنسيق المحتوى الرئيسي ── */
         .main-wrapper {
             flex: 1;
             display: flex;
@@ -80,7 +82,7 @@
             gap: 24px;
         }
 
-        /* Avatar card */
+        /* تنسيق كرت البروفايل (الاسم والصورة) */
         .avatar-card {
             background: white;
             border-radius: 30px;
@@ -102,9 +104,7 @@
         }
 
         .avatar-info h2 {
-            margin: 0 0 4px;
-            font-size: 26px;
-            color: #1a1a1a;
+            margin: 0 0 4px; font-size: 26px; color: #1a1a1a;
         }
 
         .avatar-info .role-badge {
@@ -113,82 +113,49 @@
             padding: 4px 14px; border-radius: 20px; font-size: 13px;
         }
 
-        /* Section cards */
+        /* تنسيق الأقسام (المعلومات وكلمة المرور) */
         .section-card {
-            background: white;
-            border-radius: 30px;
-            padding: 35px 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            background: white; border-radius: 30px;
+            padding: 35px 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
             animation: fadeUp 0.4s ease both;
         }
-        .section-card:nth-child(2) { animation-delay: 0.05s; }
-        .section-card:nth-child(3) { animation-delay: 0.1s; }
 
         .section-title {
-            font-size: 20px;
-            color: #1a1a1a;
-            margin: 0 0 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 20px; color: #1a1a1a; margin: 0 0 25px;
+            display: flex; align-items: center; gap: 10px;
         }
         .section-title i { color: #12958D; font-size: 22px; }
 
         .field-group { display: flex; flex-direction: column; gap: 16px; }
-
         .field-row { display: flex; flex-direction: column; gap: 6px; }
 
         .field-row label {
-            font-size: 13px;
-            color: #888;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 13px; color: #888; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
 
         .field-row input {
-            padding: 13px 20px;
-            border: 1.5px solid #e8e8e8;
-            border-radius: 16px;
-            font-size: 15px;
-            font-family: 'Abhaya Libre', serif;
-            font-weight: 800;
-            outline: none;
-            background: #fafafa;
-            color: #1a1a1a;
+            padding: 13px 20px; border: 1.5px solid #e8e8e8; border-radius: 16px;
+            font-size: 15px; font-family: 'Abhaya Libre', serif; font-weight: 800;
+            outline: none; background: #fafafa; color: #1a1a1a;
             transition: border-color 0.2s, background 0.2s;
         }
 
-        .field-row input:focus {
-            border-color: #12958D;
-            background: #fff;
-        }
+        .field-row input:focus { border-color: #12958D; background: #fff; }
 
-        .field-row input:disabled {
-            background: #f5f5f5;
-            color: #aaa;
-            cursor: not-allowed;
-        }
-
-        /* Password toggle */
+        /* إخفاء/إظهار كلمة المرور */
         .input-wrapper { position: relative; }
         .input-wrapper input { width: 100%; padding-right: 50px; }
         .toggle-pw {
             position: absolute; right: 16px; top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer; color: #aaa;
-            font-size: 20px;
-            user-select: none;
-            transition: color 0.2s;
+            transform: translateY(-50%); cursor: pointer; color: #aaa;
+            font-size: 20px; user-select: none; transition: color 0.2s;
         }
         .toggle-pw:hover { color: #12958D; }
 
-        /* Divider */
-        .divider {
-            height: 1px; background: #f0f0f0; margin: 8px 0;
-        }
+        .divider { height: 1px; background: #f0f0f0; margin: 8px 0; }
 
-        /* Buttons */
+        /* الأزرار */
         .btn-save {
             background: #12958D; color: white; border: none;
             border-radius: 20px; padding: 13px 35px;
@@ -201,7 +168,7 @@
         .btn-save:hover { background: #0e7a73; }
         .btn-save:active { transform: scale(0.97); }
 
-        /* Toast */
+        /* التنبيهات (Toast) */
         .toast {
             position: fixed; bottom: 30px; right: 30px;
             background: #12958D; color: white;
@@ -209,8 +176,7 @@
             font-size: 14px; display: flex; align-items: center; gap: 8px;
             box-shadow: 0 8px 24px rgba(18,149,141,0.35);
             transform: translateY(80px); opacity: 0;
-            transition: all 0.35s ease;
-            z-index: 9999;
+            transition: all 0.35s ease; z-index: 9999;
         }
         .toast.show { transform: translateY(0); opacity: 1; }
         .toast.error { background: #E53935; box-shadow: 0 8px 24px rgba(229,57,53,0.3); }
@@ -223,30 +189,31 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- شريط التنقل -->
 <nav class="top-navbar">
     <a href="home.html" class="navbar-brand">
         <div class="navbar-brand-icon">سِ</div>
         <div class="navbar-brand-name">SEKKAH</div>
     </a>
     <div class="navbar-links">
-        <a href="home.html"                   class="navbar-link"><i class="material-icons">home</i><span>Home</span></a>
-        <a href="Train management menu .html"  class="navbar-link"><i class="material-icons">train</i><span>Train Management</span></a>
-        <a href="Passenger Management.html"   class="navbar-link"><i class="material-icons">groups</i><span>Passengers</span></a>
-        <a href="Reservation system .html"     class="navbar-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
-        <a href="Dashboard.html"              class="navbar-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+        <a href="home.html" class="navbar-link"><i class="material-icons">home</i><span>Home</span></a>
+        <a href="Train management menu .html" class="navbar-link"><i class="material-icons">train</i><span>Train Management</span></a>
+        <a href="Passenger Management.html" class="navbar-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+        <a href="Reservation system .html" class="navbar-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+        <a href="Dashboard.html" class="navbar-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
     </div>
     <div class="navbar-right">
+        <!-- عرض اسم المستخدم النشط في الشريط العلوي -->
         <a href="Profile.html" class="navbar-user active"><i class="material-icons">person_outline</i><span id="navUserName">Admin</span></a>
         <a href="StartHer.html" class="navbar-logout"><i class="material-icons">logout</i><span>Logout</span></a>
     </div>
 </nav>
 
-<!-- MAIN -->
+<!-- المحتوى الرئيسي -->
 <div class="main-wrapper">
     <div class="profile-container">
 
-        <!-- Avatar Card -->
+        <!-- كرت الصورة الرمزية -->
         <div class="avatar-card">
             <div class="avatar-circle" id="avatarInitial">A</div>
             <div class="avatar-info">
@@ -258,7 +225,7 @@
             </div>
         </div>
 
-        <!-- Account Info -->
+        <!-- قسم معلومات الحساب -->
         <div class="section-card">
             <div class="section-title">
                 <i class="material-icons">manage_accounts</i>
@@ -280,7 +247,7 @@
             </button>
         </div>
 
-        <!-- Change Password -->
+        <!-- قسم تغيير كلمة المرور -->
         <div class="section-card">
             <div class="section-title">
                 <i class="material-icons">lock_outline</i>
@@ -319,39 +286,44 @@
     </div>
 </div>
 
-<!-- Toast -->
+<!-- التنبيه السفلي -->
 <div class="toast" id="toast">
     <i class="material-icons" id="toastIcon" style="font-size:18px;">check_circle</i>
     <span id="toastMsg">Saved successfully</span>
 </div>
 
 <script>
-    // Load saved data
+    // --- دالة تحميل بيانات البروفايل عند فتح الصفحة ---
     function loadProfile() {
-        const name  = localStorage.getItem('userName')  || 'Admin';
+        // جلب الاسم من المفتاح الذي سجل به الدخول (currentActiveUser)
+        const name = localStorage.getItem('currentActiveUser') || 'Admin';
         const email = localStorage.getItem('userEmail') || '';
 
-        document.getElementById('inputName').value  = name;
+        document.getElementById('inputName').value = name;
         document.getElementById('inputEmail').value = email;
         document.getElementById('displayName').textContent = name;
         document.getElementById('navUserName').textContent = name;
 
-        // Avatar initial
+        // وضع الحرف الأول من الاسم في دائرة الصورة
         const initial = name.trim().charAt(0).toUpperCase() || 'A';
         document.getElementById('avatarInitial').textContent = initial;
     }
 
-    // Save info
+    // --- دالة حفظ المعلومات الشخصية ---
     function saveInfo() {
-        const name  = document.getElementById('inputName').value.trim();
+        const name = document.getElementById('inputName').value.trim();
         const email = document.getElementById('inputEmail').value.trim();
 
+        // التحقق من المدخلات
         if (!name || !email) { showToast('Please fill all fields', true); return; }
         if (!email.includes('@')) { showToast('Enter a valid email', true); return; }
 
-        localStorage.setItem('userName', name);
+        // حفظ الاسم الجديد في كل المفاتيح لضمان التحديث في كل الموقع
+        localStorage.setItem('currentActiveUser', name); 
+        localStorage.setItem('userName', name); // احتياطي
         localStorage.setItem('userEmail', email);
 
+        // تحديث العناصر في الصفحة فوراً
         document.getElementById('displayName').textContent = name;
         document.getElementById('navUserName').textContent = name;
         document.getElementById('avatarInitial').textContent = name.charAt(0).toUpperCase();
@@ -359,7 +331,7 @@
         showToast('Profile updated successfully');
     }
 
-    // Change password
+    // --- دالة تغيير كلمة المرور والتأكد من نجاحها ---
     function changePassword() {
         const current = document.getElementById('currentPw').value;
         const newPw   = document.getElementById('newPw').value;
@@ -367,12 +339,31 @@
 
         if (!current || !newPw || !confirm) { showToast('Please fill all password fields', true); return; }
 
+        // جلب كلمة المرور الحالية المخزنة
         const saved = localStorage.getItem('userPassword') || '123456';
-        if (current !== saved) { showToast('Current password is incorrect', true); return; }
-        if (newPw.length < 6)  { showToast('New password must be at least 6 characters', true); return; }
-        if (newPw !== confirm)  { showToast('Passwords do not match', true); return; }
 
+        // التأكد من صحة كلمة المرور الحالية
+        if (current !== saved) { 
+            showToast('Current password is incorrect', true); 
+            return; 
+        }
+
+        // شروط كلمة المرور الجديدة
+        if (newPw.length < 6) { 
+            showToast('New password must be at least 6 characters', true); 
+            return; 
+        }
+
+        // التأكد من تطابق كلمة المرور الجديدة مع التأكيد
+        if (newPw !== confirm) { 
+            showToast('Passwords do not match', true); 
+            return; 
+        }
+
+        // حفظ كلمة المرور الجديدة في الذاكرة بنجاح
         localStorage.setItem('userPassword', newPw);
+        
+        // مسح الحقول بعد النجاح
         document.getElementById('currentPw').value = '';
         document.getElementById('newPw').value = '';
         document.getElementById('confirmPw').value = '';
@@ -380,7 +371,7 @@
         showToast('Password changed successfully');
     }
 
-    // Toggle password visibility
+    // --- دالة إظهار وإخفاء كلمة المرور ---
     function togglePw(inputId, icon) {
         const input = document.getElementById(inputId);
         if (input.type === 'password') {
@@ -392,7 +383,7 @@
         }
     }
 
-    // Toast notification
+    // --- دالة إظهار رسالة التنبيه (Toast) ---
     function showToast(msg, isError = false) {
         const toast = document.getElementById('toast');
         const toastMsg = document.getElementById('toastMsg');
@@ -402,14 +393,16 @@
         toastIcon.textContent = isError ? 'error_outline' : 'check_circle';
         toast.className = 'toast' + (isError ? ' error' : '');
 
-        // show
+        // إظهار الرسالة
         setTimeout(() => toast.classList.add('show'), 10);
-        // hide after 3s
-        setTimeout(() => toast.classList.remove('show'), 3200);
+        // إخفاؤها بعد 3 ثوانٍ
+        setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
+    // تشغيل دالة التحميل عند فتح الصفحة
     loadProfile();
 </script>
 
 </body>
 </html>
+

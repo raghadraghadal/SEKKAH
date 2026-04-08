@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -238,6 +238,180 @@ body {
     <div class="feature-desc">Get the data you need to keep things running smoothly.</div>
   </div>
 </div>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEKKAH — Welcome</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- المتغيرات الأساسية --- */
+        :root {
+            --teal: #12958D;
+            --teal-dark: #0d6b65;
+            --teal-light: #f0f9f8;
+            --white: #ffffff;
+            --gray-bg: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--white);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- شريط التنقل --- */
+        .nav {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 60px;
+            position: sticky; top: 0; background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 100;
+        }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .brand-box {
+            width: 44px; height: 44px; border-radius: 12px;
+            background: linear-gradient(135deg, var(--teal), #2DD4BF);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 900; font-size: 18px;
+        }
+        .brand-text { font-size: 22px; font-weight: 900; color: var(--teal); letter-spacing: 1px; }
+
+        /* --- الهيرو (Hero) --- */
+        .hero {
+            display: flex; align-items: center; justify-content: space-between;
+            max-width: 1300px; margin: 0 auto; padding: 80px 60px;
+            min-height: calc(100vh - 85px);
+        }
+        .hero-content { flex: 1; max-width: 600px; }
+        .hero-title { font-size: 64px; font-weight: 900; line-height: 1.1; margin-bottom: 24px; }
+        .hero-title span { color: var(--teal); }
+        .hero-desc { font-size: 20px; color: var(--text-muted); margin-bottom: 40px; }
+
+        /* --- الأزرار --- */
+        .btn-group { display: flex; gap: 16px; }
+        .btn {
+            padding: 14px 32px; border-radius: 12px; font-weight: 700; text-decoration: none;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .btn-primary { background: var(--teal); color: white; box-shadow: 0 4px 14px rgba(18,149,141,0.3); }
+        .btn-primary:hover { background: var(--teal-dark); transform: translateY(-3px); }
+        .btn-outline { border: 2px solid #e2e8f0; color: var(--text-main); }
+
+        .hero-visual { flex: 1; display: flex; justify-content: flex-end; }
+        .train-container { width: 100%; max-width: 520px; animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        /* --- قسم المميزات المحدث (آمن، سريع، مريح) --- */
+        .features {
+            background: var(--gray-bg);
+            padding: 80px 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .feature-card {
+            background: var(--white);
+            padding: 35px; border-radius: 24px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.02);
+            transition: 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        
+        .icon-box {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: var(--teal-light);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .icon-box i { color: var(--teal); font-size: 30px; }
+        
+        .feature-card h3 { font-size: 24px; font-weight: 900; margin-bottom: 10px; color: var(--text-main); }
+        .feature-card p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+
+        @media (max-width: 968px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero-content { margin-bottom: 40px; }
+            .btn-group { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <a href="#" class="brand">
+            <div class="brand-box">سِ</div>
+            <div class="brand-text">SEKKAH</div>
+        </a>
+        <a href="Login.html" class="btn-outline" style="padding: 10px 24px; font-size: 14px;">Sign In</a>
+    </nav>
+
+    <main class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to <br><span>SEKKAH</span></h1>
+            <p class="hero-desc">Your simplified gateway to manage Saudi rail operations. Clean, smart, and built for the future.</p>
+            <div class="btn-group">
+                <a href="Login.html" class="btn btn-primary"><i class="material-icons">east</i> Get Started</a>
+                <a href="SingUp.html" class="btn btn-outline">Register</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="train-container">
+                <!-- رسمة القطار SVG -->
+                <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f1f5f9"/><stop offset="100%" stop-color="#cbd5e1"/></linearGradient>
+                        <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0d6b65"/><stop offset="100%" stop-color="#12958D"/></linearGradient>
+                    </defs>
+                    <ellipse cx="270" cy="252" rx="175" ry="8" fill="rgba(0,0,0,0.05)"/>
+                    <rect x="75" y="94" width="390" height="124" rx="16" fill="url(#g1)"/>
+                    <path d="M75,94 Q28,128 28,156 Q28,188 75,198 L75,94Z" fill="url(#g2)"/>
+                    <rect x="75" y="94" width="390" height="18" rx="10" fill="url(#g2)"/>
+                    <rect x="96" y="112" width="46" height="35" rx="7" fill="white" opacity="0.6"/>
+                    <rect x="156" y="112" width="46" height="35" rx="7" fill="white" opacity="0.6"/>
+                    <rect x="216" y="112" width="46" height="35" rx="7" fill="white" opacity="0.6"/>
+                    <rect x="276" y="112" width="46" height="35" rx="7" fill="white" opacity="0.6"/>
+                    <circle cx="130" cy="216" r="16" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+                    <circle cx="205" cy="216" r="16" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+                    <circle cx="300" cy="216" r="16" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+    </main>
+
+    <section class="features">
+        <!-- الميزة الأولى: آمن -->
+        <div class="feature-card">
+            <div class="icon-box"><i class="material-icons">verified_user</i></div>
+            <h3>Secure</h3>
+            <p>Advanced local authentication and data validation to keep all operational records safe.</p>
+        </div>
+        
+        <!-- الميزة الثانية: سريع -->
+        <div class="feature-card">
+            <div class="icon-box"><i class="material-icons">bolt</i></div>
+            <h3>Fast</h3>
+            <p>Optimized architecture ensuring instant navigation and real-time response across the platform.</p>
+        </div>
+        
+        <!-- الميزة الثالثة: مريح -->
+        <div class="feature-card">
+            <div class="icon-box"><i class="material-icons">auto_awesome</i></div>
+            <h3>Comfortable</h3>
+            <p>An eye-friendly interface with a modern design tailored for a seamless user experience.</p>
+        </div>
+    </section>
 
 </body>
 </html>
