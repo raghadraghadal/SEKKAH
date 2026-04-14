@@ -123,6 +123,11 @@ function addTrain(){
   }
 
   const trains=JSON.parse(localStorage.getItem('trains')||'[]');
+  if(trains.some(t => t.number === num)){ // تتحقق اذا فيه قطار بنفس الرقم موجود مسبقا
+  msg.textContent = 'Train number already exists.';//تعرض رسالة خطا للمستخدم
+  msg.className = 'msg error';//تخلي شكل الرسالة error
+  return; //توقف تنفيذ و ما تكمل مقارنة
+}
   trains.push({number:num,capacity:cap,status:selectedStatus});
   localStorage.setItem('trains',JSON.stringify(trains));
 
