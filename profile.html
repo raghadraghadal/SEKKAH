@@ -293,6 +293,12 @@
 </div>
 
 <script>
+    // منع الدخول المباشر بدون تسجيل دخول
+if (!localStorage.getItem('currentActiveUser')) {
+    alert('Unauthorized access! Please login first.');
+    location.href = 'Login.html';
+}
+    
     // --- دالة تحميل بيانات البروفايل عند فتح الصفحة ---
     function loadProfile() {
         // جلب الاسم من المفتاح الذي سجل به الدخول (currentActiveUser)
