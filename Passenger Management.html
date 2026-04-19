@@ -64,6 +64,49 @@ body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-hei
 .modal-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:22px;}
 .btn-confirm{background:#12958D;color:white;border:none;border-radius:12px;padding:11px 26px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;}
 .btn-cancel-modal{background:transparent;color:#555;border:1.5px solid #e0e0e0;border-radius:12px;padding:11px 22px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;}
+
+/* TOAST */
+#toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #12958D;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 800;
+  font-family: 'Abhaya Libre', serif;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 6px 24px rgba(18,149,141,0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+  z-index: 999;
+  white-space: nowrap;
+}
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+#toast .t-icon {
+  width: 22px;
+  height: 22px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+#toast.error {
+  background: #E53935;
+  box-shadow: 0 6px 24px rgba(229,57,53,0.35);
+}
 </style>
 </head>
 <body>
@@ -115,15 +158,40 @@ body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-hei
     <div class="modal-field"><label>Email</label><input type="email" id="m_email"></div>
     <div class="modal-actions">
       <button class="btn-cancel-modal" onclick="closeModal()">Cancel</button>
-      <button class="btn-confirm" onclick="savePassenger()">Register</button>
+      <button class="btn-confirm" onclick="savePassenger()">Save</button>
     </div>
   </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div id="toast">
+  <div class="t-icon" id="toastIcon">✓</div>
+  <span id="toastMsg">Saved successfully</span>
 </div>
 
 <script>
 if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
 document.getElementById('nbUser').textContent = localStorage.getItem('userName')||'Admin';
 
+/* ── Toast ── */
+var toastTimer;
+function showToast(msg, type) {
+  var t    = document.getElementById('toast');
+  var icon = document.getElementById('toastIcon');
+  document.getElementById('toastMsg').textContent = msg;
+  if (type === 'error') {
+    t.classList.add('error');
+    icon.textContent = '✕';
+  } else {
+    t.classList.remove('error');
+    icon.textContent = '✓';
+  }
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+/* ── Data ── */
 const defaultPassengers=[
   {id:'P-001',name:'Anas bin Malik',nid:'1023456789',phone:'0501234567',email:'anas@example.com',date:'2026-01-10'},
   {id:'P-002',name:'Saad bin Ahmad',nid:'1034567890',phone:'0509876543',email:'saad@example.com',date:'2026-01-15'},
@@ -133,6 +201,7 @@ function load(){const s=localStorage.getItem('passengers');return s?JSON.parse(s
 function save(l){localStorage.setItem('passengers',JSON.stringify(l));}
 function initials(n){return(n||'?').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();}
 
+/* ── Render ── */
 function render(filter=''){
   const list=load();
   const body=document.getElementById('passBody');
@@ -151,6 +220,7 @@ function render(filter=''){
     </tr>`).join('');
 }
 
+/* ── Modal ── */
 function openModal(){
   document.getElementById('modalTitle').textContent='Register Passenger';
   document.getElementById('m_index').value='-1';
@@ -168,19 +238,44 @@ function openEdit(pid){
   document.getElementById('modalOverlay').classList.add('show');
 }
 function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
+
+/* ── Save ── */
 function savePassenger(){
-  const name=document.getElementById('m_name').value.trim();
-  const nid=document.getElementById('m_nid').value.trim();
-  const phone=document.getElementById('m_phone').value.trim();
-  const email=document.getElementById('m_email').value.trim();
-  const pid=document.getElementById('m_index').value;
-  if(!name||!nid||!phone||!email){alert('Please fill all fields');return;}
-  const list=load();
-  if(pid==='-1'){list.push({id:'P-'+Date.now(),name,nid,phone,email,date:new Date().toISOString().split('T')[0]});}
-  else{const idx=list.findIndex(x=>x.id===pid);list[idx]={...list[idx],name,nid,phone,email};}
-  save(list);closeModal();render();
+  const name  = document.getElementById('m_name').value.trim();
+  const nid   = document.getElementById('m_nid').value.trim();
+  const phone = document.getElementById('m_phone').value.trim();
+  const email = document.getElementById('m_email').value.trim();
+  const pid   = document.getElementById('m_index').value;
+
+  if(!name||!nid||!phone||!email){
+    showToast('Please fill all fields', 'error');
+    return;
+  }
+
+  const list   = load();
+  const isEdit = pid !== '-1';
+
+  if(!isEdit){
+    list.push({id:'P-'+Date.now(),name,nid,phone,email,date:new Date().toISOString().split('T')[0]});
+  } else {
+    const idx = list.findIndex(x=>x.id===pid);
+    list[idx] = {...list[idx], name, nid, phone, email};
+  }
+
+  save(list);
+  closeModal();
+  render();
+  showToast(isEdit ? 'Passenger updated successfully' : 'Passenger registered successfully');
 }
-function deleteP(pid){if(!confirm('Delete this record?'))return;save(load().filter(p=>p.id!==pid));render();}
+
+/* ── Delete ── */
+function deleteP(pid){
+  if(!confirm('Delete this record?'))return;
+  save(load().filter(p=>p.id!==pid));
+  render();
+  showToast('Passenger record deleted', 'error');
+}
+
 document.getElementById('searchInput').addEventListener('input',function(){render(this.value);});
 render();
 </script>
