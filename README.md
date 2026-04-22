@@ -33,12 +33,12 @@ The system will run locally for demonstration purposes.
 
 ##  Team Members
 
-1- Raghad Abdullah Alamri
-2- Daad Ibrahim Alateeq
-3- Fulwah Khaled Alyahya
-4- Shatha Ahmad Alghannami
-5- Raghad Khalid Almalki
-8- Norah Naif Alqhtani
+1- *Raghad Abdullah Alamri
+2- *Daad Ibrahim Alateeq
+3- *Fulwah Khaled Alyahya
+4- *Shatha Ahmad Alghannami
+5- *Raghad Khalid Almalki
+8- *Norah Naif Alqhtani
 
 ---
 
