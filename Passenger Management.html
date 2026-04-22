@@ -9,8 +9,6 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-height:100vh;}
-
-/* NAVBAR */
 .top-navbar{width:100%;background:white;border-bottom:1px solid #eee;padding:0 32px;display:flex;align-items:center;height:62px;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
 .nb-brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:32px;}
 .nb-icon{width:34px;height:34px;background:linear-gradient(135deg,#12958D,#0d7069);border-radius:9px;display:flex;align-items:center;justify-content:center;color:white;font-size:15px;font-weight:900;font-family:'Cairo',sans-serif;}
@@ -26,19 +24,13 @@ body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-hei
 .nb-user i{font-size:17px;}
 .nb-logout{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:25px;background:#fde8e8;color:#E53935;text-decoration:none;font-size:13px;font-weight:800;}
 .nb-logout:hover{background:#fac9c9;}
-
-/* PAGE */
 .page-body{padding:28px 36px;}
 .page-title{font-size:32px;font-weight:800;color:#1a1a1a;margin-bottom:24px;letter-spacing:.5px;}
-
-/* SEARCH ROW */
 .search-row{display:flex;gap:12px;align-items:center;margin-bottom:20px;flex-wrap:wrap;}
 .search-input{flex:1;min-width:200px;padding:11px 20px;border:1.5px solid #e0e0e0;border-radius:25px;font-size:14px;font-family:'Abhaya Libre',serif;outline:none;background:#fafafa;transition:border-color .2s;}
 .search-input:focus{border-color:#12958D;background:white;}
 .btn-add{background:#12958D;color:white;border:none;border-radius:25px;padding:11px 24px;font-size:14px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:'Abhaya Libre',serif;transition:background .2s;}
 .btn-add:hover{background:#0d7069;}
-
-/* TABLE */
 .table-wrap{background:white;border-radius:20px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.05);}
 .pass-table{width:100%;border-collapse:collapse;}
 .pass-table thead th{background:#12958D;color:white;padding:15px 12px;font-size:13px;font-weight:800;text-align:center;}
@@ -51,8 +43,6 @@ body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-hei
 .btn-del{background:#fde8e8;color:#E53935;border:none;border-radius:8px;padding:6px 13px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;}
 .btn-del:hover{background:#fac9c9;}
 .empty{text-align:center;padding:40px;color:#aaa;font-size:15px;}
-
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:400;align-items:center;justify-content:center;}
 .modal-overlay.show{display:flex;}
 .modal{background:white;border-radius:24px;padding:36px;width:460px;max-width:95vw;box-shadow:0 12px 40px rgba(0,0,0,0.15);}
@@ -64,54 +54,15 @@ body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-hei
 .modal-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:22px;}
 .btn-confirm{background:#12958D;color:white;border:none;border-radius:12px;padding:11px 26px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;}
 .btn-cancel-modal{background:transparent;color:#555;border:1.5px solid #e0e0e0;border-radius:12px;padding:11px 22px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Abhaya Libre',serif;}
-
 /* TOAST */
-#toast {
-  position: fixed;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: #12958D;
-  color: white;
-  padding: 14px 28px;
-  border-radius: 50px;
-  font-size: 14px;
-  font-weight: 800;
-  font-family: 'Abhaya Libre', serif;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 6px 24px rgba(18,149,141,0.35);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .3s ease, transform .3s ease;
-  z-index: 999;
-  white-space: nowrap;
-}
-#toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-#toast .t-icon {
-  width: 22px;
-  height: 22px;
-  background: rgba(255,255,255,0.25);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  flex-shrink: 0;
-}
-#toast.error {
-  background: #E53935;
-  box-shadow: 0 6px 24px rgba(229,57,53,0.35);
-}
+#toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#12958D;color:white;padding:14px 28px;border-radius:50px;font-size:14px;font-weight:800;font-family:'Abhaya Libre',serif;display:flex;align-items:center;gap:10px;box-shadow:0 6px 24px rgba(18,149,141,0.35);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;z-index:999;white-space:nowrap;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast .t-icon{width:22px;height:22px;background:rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+#toast.error{background:#E53935;box-shadow:0 6px 24px rgba(229,57,53,0.35);}
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="top-navbar">
   <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
   <div class="nb-links">
@@ -129,14 +80,12 @@ body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-hei
 
 <div class="page-body">
   <div class="page-title">Passenger Management</div>
-
   <div class="search-row">
     <input type="text" class="search-input" id="searchInput" placeholder="Search by name, phone, or national ID...">
     <button class="btn-add" onclick="openModal()">
       <i class="material-icons" style="font-size:18px">person_add</i> Register Passenger
     </button>
   </div>
-
   <div class="table-wrap">
     <table class="pass-table">
       <thead>
@@ -147,7 +96,6 @@ body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-hei
   </div>
 </div>
 
-<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2 id="modalTitle">Register Passenger</h2>
@@ -163,120 +111,180 @@ body{font-family:'Abhaya Libre',serif;font-weight:800;background:#EAF6F5;min-hei
   </div>
 </div>
 
-<!-- TOAST NOTIFICATION -->
 <div id="toast">
-  <div class="t-icon" id="toastIcon">✓</div>
+  <div class="t-icon" id="toastIcon">&#10003;</div>
   <span id="toastMsg">Saved successfully</span>
 </div>
 
 <script>
-if(!localStorage.getItem('userName')){alert('Please login first!');location.href='Login.html';}
-document.getElementById('nbUser').textContent = localStorage.getItem('userName')||'Admin';
+// ── User ──
+var savedUser = localStorage.getItem('userName');
+if (!savedUser) { savedUser = 'Admin'; }
+document.getElementById('nbUser').textContent = savedUser;
 
-/* ── Toast ── */
+// ── Toast ──
 var toastTimer;
 function showToast(msg, type) {
-  var t    = document.getElementById('toast');
+  var t = document.getElementById('toast');
   var icon = document.getElementById('toastIcon');
   document.getElementById('toastMsg').textContent = msg;
   if (type === 'error') {
     t.classList.add('error');
-    icon.textContent = '✕';
+    icon.innerHTML = '&#10007;';
   } else {
     t.classList.remove('error');
-    icon.textContent = '✓';
+    icon.innerHTML = '&#10003;';
   }
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+  toastTimer = setTimeout(function () { t.classList.remove('show'); }, 3000);
 }
 
-/* ── Data ── */
-const defaultPassengers=[
+// ── Data ──
+var defaultPassengers = [
   {id:'P-001',name:'Anas bin Malik',nid:'1023456789',phone:'0501234567',email:'anas@example.com',date:'2026-01-10'},
   {id:'P-002',name:'Saad bin Ahmad',nid:'1034567890',phone:'0509876543',email:'saad@example.com',date:'2026-01-15'},
-  {id:'P-003',name:'Ibrahim bin Abdullah',nid:'1045678901',phone:'0551234567',email:'ibrahim@example.com',date:'2026-02-03'},
+  {id:'P-003',name:'Ibrahim bin Abdullah',nid:'1045678901',phone:'0551234567',email:'ibrahim@example.com',date:'2026-02-03'}
 ];
-function load(){const s=localStorage.getItem('passengers');return s?JSON.parse(s):defaultPassengers;}
-function save(l){localStorage.setItem('passengers',JSON.stringify(l));}
-function initials(n){return(n||'?').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();}
 
-/* ── Render ── */
-function render(filter=''){
-  const list=load();
-  const body=document.getElementById('passBody');
-  const filtered=filter?list.filter(p=>p.name.toLowerCase().includes(filter.toLowerCase())||p.phone.includes(filter)||p.nid.includes(filter)):list;
-  if(!filtered.length){body.innerHTML=`<tr><td colspan="7" class="empty">No passengers found.</td></tr>`;return;}
-  body.innerHTML=filtered.map((p,i)=>`
-    <tr>
-      <td>${i+1}</td>
-      <td><div style="display:flex;align-items:center;gap:10px;justify-content:center">
-        <div class="avatar">${initials(p.name)}</div><strong>${p.name}</strong></div></td>
-      <td>${p.nid}</td><td>${p.phone}</td><td>${p.email}</td><td>${p.date}</td>
-      <td>
-        <button class="btn-edit" onclick="openEdit('${p.id}')">Edit</button>
-        <button class="btn-del" onclick="deleteP('${p.id}')">Delete</button>
-      </td>
-    </tr>`).join('');
+function load() {
+  var s = localStorage.getItem('passengers');
+  return s ? JSON.parse(s) : defaultPassengers;
+}
+function save(list) {
+  localStorage.setItem('passengers', JSON.stringify(list));
+}
+function initials(n) {
+  return (n || '?').split(' ').slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase();
 }
 
-/* ── Modal ── */
-function openModal(){
-  document.getElementById('modalTitle').textContent='Register Passenger';
-  document.getElementById('m_index').value='-1';
-  ['m_name','m_nid','m_phone','m_email'].forEach(id=>document.getElementById(id).value='');
+// ── Render ──
+function render(filter) {
+  if (filter === undefined || filter === null) filter = '';
+  var list = load();
+  var body = document.getElementById('passBody');
+  var f = filter.trim().toLowerCase();
+
+  var filtered;
+  if (f === '') {
+    filtered = list;
+  } else {
+    filtered = [];
+    for (var i = 0; i < list.length; i++) {
+      var p = list[i];
+      if (
+        p.name.toLowerCase().indexOf(f) !== -1 ||
+        p.phone.indexOf(filter.trim()) !== -1 ||
+        p.nid.indexOf(filter.trim()) !== -1
+      ) {
+        filtered.push(p);
+      }
+    }
+  }
+
+  if (filtered.length === 0) {
+    body.innerHTML = '<tr><td colspan="7" class="empty">No passengers found.</td></tr>';
+    return;
+  }
+
+  var rows = '';
+  for (var j = 0; j < filtered.length; j++) {
+    var p = filtered[j];
+    rows += '<tr>'
+      + '<td>' + (j + 1) + '</td>'
+      + '<td><div style="display:flex;align-items:center;gap:10px;justify-content:center">'
+      + '<div class="avatar">' + initials(p.name) + '</div><strong>' + p.name + '</strong></div></td>'
+      + '<td>' + p.nid + '</td>'
+      + '<td>' + p.phone + '</td>'
+      + '<td>' + p.email + '</td>'
+      + '<td>' + p.date + '</td>'
+      + '<td>'
+      + '<button class="btn-edit" onclick="openEdit(\'' + p.id + '\')">Edit</button>'
+      + '<button class="btn-del" onclick="deleteP(\'' + p.id + '\')">Delete</button>'
+      + '</td></tr>';
+  }
+  body.innerHTML = rows;
+}
+
+// ── Modal ──
+function openModal() {
+  document.getElementById('modalTitle').textContent = 'Register Passenger';
+  document.getElementById('m_index').value = '-1';
+  document.getElementById('m_name').value = '';
+  document.getElementById('m_nid').value = '';
+  document.getElementById('m_phone').value = '';
+  document.getElementById('m_email').value = '';
   document.getElementById('modalOverlay').classList.add('show');
 }
-function openEdit(pid){
-  const p=load().find(x=>x.id===pid);if(!p)return;
-  document.getElementById('modalTitle').textContent='Edit Passenger';
-  document.getElementById('m_index').value=pid;
-  document.getElementById('m_name').value=p.name;
-  document.getElementById('m_nid').value=p.nid;
-  document.getElementById('m_phone').value=p.phone;
-  document.getElementById('m_email').value=p.email;
+function openEdit(pid) {
+  var list = load();
+  var p = null;
+  for (var i = 0; i < list.length; i++) { if (list[i].id === pid) { p = list[i]; break; } }
+  if (!p) return;
+  document.getElementById('modalTitle').textContent = 'Edit Passenger';
+  document.getElementById('m_index').value = pid;
+  document.getElementById('m_name').value = p.name;
+  document.getElementById('m_nid').value = p.nid;
+  document.getElementById('m_phone').value = p.phone;
+  document.getElementById('m_email').value = p.email;
   document.getElementById('modalOverlay').classList.add('show');
 }
-function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+}
 
-/* ── Save ── */
-function savePassenger(){
-  const name  = document.getElementById('m_name').value.trim();
-  const nid   = document.getElementById('m_nid').value.trim();
-  const phone = document.getElementById('m_phone').value.trim();
-  const email = document.getElementById('m_email').value.trim();
-  const pid   = document.getElementById('m_index').value;
+// ── Save ──
+function savePassenger() {
+  var name  = document.getElementById('m_name').value.trim();
+  var nid   = document.getElementById('m_nid').value.trim();
+  var phone = document.getElementById('m_phone').value.trim();
+  var email = document.getElementById('m_email').value.trim();
+  var pid   = document.getElementById('m_index').value;
 
-  if(!name||!nid||!phone||!email){
+  if (!name || !nid || !phone || !email) {
     showToast('Please fill all fields', 'error');
     return;
   }
 
-  const list   = load();
-  const isEdit = pid !== '-1';
+  var list = load();
+  var isEdit = pid !== '-1';
 
-  if(!isEdit){
-    list.push({id:'P-'+Date.now(),name,nid,phone,email,date:new Date().toISOString().split('T')[0]});
+  if (!isEdit) {
+    list.push({ id: 'P-' + Date.now(), name: name, nid: nid, phone: phone, email: email, date: new Date().toISOString().split('T')[0] });
   } else {
-    const idx = list.findIndex(x=>x.id===pid);
-    list[idx] = {...list[idx], name, nid, phone, email};
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === pid) {
+        list[i].name  = name;
+        list[i].nid   = nid;
+        list[i].phone = phone;
+        list[i].email = email;
+        break;
+      }
+    }
   }
 
   save(list);
   closeModal();
-  render();
+  render(document.getElementById('searchInput').value);
   showToast(isEdit ? 'Passenger updated successfully' : 'Passenger registered successfully');
 }
 
-/* ── Delete ── */
-function deleteP(pid){
-  if(!confirm('Delete this record?'))return;
-  save(load().filter(p=>p.id!==pid));
-  render();
+// ── Delete ──
+function deleteP(pid) {
+  if (!confirm('Delete this record?')) return;
+  var list = load();
+  var newList = [];
+  for (var i = 0; i < list.length; i++) { if (list[i].id !== pid) newList.push(list[i]); }
+  save(newList);
+  render(document.getElementById('searchInput').value);
   showToast('Passenger record deleted', 'error');
 }
 
-document.getElementById('searchInput').addEventListener('input',function(){render(this.value);});
+// ── Search ──
+document.getElementById('searchInput').addEventListener('input', function () {
+  render(this.value);
+});
+
 render();
 </script>
 </body>
