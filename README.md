@@ -17,7 +17,6 @@ SEKKAH is a web-based railway management system designed to help users monitor a
 
 ---
 
-
 ##  How to Run
 
 1. Clone the repository:
