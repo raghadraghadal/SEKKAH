@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKKAH — Home</title>
+<!-- الروابط الأصلية للخطوط والأيقونات -->
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@500;800&family=Cairo:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+/* ── تصفير المسافات لضمان الالتصاق بالسقف ── */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    background: #EAF6F5;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Abhaya Libre', serif;
+    font-weight: 800;
+    min-height: 100vh;
+}
+
+/* ── NAVBAR (التنسيق الأصلي الفخم) ── */
+.top-navbar {
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #eee;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    height: 62px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.nb-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-right: 32px; }
+.nb-icon { 
+    width: 34px; height: 34px; 
+    background: linear-gradient(135deg, #12958D, #0d7069); 
+    border-radius: 9px; display: flex; align-items: center; justify-content: center; 
+    color: white; font-size: 15px; font-weight: 900; font-family: 'Cairo', sans-serif; 
+}
+.nb-name { font-size: 17px; font-weight: 900; color: #12958D; letter-spacing: 2px; }
+
+.nb-links { display: flex; align-items: center; gap: 2px; flex: 1; }
+.nb-link { 
+    display: flex; align-items: center; gap: 5px; padding: 7px 11px; border-radius: 9px; 
+    color: #555; text-decoration: none; font-size: 13px; font-weight: 800; 
+    transition: background .18s, color .18s; white-space: nowrap; 
+}
+.nb-link i { font-size: 17px; }
+.nb-link:hover, .nb-link.active { background: #EAF6F5; color: #12958D; }
+
+.nb-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.nb-user { 
+    display: flex; align-items: center; gap: 6px; padding: 6px 13px; border-radius: 25px; 
+    background: #f5f5f5; text-decoration: none; color: #333; font-size: 13px; font-weight: 800; 
+}
+.nb-logout { 
+    display: flex; align-items: center; gap: 5px; padding: 6px 14px; border-radius: 25px; 
+    background: #fde8e8; color: #E53935; text-decoration: none; font-size: 13px; font-weight: 800; 
+}
+
+/* ── PAGE CONTENT ── */
+.page-body { padding: 28px 36px; }
+
+/* بنر الترحيب */
+.welcome-banner {
+    background: linear-gradient(135deg, #12958D, #1a7fc1);
+    border-radius: 20px; padding: 32px 36px; color: white; margin-bottom: 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 8px 30px rgba(18,149,141,0.25);
+}
+.wb-left .wb-greet { font-size: 13px; opacity: .7; letter-spacing: 1px; margin-bottom: 4px; }
+.wb-left .wb-title { font-size: 26px; font-weight: 900; margin-bottom: 4px; }
+.wb-left .wb-sub { font-size: 14px; opacity: .75; font-weight: 500; }
+.wb-icon { font-size: 64px; opacity: .2; }
+
+/* شبكة الإحصائيات */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.stat-card { 
+    background: white; border-radius: 16px; padding: 20px; 
+    display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+}
+.stat-icon { 
+    width: 48px; height: 48px; border-radius: 13px; 
+    display: flex; align-items: center; justify-content: center; background: #EAF6F5; 
+}
+.stat-icon i { font-size: 24px; color: #12958D; }
+.stat-val { font-size: 26px; font-weight: 900; color: #1a1a1a; line-height: 1; }
+.stat-lbl { font-size: 12px; color: #888; margin-top: 3px; }
+
+/* كروت الوصول السريع */
+.section-title { font-size: 15px; font-weight: 800; color: #1a1a1a; margin-bottom: 16px; text-transform: uppercase; }
+.cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.mgmt-card {
+    background: white; border-radius: 20px; padding: 28px 20px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    text-decoration: none; color: #1a1a1a; transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 2px solid transparent;
+}
+.mgmt-card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(18,149,141,0.18); border-color: #c4e9e7; }
+.mgmt-card-icon { 
+    width: 64px; height: 64px; background: #EAF6F5; border-radius: 18px; 
+    display: flex; align-items: center; justify-content: center; margin-bottom: 14px; 
+}
+.mgmt-card:hover .mgmt-card-icon { background: #12958D; }
+.mgmt-card-icon i { color: #12958D; font-size: 30px; }
+.mgmt-card:hover .mgmt-card-icon i { color: white; }
+.mgmt-card-title { font-size: 14px; font-weight: 900; color: #333; }
+.mgmt-card-desc { font-size: 12px; color: #aaa; margin-top: 5px; font-weight: 500; }
+
+@media(max-width:900px) {
+    .cards-grid, .stats-grid { grid-template-columns: repeat(2,1fr); }
+    .nb-link span { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- شريط التنقل (الآن سيلتصق بالسقف تماماً) -->
+<nav class="top-navbar">
+    <a href="home.html" class="nb-brand"><div class="nb-icon">سِ</div><div class="nb-name">SEKKAH</div></a>
+    <div class="nb-links">
+        <a href="home.html" class="nb-link active"><i class="material-icons">home</i><span>Home</span></a>
+        <a href="Train management menu .html" class="nb-link"><i class="material-icons">train</i><span>Train Management</span></a>
+        <a href="Passenger Management.html" class="nb-link"><i class="material-icons">groups</i><span>Passengers</span></a>
+        <a href="Reservation system .html" class="nb-link"><i class="material-icons">confirmation_number</i><span>Reservations</span></a>
+        <a href="Dashboard.html" class="nb-link"><i class="material-icons">bar_chart</i><span>Dashboard</span></a>
+    </div>
+    <div class="nb-right">
+        <a href="Profile.html" class="nb-user"><i class="material-icons">person_outline</i><span id="nbUser">Admin</span></a>
+        <a href="index.html" class="nb-logout"><i class="material-icons">logout</i>Logout</a>
+    </div>
+</nav>
+
+<div class="page-body">
+    <!-- بنر الترحيب -->
+    <div class="welcome-banner">
+        <div class="wb-left">
+            <div class="wb-greet">GOOD DAY</div>
+            <div class="wb-title">Welcome back, <span id="home-user-name">User</span>! 👋</div>
+            <div class="wb-sub">What would you like to manage today?</div>
+        </div>
+        <i class="material-icons wb-icon">train</i>
+    </div>
+
+    <!-- شبكة الإحصائيات -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">train</i></div>
+            <div><div class="stat-val" id="statTrains">0</div><div class="stat-lbl">Total Trains</div></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">confirmation_number</i></div>
+            <div><div class="stat-val" id="statBookings">0</div><div class="stat-lbl">Total Bookings</div></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">groups</i></div>
+            <div><div class="stat-val" id="statPassengers">0</div><div class="stat-lbl">Passengers</div></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="material-icons">route</i></div>
+            <div><div class="stat-val">10</div><div class="stat-lbl">Active Routes</div></div>
+        </div>
+    </div>
+
+    <div class="section-title">Quick Access</div>
+    <div class="cards-grid">
+        <a href="Train management menu .html" class="mgmt-card">
+            <div class="mgmt-card-icon"><i class="material-icons">train</i></div>
+            <div class="mgmt-card-title">Train Management</div>
+            <div class="mgmt-card-desc">Add and monitor trains</div>
+        </a>
+        <a href="Passenger Management.html" class="mgmt-card">
+            <div class="mgmt-card-icon"><i class="material-icons">people</i></div>
+            <div class="mgmt-card-title">Passenger Management</div>
+            <div class="mgmt-card-desc">Manage passenger records</div>
+        </a>
+        <a href="Reservation system .html" class="mgmt-card">
+            <div class="mgmt-card-icon"><i class="material-icons">confirmation_number</i></div>
+            <div class="mgmt-card-title">Reservation System</div>
+            <div class="mgmt-card-desc">Book and manage reservations</div>
+        </a>
+        <a href="Dashboard.html" class="mgmt-card">
+            <div class="mgmt-card-icon"><i class="material-icons">assessment</i></div>
+            <div class="mgmt-card-title">Dashboard & Reports</div>
+            <div class="mgmt-card-desc">Revenue and booking reports</div>
+        </a>
+    </div>
+</div>
+
+<script>
+/* ── الجافا سكريبت: جلب الاسم وتحديث الأرقام ── */
+
+// جلب اسم المستخدم النشط
+const activeUser = localStorage.getItem('currentActiveUser');
+
+if(!activeUser) {
+    // إذا لم يجد مستخدم، يرجعه لصفحة اللوجن
+    alert('Please login first!');
+    location.href = 'Login.html';
+} else {
+    // عرض الاسم في الأماكن المخصصة
+    document.getElementById('home-user-name').textContent = activeUser;
+    document.getElementById('nbUser').textContent = activeUser;
+}
+
+// تحديث أرقام الإحصائيات من الذاكرة
+const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+const passengers = JSON.parse(localStorage.getItem('passengers') || '[]');
+const trains = JSON.parse(localStorage.getItem('trains') || '[]');
+
+document.getElementById('statBookings').textContent = bookings.length;
+document.getElementById('statPassengers').textContent = passengers.length;
+document.getElementById('statTrains').textContent = trains.length;
+</script>
+
+</body>
+</html>
+
+
+
+
+
