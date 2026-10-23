@@ -22,4 +22,5 @@ jobs:
           args: >
             -Dsonar.projectKey=nnrg-svg_Sukkah
             -Dsonar.organization=nnrg-svg
+             -Dsonar.branch.name=master
 
