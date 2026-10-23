@@ -1,7 +1,7 @@
 name: System Reliability Test
 
 on:
-  workflow_dispatch: # يتيح لكِ تشغيل الاختبار يدوياً بضغطة زر في أي وقت
+  workflow_dispatch: # يتيح لكِ تشغيل الاختبار يدوياً بضغطة زر
 
 jobs:
   reliability_check:
@@ -15,11 +15,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-size: 20
+          node-version: 20
 
       - name: Install Artillery (Testing Tool)
         run: npm install -g artillery@latest
 
       - name: Execute 150 Requests Simulation
         run: |
-          artillery quick --duration 10 --rate 15 https://your-project-link.com
+          artillery quick https://httpbin.org -c 15 -n 10
