@@ -1,0 +1,24 @@
+{
+  "name": "sekkah",
+  "version": "1.0.0",
+  "description": "SEKKAH is a web-based railway management system designed to help users monitor and manage train operations efficiently. The system provides multiple features for handling trains, schedules, and passenger-related activities.",
+  "main": "save.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devshatha/sekkah.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Devshatha/sekkah/issues"
+  },
+  "homepage": "https://github.com/Devshatha/sekkah#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6",
+    "http-server": "^14.1.1"
+  }
+}
