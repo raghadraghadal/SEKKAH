@@ -39,5 +39,24 @@ test.describe('SEKKAH Functional Tests', () => {
       await expect(page.locator('body')).toBeVisible();
     }
   });
+test('Add a new train with valid details and verify preview row', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('userName', 'Admin');
+  });
+
+  await page.goto(`${BASE_URL}/addNewTrain.html`);
+
+  await page.fill('#trainNumber', '905');
+  await page.fill('#capacity', '75');
+  await page.click('#availBtn');
+
+  await page.click('button:has-text("Add Train")');
+
+  await expect(page.locator('#msg')).toHaveText('Train added successfully!');
+  await expect(page.locator('#preview')).toBeVisible();
+  await expect(page.locator('#previewBody')).toContainText('Train 905');
+  await expect(page.locator('#previewBody')).toContainText('75');
+  await expect(page.locator('#previewBody')).toContainText('Available');
+});
 
 });
